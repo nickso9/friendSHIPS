@@ -2,6 +2,12 @@ import React, { Component } from 'react';
 
 class Register extends Component {
 
+    state = {
+        email: '',
+        username: '',
+        password: '',
+        confirmPassword: '',
+    }
 
     render() {
         return (
@@ -10,12 +16,20 @@ class Register extends Component {
 
                 <div style={inputWrapper}>
                     <span >Email:</span>
-                    <input style={inputClass}/>
+                    <input 
+                        style={inputClass}
+                        value={this.state.email}
+                        onChange={(e) => {this.setState({ email: e.target.value }) }}
+                    />
                 </div>
 
                 <div style={inputWrapper}>
                     <span >Username:</span>
-                    <input style={inputClass}/>
+                    <input 
+                        style={inputClass}
+                        value={this.state.username}
+                        onChange={(e) => {this.setState({ username: e.target.value }) }}
+                    />
                 </div>
 
                 <div style={inputWrapper}>
@@ -24,6 +38,8 @@ class Register extends Component {
                         style={inputClass} 
                         type="password" 
                         autoComplete="false" 
+                        value={this.state.password}
+                        onChange={(e) => {this.setState({ password: e.target.value }) }}
                     />
                 </div>
 
@@ -33,6 +49,8 @@ class Register extends Component {
                         style={inputClass} 
                         type="password" 
                         autoComplete="false" 
+                        value={this.state.confirmPassword}
+                        onChange={(e) => {this.setState({ confirmPassword: e.target.value }) }}
                     />
                 </div>
 
