@@ -4,43 +4,45 @@ import { NavLink } from 'react-router-dom'
 class Navbar extends Component {
 
 
-
-
-
     render() {
+
         return (
 
             <div style={navbarWrapper}>
                 <div style={navbarBrandWrapper}>
                     <NavLink to='/' style={navbarBrand}>
                         <h1>Message/Query</h1>
-                    </NavLink>
-                    
+                    </NavLink>  
                 </div>
                 
                 <div >    
                     <div style={inputWrapper}>
                      
-                        <button style={inputStyle}
-                            onMouseEnter={(e) => {
-                                e.target.style.textDecoration = 'underline'
-                            }}
-                            onMouseLeave={(e) => {
-                                e.target.style.textDecoration = 'none'
-                            }}
-                        >Register</button>
+                        <NavLink to='/register' style={navbarBrand}>
+                            <button style={inputStyle}
+                                onMouseEnter={(e) => {
+                                    e.target.style.textDecoration = 'underline'
+                                }}
+                                onMouseLeave={(e) => {
+                                    e.target.style.textDecoration = 'none'
+                                }}
+                            >Register</button>
+                        </NavLink> 
                     </div>
 
                     <div style={inputWrapper}>
                   
-                        <button style={inputStyle}
-                            onMouseEnter={(e) => {
-                                e.target.style.textDecoration = 'underline'
-                            }}
-                            onMouseLeave={(e) => {
-                                e.target.style.textDecoration = 'none'
-                            }}
-                        >Login</button>
+                        <NavLink to='/login' style={navbarBrand}>
+                            <button style={inputStyle}
+                                onMouseEnter={(e) => {
+                                    e.target.style.textDecoration = 'underline'
+                                }}
+                                onMouseLeave={(e) => {
+                                    e.target.style.textDecoration = 'none'
+                                }}
+                            >Login</button>
+                        </NavLink> 
+
                     </div>
 
                 </div>
@@ -77,7 +79,7 @@ const inputWrapper = {
 }
 
 const inputStyle = {
-    fontSize: '24px',
+    fontSize: '16px',
     display: 'block',
     marginTop: '3px',
     backgroundColor: 'white',
