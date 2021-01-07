@@ -1,19 +1,23 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+const User = require('./user')
 
 const userSchema = new Schema({
     email: {
         type: String,
-        require: true
+        required: true
     },
     password: {
         type: String,
-        require: true
+        required: true
+    },
+    username: {
+        type: String,
+        required: true
     },
     messages: [{
         recipient: {
             type: Schema.Types.ObjectId,
-            ref: User,
             required: true
         },
         message: {

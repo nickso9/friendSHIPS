@@ -1,15 +1,31 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+
+import { loginUser } from '../../actions/userActions'
 
 class Login extends Component {
-    state = {
-        email: '',
-        password: ''
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            email: '',
+            password: ''
+        }
+
+        this.onSubmit = this.onSubmit.bind(this);
+    }
+    
+
+    onSubmit(e) {
+        e.preventDefault()
+        this.props.loginUser(this.state)   
     }
 
 
     render() {
         return (
-            <form style={loginWrapper}>
+            <form style={loginWrapper} onSubmit={this.onSubmit}>
                 <h1>Login</h1>
 
                 <div style={inputWrapper}>
@@ -45,9 +61,7 @@ class Login extends Component {
                         e.target.style.color = 'black'
                         
                     }}
-                    onClick={() => {
-                        console.log(this.state)
-                    }}
+                    type="submit"
                 >Login</button>
             </form>
         )
@@ -88,4 +102,8 @@ const inputButton = {
     float: 'right'
 }
 
-export default Login
+Login.propTypes = {
+    loginUser: PropTypes.func.isRequired
+}
+
+export default connect(null, { loginUser })(Login)

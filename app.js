@@ -1,13 +1,14 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const cors = require('cors')
 
 require('dotenv').config();
 const app = express();
+app.use(cors())
 
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@${process.env.DB_HOST}/${process.env.DB_DATABASE}`
 
 app.use(express.json())
-
 
 mongoose.connect(uri, 
     { 
@@ -27,11 +28,8 @@ mongoose.connect(uri,
     }
 );
 
-// mongoose
-//   .connect(
-//     `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@${process.env.DB_HOST}/${process.env.DB_DATABASE}`
-//   )
-//   .then(result => {
-//     app.listen(8080)
-//   })
-//   .catch(err => console.log(err));
+const userRoute = require('./routes/user');
+const loginRoute = require('./routes/auth')
+
+app.use('/users', userRoute)
+app.use('/users', loginRoute)
