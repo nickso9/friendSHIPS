@@ -15,7 +15,7 @@ class Register extends Component {
                 <h1>Register User</h1>
 
                 <div style={inputWrapper}>
-                    <label for="email">Email:</label>
+                    <label htmlFor="email">Email:</label>
                     <input 
                         style={inputClass}
                         value={this.state.email}
@@ -24,7 +24,7 @@ class Register extends Component {
                 </div>
 
                 <div style={inputWrapper}>
-                    <label for="username">Username:</label>
+                    <label htmlFor="username">Username:</label>
                     <input 
                         style={inputClass}
                         value={this.state.username}
@@ -33,7 +33,7 @@ class Register extends Component {
                 </div>
 
                 <div style={inputWrapper}>
-                    <label for="password">Password:</label>
+                    <label htmlFor="password">Password:</label>
                     <input 
                         style={inputClass} 
                         type="password" 
@@ -44,7 +44,7 @@ class Register extends Component {
                 </div>
 
                 <div style={inputWrapper}>
-                    <label for='confirmpassword'>Confirm password:</label>
+                    <label htmlFor='confirmpassword'>Confirm password:</label>
                     <input 
                         style={inputClass} 
                         type="password" 

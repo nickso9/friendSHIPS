@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
-
+import { login } from '../../actions/userActions';
+import { clearErrors } from '../../actions/errorActions';
 
 
 class Login extends Component {
@@ -9,16 +12,36 @@ class Login extends Component {
         super(props);
         this.state = {
             email: '',
-            password: ''
+            password: '',
+            msg: null
         }
 
         this.onSubmit = this.onSubmit.bind(this);
     }
-    
+
+
+    componentDidUpdate(prevProps) {
+        const { error } = this.props;
+        if (error !== prevProps.error) {
+            if (error.id === 'LOGIN_FAIL') {
+                this.setState({ msg: error.msg.msg });
+            } else {
+                this.setState({ msg: null });
+            }
+        }
+    }
 
     onSubmit(e) {
         e.preventDefault()
-      
+
+        const { email, password } = this.state;
+
+        const user = {
+            email,
+            password
+        };
+
+        this.props.login(user);
     }
 
 
@@ -28,29 +51,29 @@ class Login extends Component {
                 <h1>Login</h1>
 
                 <div style={inputWrapper}>
-                    <label for="email">Email:</label>
-                    <input 
+                    <label htmlFor="email">Email:</label>
+                    <input
                         style={inputClass}
                         value={this.state.email}
                         onChange={(e) => this.setState({ email: e.target.value })}
                     />
                 </div>
 
-               
+
                 <div style={inputWrapper}>
-                    <label for="password">Password:</label>
-                    <input 
-                        style={inputClass} 
-                        type="password" 
-                        autoComplete="false" 
+                    <label htmlFor="password">Password:</label>
+                    <input
+                        style={inputClass}
+                        type="password"
+                        autoComplete="false"
                         value={this.state.password}
                         onChange={(e) => this.setState({ password: e.target.value })}
                     />
                 </div>
 
 
-                <button 
-                    style={inputButton} 
+                <button
+                    style={inputButton}
                     onMouseEnter={(e) => {
                         e.target.style.background = 'black'
                         e.target.style.color = 'white'
@@ -58,7 +81,7 @@ class Login extends Component {
                     onMouseLeave={(e) => {
                         e.target.style.background = 'white'
                         e.target.style.color = 'black'
-                        
+
                     }}
                     type="submit"
                 >Login</button>
@@ -67,9 +90,19 @@ class Login extends Component {
     }
 }
 
+const mapStateToProps = state => ({
+    isAuthenticated: state.auth.isAuthenticated,
+    error: state.error
+});
 
+Login.propTypes = {
+    isAuthenticated: PropTypes.bool,
+    error: PropTypes.object.isRequired,
+    login: PropTypes.func.isRequired,
+    clearErrors: PropTypes.func.isRequired
+};
 
-export default Login
+export default connect(mapStateToProps, { login, clearErrors })(Login);
 
 
 const loginWrapper = {

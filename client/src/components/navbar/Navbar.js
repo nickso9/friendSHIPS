@@ -4,18 +4,18 @@ import { NavLink } from 'react-router-dom'
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import { LogoutUser } from '../../actions/userActions'
+import { goLogin } from '../../actions/pageActions'
+import { goLogout } from '../../actions/pageActions'
+import { goRegister } from '../../actions/pageActions'
+import { goMessage } from '../../actions/pageActions'
+import { logout } from '../../actions/userActions'
 
 class Navbar extends Component {
 
 
-
-    
-    
-
     render() {
 
-        const { isAuthenticated, user } = this.props.auth;
+        const { isAuthenticated } = this.props.auth;
 
         let navbarSettings;
 
@@ -25,7 +25,7 @@ class Navbar extends Component {
                     <div >    
                         <div style={inputWrapper}>
                         
-                            <NavLink to='/register' style={navbarBrand}>
+                            <span style={navbarBrand}>
                                 <button style={inputStyle}
                                     onMouseEnter={(e) => {
                                         e.target.style.textDecoration = 'underline'
@@ -33,13 +33,16 @@ class Navbar extends Component {
                                     onMouseLeave={(e) => {
                                         e.target.style.textDecoration = 'none'
                                     }}
+                                    onClick={() => {
+                                        this.props.goRegister()
+                                    }}
                                 >Register</button>
-                            </NavLink> 
+                            </span> 
                         </div>
 
                         <div style={inputWrapper}>
                     
-                            <NavLink to='/login' style={navbarBrand}>
+                            <span style={navbarBrand}>
                                 <button style={inputStyle}
                                     onMouseEnter={(e) => {
                                         e.target.style.textDecoration = 'underline'
@@ -47,8 +50,11 @@ class Navbar extends Component {
                                     onMouseLeave={(e) => {
                                         e.target.style.textDecoration = 'none'
                                     }}
+                                    onClick={() => {
+                                        this.props.goLogin()
+                                    }}
                                 >Login</button>
-                            </NavLink> 
+                            </span> 
 
                         </div>
 
@@ -68,12 +74,8 @@ class Navbar extends Component {
                             e.target.style.textDecoration = 'none'
                         }}
                         onClick={() => {
-                            this.props.LogoutUser()
-                            this.setState({
-                                ...this.state,
-                                user: undefined
-                            })
-
+                            this.props.logout()
+                            this.props.goLogout()
                         }}
                     >Logout</button>
                 </span> 
@@ -103,7 +105,12 @@ class Navbar extends Component {
 
 
 Navbar.propTypes = {
-    auth: PropTypes.object.isRequired
+    auth: PropTypes.object.isRequired,
+    goMessage: PropTypes.func.isRequired,
+    goLogin: PropTypes.func.isRequired,
+    goRegister: PropTypes.func.isRequired,
+    goLogout: PropTypes.func.isRequired,
+    logout: PropTypes.func.isRequired
 }
 
 
@@ -112,7 +119,7 @@ const mapStateToProps = state => ({
 });
 
 
-export default connect(mapStateToProps, null)(Navbar);
+export default connect(mapStateToProps, { goLogin, goLogout, goMessage, goRegister, logout })(Navbar);
 
 
 const navbarWrapper = {

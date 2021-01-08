@@ -2,6 +2,38 @@ const router = require('express').Router();
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const User = require('../models/user');
+const auth = require('../auth/auth');
+
+router.post('/tokenIsValid', async (req, res) => {
+    console.log('token is valid')
+    try {
+        const token = req.header('x-auth-token');
+
+        if (!token) return res.json(false);
+
+        const verified = jwt.verify(token, process.env.JWT_SECRET);
+        if (!verified) return res.json(false);
+
+        const user = await User.findById(verified.id);
+        if (!user) return res.json(false);
+
+        return res.json(true)
+
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({error: error.message});
+    };
+})
+
+router.get('/', auth, async (req, res) => {
+    console.log('get ///')
+    const user = await User.findById(req.user);
+    console.log(user)
+    res.json({
+        username: user.username,
+        id: user._id
+    })
+})
 
 
 router.post('/register', async (req, res) => {
@@ -43,6 +75,7 @@ router.post('/register', async (req, res) => {
 
 
 router.post('/login', async (req, res) => {
+    console.log(req.body)
     try {
         const { email, password } = req.body
         if (!email || !password) {
