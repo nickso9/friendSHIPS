@@ -66,7 +66,15 @@ router.post('/register', async (req, res) => {
         });
 
         const savedUser = await newUser.save();
-        res.json(savedUser);
+
+        const token = jwt.sign({id: savedUser._id}, process.env.JWT_SECRET, { expiresIn: '1hr' });
+
+        res.json({
+            token, 
+            user: {
+                id: savedUser._id, 
+                username: savedUser.username,
+            }});
 
     } catch (error) {
         res.status(500).json({error: error.message})
@@ -99,7 +107,7 @@ router.post('/login', async (req, res) => {
             token, 
             user: {
                 id: user._id, 
-                display: user.username,
+                username: user.username,
             }});
 
     } catch (error) {

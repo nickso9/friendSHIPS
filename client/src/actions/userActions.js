@@ -6,18 +6,18 @@ import {
 import { returnErrors } from './errorActions'
 
 export const loadUser = () => async (dispatch, getState) => {
- console.log('asdhkashdkjas')
+ 
   dispatch({ type: USER_LOADING });
 
   try {
 
     const tokenResults = await axios.post(
       'http://localhost:8080/users/tokenIsValid', null, tokenConfig(getState))
-      console.log(tokenResults)
+      
+
     if (tokenResults.data) {
-      const userResults = await axios.get('http://localhost:8080/users',
-        tokenConfig(getState));
-      console.log(userResults.data)
+      const userResults = await axios.get('http://localhost:8080/users',tokenConfig(getState));
+      
       dispatch({
         type: USER_LOADED,
         payload: userResults.data
@@ -26,16 +26,17 @@ export const loadUser = () => async (dispatch, getState) => {
     }
 
   } catch (err) {
-    console.log(err)
-    throw new Error('login failed.')
+    dispatch(returnErrors(err.response.data, err.response.status));
+    dispatch({
+        type: AUTH_ERROR
+    });
   }
 
 };
 
-// 
 
 export const register = ({ name, email, password, confirmPassword, username }) => dispatch => {
-  // Headers
+
   const config = {
     headers: {
       'Content-Type': 'application/json'
@@ -46,8 +47,7 @@ export const register = ({ name, email, password, confirmPassword, username }) =
 
   const body = JSON.stringify({ name, email, password, passwordCheck, username });
 
-  axios
-    .post('http://localhost:8080/users/register', body, config)
+  axios.post('http://localhost:8080/users/register', body, config)
     .then(res =>
         dispatch({
           type: REGISTER_SUCCESS,
@@ -64,8 +64,6 @@ export const register = ({ name, email, password, confirmPassword, username }) =
     });
 };
 
-
-// 
 
 
 
