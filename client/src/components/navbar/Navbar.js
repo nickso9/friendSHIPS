@@ -4,31 +4,24 @@ import { NavLink } from 'react-router-dom'
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
+import { LogoutUser } from '../../actions/userActions'
+
 class Navbar extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            user: undefined
-        }
-    }
 
 
-    componentDidUpdate(previousProps, previousState) {
-        if (previousProps.user !== this.props.user) {
-            this.setState({user: this.props.user})
-        }
-    }
 
+    
     
 
     render() {
 
+        const { isAuthenticated, user } = this.props.auth;
+
         let navbarSettings;
 
-        if (!this.state.user) {
+        if (!isAuthenticated) {
             navbarSettings = (
-
-                
+    
                     <div >    
                         <div style={inputWrapper}>
                         
@@ -63,8 +56,9 @@ class Navbar extends Component {
                
             )
         } else {
+
             navbarSettings = (
-                <NavLink to='/logout' style={navbarBrand}>
+                <span style={navbarBrand}>
                     <button 
                         style={inputStyle}
                         onMouseEnter={(e) => {
@@ -73,8 +67,16 @@ class Navbar extends Component {
                         onMouseLeave={(e) => {
                             e.target.style.textDecoration = 'none'
                         }}
+                        onClick={() => {
+                            this.props.LogoutUser()
+                            this.setState({
+                                ...this.state,
+                                user: undefined
+                            })
+
+                        }}
                     >Logout</button>
-                </NavLink> 
+                </span> 
             )
         }
 
@@ -98,6 +100,19 @@ class Navbar extends Component {
         )
     }
 }   
+
+
+Navbar.propTypes = {
+    auth: PropTypes.object.isRequired
+}
+
+
+const mapStateToProps = state => ({
+    auth: state.auth
+});
+
+
+export default connect(mapStateToProps, null)(Navbar);
 
 
 const navbarWrapper = {
@@ -136,14 +151,3 @@ const inputStyle = {
     outline: 'none'
 }
 
-Navbar.propTypes = {
-    user: PropTypes.object
-}
-
-
-const mapStateToProps = state => ({
-    user: state.user.user
-});
-
-
-export default connect(mapStateToProps, null)(Navbar);

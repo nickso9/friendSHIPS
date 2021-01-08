@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 
-import { loginUser } from '../../actions/userActions'
+
+
 
 class Login extends Component {
 
@@ -19,7 +18,7 @@ class Login extends Component {
 
     onSubmit(e) {
         e.preventDefault()
-        this.props.loginUser(this.state)   
+      
     }
 
 
@@ -29,7 +28,7 @@ class Login extends Component {
                 <h1>Login</h1>
 
                 <div style={inputWrapper}>
-                    <span >Email:</span>
+                    <label for="email">Email:</label>
                     <input 
                         style={inputClass}
                         value={this.state.email}
@@ -39,7 +38,7 @@ class Login extends Component {
 
                
                 <div style={inputWrapper}>
-                    <span >Password:</span>
+                    <label for="password">Password:</label>
                     <input 
                         style={inputClass} 
                         type="password" 
@@ -67,6 +66,10 @@ class Login extends Component {
         )
     }
 }
+
+
+
+export default Login
 
 
 const loginWrapper = {
@@ -102,8 +105,3 @@ const inputButton = {
     float: 'right'
 }
 
-Login.propTypes = {
-    loginUser: PropTypes.func.isRequired
-}
-
-export default connect(null, { loginUser })(Login)

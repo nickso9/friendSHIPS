@@ -7,17 +7,15 @@ import Login from './containers/auth/Login';
 import Register from './containers/auth/Register';
 import Home from './containers/home/Home'
 
+import { loadUser } from './actions/userActions';
 import store from './store';
 
 
 class App extends Component {
-  state = {
-      token: undefined,
-      user: undefined
-    }
-  
-  
- 
+
+  componentDidMount() {
+    store.dispatch(loadUser());
+  }
 
   render() {
     return (

@@ -15,7 +15,7 @@ class Register extends Component {
                 <h1>Register User</h1>
 
                 <div style={inputWrapper}>
-                    <span >Email:</span>
+                    <label for="email">Email:</label>
                     <input 
                         style={inputClass}
                         value={this.state.email}
@@ -24,7 +24,7 @@ class Register extends Component {
                 </div>
 
                 <div style={inputWrapper}>
-                    <span >Username:</span>
+                    <label for="username">Username:</label>
                     <input 
                         style={inputClass}
                         value={this.state.username}
@@ -33,7 +33,7 @@ class Register extends Component {
                 </div>
 
                 <div style={inputWrapper}>
-                    <span >Password:</span>
+                    <label for="password">Password:</label>
                     <input 
                         style={inputClass} 
                         type="password" 
@@ -44,7 +44,7 @@ class Register extends Component {
                 </div>
 
                 <div style={inputWrapper}>
-                    <span >Confirm password:</span>
+                    <label for='confirmpassword'>Confirm password:</label>
                     <input 
                         style={inputClass} 
                         type="password" 
@@ -71,6 +71,8 @@ class Register extends Component {
     }
 }
 
+
+export default Register
 
 const registerWrapper = {
     width: '500px',
@@ -105,4 +107,3 @@ const inputButton = {
     float: 'right'
 }
 
-export default Register
