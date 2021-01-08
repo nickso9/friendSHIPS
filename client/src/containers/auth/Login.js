@@ -13,7 +13,7 @@ class Login extends Component {
         this.state = {
             email: '',
             password: '',
-            msg: null
+            msg: ''
         }
 
         this.onSubmit = this.onSubmit.bind(this);
@@ -55,7 +55,10 @@ class Login extends Component {
                     <input
                         style={inputClass}
                         value={this.state.email}
-                        onChange={(e) => this.setState({ email: e.target.value })}
+                        onChange={(e) => {
+                            this.setState({ email: e.target.value})
+                            this.props.clearErrors();
+                        }}
                     />
                 </div>
 
@@ -67,7 +70,10 @@ class Login extends Component {
                         type="password"
                         autoComplete="false"
                         value={this.state.password}
-                        onChange={(e) => this.setState({ password: e.target.value })}
+                        onChange={(e) => {
+                            this.setState({ password: e.target.value})
+                            this.props.clearErrors();
+                        }}
                     />
                 </div>
 
@@ -85,6 +91,9 @@ class Login extends Component {
                     }}
                     type="submit"
                 >Login</button>
+                <div style={errorWrapper}>
+                    {this.state.msg}
+                </div>
             </form>
         )
     }
@@ -138,3 +147,9 @@ const inputButton = {
     float: 'right'
 }
 
+const errorWrapper = {
+    height: '40px',
+    color: 'red',
+    fontSize: '12px',
+    width: '90%'
+}

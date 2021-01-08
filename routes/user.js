@@ -5,7 +5,7 @@ const User = require('../models/user');
 const auth = require('../auth/auth');
 
 router.post('/tokenIsValid', async (req, res) => {
-    console.log('token is valid')
+
     try {
         const token = req.header('x-auth-token');
 
@@ -103,6 +103,7 @@ router.post('/login', async (req, res) => {
             }});
 
     } catch (error) {
+        console.log(error)
         res.status(500).json({error: error.message});
     };
 

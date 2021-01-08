@@ -15,7 +15,7 @@ class Navbar extends Component {
 
     render() {
 
-        const { isAuthenticated } = this.props.auth;
+        const { isAuthenticated, user } = this.props.auth;
 
         let navbarSettings;
 
@@ -64,7 +64,8 @@ class Navbar extends Component {
         } else {
 
             navbarSettings = (
-                <span style={navbarBrand}>
+                <div style={navbarBrand}>
+                    <span style={navbarWelcome}>Welcome !!</span>
                     <button 
                         style={inputStyle}
                         onMouseEnter={(e) => {
@@ -78,7 +79,7 @@ class Navbar extends Component {
                             this.props.goLogout()
                         }}
                     >Logout</button>
-                </span> 
+                </div> 
             )
         }
 
@@ -149,12 +150,16 @@ const inputWrapper = {
 
 const inputStyle = {
     fontSize: '16px',
-    display: 'block',
+    display: 'inline-block',
     marginTop: '3px',
     backgroundColor: 'white',
     border: '0',
     boxShadow:  '2px 3px 2px #ccc',
     padding: '10px',
     outline: 'none'
+}
+
+const navbarWelcome = {
+    display: 'inline'
 }
 
