@@ -26,9 +26,9 @@ router.post('/tokenIsValid', async (req, res) => {
 })
 
 router.get('/', auth, async (req, res) => {
-    console.log('get ///')
+    
     const user = await User.findById(req.user);
-    console.log(user)
+
     res.json({
         username: user.username,
         id: user._id
@@ -37,7 +37,7 @@ router.get('/', auth, async (req, res) => {
 
 
 router.post('/register', async (req, res) => {
-    console.log(req.body)
+    
     try {
         let { email, password, passwordCheck, username } = req.body;
         
@@ -83,7 +83,7 @@ router.post('/register', async (req, res) => {
 
 
 router.post('/login', async (req, res) => {
-    console.log(req.body)
+    
     try {
         const { email, password } = req.body
         if (!email || !password) {

@@ -4,7 +4,11 @@ const cors = require('cors')
 
 require('dotenv').config();
 const app = express();
-app.use(cors())
+
+const server = app.listen(8080, () => console.log('server running.'))
+const io = require('./socket').init(server);
+
+app.use(cors());
 
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@${process.env.DB_HOST}/${process.env.DB_DATABASE}`
 
@@ -18,16 +22,26 @@ mongoose.connect(uri,
         useFindAndModify: false 
     }
 ).then(() => { 
-    console.log('connected')
-    app.listen(8080, () => {
-        console.log('and listening')
-    })
- },
-    (err) => {  
-        console.log(err)
-    }
-);
+    console.log('db connected')
+})
+.catch(err => console.log(err))
 
-const userRoute = require('./routes/user');
 
-app.use('/users', userRoute)
+
+io.on('connection', socket => {
+    
+    require('./controllers/chat')(socket)
+
+    return io
+});
+
+
+
+
+
+
+const usersRoute = require('./routes/user');
+const userRoute = require('./routes/actions')
+
+app.use('/users', usersRoute)
+app.use('/user', userRoute)

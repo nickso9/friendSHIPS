@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const User = require('./user')
+
 
 const userSchema = new Schema({
     email: {
@@ -15,6 +15,11 @@ const userSchema = new Schema({
         type: String,
         required: true
     },
+    friends: [{
+        type: Schema.Types.ObjectId,
+        ref: 'User',
+        required: true
+    }],
     messages: [{
         recipient: {
             type: Schema.Types.ObjectId,

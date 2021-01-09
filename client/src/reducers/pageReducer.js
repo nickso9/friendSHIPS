@@ -4,7 +4,7 @@ const initialState = {
     status: 'landing'
 }
 
-export default function(state = initialState, action) {
+export default function page(state = initialState, action) {
   switch(action.type) {
     case LANDING_PAGE:
       return {

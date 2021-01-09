@@ -1,0 +1,116 @@
+import React, { Component } from 'react'
+
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+
+import { addFriend } from '../../../actions/friendActions';
+import { searchFriend } from '../../../actions/friendActions';
+import { clearFriendError } from '../../../actions/friendActions'
+
+class Friends extends Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            username: '',
+            friend: ''
+        }
+
+        this.onSubmit = this.onSubmit.bind(this)
+    }
+
+    onSubmit(e) {
+        e.preventDefault()
+        this.props.clearFriendError()
+        this.props.searchFriend(this.state.username)
+    }
+
+    componentDidUpdate(prevProps) {
+        console.log(this.props)
+        if (prevProps.friend !== this.props.friend) {
+            this.setState({...this.state,
+            friend: this.props.friend})
+            
+        }
+    }
+
+    render() {
+        return (
+            <div style={friendsWrapper}>
+                <div style={innerWrapper}>
+                    <form style={friendsInput} onSubmit={this.onSubmit}>
+                        <input 
+                            style={searchInput} 
+                            type='text' 
+                            value={this.state.username}
+                            onChange={(e) => {
+                                this.setState({username: e.target.value})
+                            }}    
+                        />
+                        <button style={searchButton} type="submit">Search</button>
+                    </form>
+                    <div style={searchWrapper}>
+                            { this.props.friend.msg ? this.props.friend.msg : this.props.friend.user } 
+                    </div>
+                    <div style={friendsListWrapper}>
+                        friends list
+
+                    </div>
+
+                </div>
+            </div>
+        )
+    }
+
+}
+
+Friends.propTypes = {
+    searchFriend: PropTypes.func.isRequired,
+    addFriend: PropTypes.func.isRequired,
+    clearFriendError: PropTypes.func.isRequired
+};
+
+const mapStateToProps = state => ({
+    auth: state.auth,
+    friend: state.friend
+});
+
+
+
+export default connect(mapStateToProps, { searchFriend, addFriend, clearFriendError })(Friends)
+
+const friendsWrapper = {
+    border: '1px solid black',
+    height: '500px',
+    width: '600px',
+    margin: 'auto',
+}
+
+const innerWrapper = {
+    display: 'block'
+}
+
+
+const friendsInput = {
+    width: '100%',
+    padding: '0px'
+}
+
+const searchInput = {
+    width: '80%'
+}
+
+const searchButton = {
+    width: '18%'
+}
+
+const searchWrapper = {
+    width: '100%',
+    height: '50px',
+    backgroundColor: 'yellow'
+}
+
+const friendsListWrapper = {
+    width: '100%',
+    height: '100%',
+    backgroundColor: 'pink'
+}
