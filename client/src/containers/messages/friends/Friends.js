@@ -12,7 +12,6 @@ class Friends extends Component {
         super(props)
         this.state = {
             username: '',
-            friend: ''
         }
 
         this.onSubmit = this.onSubmit.bind(this)
@@ -20,18 +19,11 @@ class Friends extends Component {
 
     onSubmit(e) {
         e.preventDefault()
+        this.setState({username: ''})
         this.props.clearFriendError()
         this.props.searchFriend(this.state.username)
     }
 
-    componentDidUpdate(prevProps) {
-        console.log(this.props)
-        if (prevProps.friend !== this.props.friend) {
-            this.setState({...this.state,
-            friend: this.props.friend})
-            
-        }
-    }
 
     render() {
         return (
@@ -49,7 +41,23 @@ class Friends extends Component {
                         <button style={searchButton} type="submit">Search</button>
                     </form>
                     <div style={searchWrapper}>
-                            { this.props.friend.msg ? this.props.friend.msg : this.props.friend.user } 
+                            { this.props.friend.msg  ? 
+                                (
+                                    <div style={errorMessage}>{this.props.friend.msg}</div>
+                                ):
+                                this.props.friend.user ?
+                                (
+                                    <div style={addFriendWrapper}>
+                                        <div style={friendInfo}>
+                                           {this.props.friend.user}
+                                        </div>
+                                        <div style={friendsInfoButton}>
+                                            <button>Add Friend</button>
+                                        </div>
+                                    </div> 
+                                ) :
+                                ''
+                            } 
                     </div>
                     <div style={friendsListWrapper}>
                         friends list
@@ -99,6 +107,10 @@ const searchInput = {
     width: '80%'
 }
 
+const errorMessage = {
+    color: 'red'
+}
+
 const searchButton = {
     width: '18%'
 }
@@ -107,6 +119,28 @@ const searchWrapper = {
     width: '100%',
     height: '50px',
     backgroundColor: 'yellow'
+}
+
+const addFriendWrapper = {
+    width: '90%',
+    margin: 'auto',
+    height: '100%',
+    display: 'flex',
+    alignItems: 'center',
+}
+
+const friendInfo = {
+    width: '80%',
+    height: '100%',
+    display: 'flex',
+    alignItems: 'center',
+}
+
+const friendsInfoButton = {
+    width: '20%',
+    height: '100%',
+    display: 'flex',
+    alignItems: 'center',
 }
 
 const friendsListWrapper = {
