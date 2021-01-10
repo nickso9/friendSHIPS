@@ -5,7 +5,6 @@ import { FRIEND_SEARCH, FRIEND_SUCCESS, FRIEND_FAIL, FRIEND_NOTFOUND, CLEAR_FRIE
 
 export const searchFriend = (username) => dispatch => {
 
-    console.log(username)
     axios.get('http://localhost:8080/user/search', {
         params: {
             user: username
@@ -38,8 +37,20 @@ export const searchFriend = (username) => dispatch => {
    
 };
   
-export const addFriend = (username) => {
-
+export const addFriend = (userToAdd, user) => dispatch => {
+    axios.post('http://localhost:8080/user/addfriend', {
+        body: {
+            userToAdd: userToAdd,
+            user: user
+        }
+    })
+    .then(user => console.log(user))
+    .catch(err => {
+        dispatch({
+            type: FRIEND_FAIL,
+            payload: err.response.data.msg
+        })
+    })
 };
 
 

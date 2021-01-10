@@ -24,6 +24,9 @@ class Friends extends Component {
         this.props.searchFriend(this.state.username)
     }
 
+        
+    
+
 
     render() {
         return (
@@ -51,7 +54,13 @@ class Friends extends Component {
                                         <div style={friendInfo}>
                                            {this.props.friend.user}
                                         </div>
-                                        <div style={friendsInfoButton}>
+                                        <div 
+                                            style={friendsInfoButton}
+                                            onClick={() => {
+                                                const { id } = this.props.auth.user
+                                                this.props.addFriend(this.props.friend.id, id)
+                                            }}
+                                            >
                                             <button>Add Friend</button>
                                         </div>
                                     </div> 

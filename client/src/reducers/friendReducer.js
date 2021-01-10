@@ -26,7 +26,7 @@ export default function error(state = initialState, action) {
     case FRIEND_FAIL:
         return {
             ...state,
-            msg: {},
+            msg: action.payload,
         };
     case CLEAR_FRIEND_ERROR:
         return {
