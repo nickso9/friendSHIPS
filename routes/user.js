@@ -27,11 +27,12 @@ router.post('/tokenIsValid', async (req, res) => {
 
 router.get('/', auth, async (req, res) => {
     
-    const user = await User.findById(req.user);
+    const user = await User.findById(req.user).populate('friends', '-email -password -messages -friends');
 
     res.json({
         username: user.username,
-        id: user._id
+        id: user._id,
+        friendsList: user.friends
     })
 })
 
@@ -74,6 +75,7 @@ router.post('/register', async (req, res) => {
             user: {
                 id: savedUser._id, 
                 username: savedUser.username,
+                friendsList: savedUser.friends
             }});
 
     } catch (error) {
@@ -90,7 +92,7 @@ router.post('/login', async (req, res) => {
             return res.status(400).json({msg: 'email or password required.'})
         };
 
-        const user = await User.findOne({email: email});
+        const user = await User.findOne({email: email}).populate('friends', '-email -password -messages -friends');
 
         if (!user) {
             return res.status(400).json({msg: 'account not found.'})
@@ -108,6 +110,7 @@ router.post('/login', async (req, res) => {
             user: {
                 id: user._id, 
                 username: user.username,
+                friendsList: user.friends
             }});
 
     } catch (error) {

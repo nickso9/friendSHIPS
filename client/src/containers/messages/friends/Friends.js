@@ -12,6 +12,7 @@ class Friends extends Component {
         super(props)
         this.state = {
             username: '',
+            friendsList: this.props.auth.user.friendsList
         }
 
         this.onSubmit = this.onSubmit.bind(this)
@@ -24,12 +25,19 @@ class Friends extends Component {
         this.props.searchFriend(this.state.username)
     }
 
-        
-    
-
+    componentDidUpdate(prevProps, prevState) {
+        if (prevProps.friend.friendsList !== this.props.friend.friendsList) {
+            this.setState({
+                ...this.state,
+                friendsList: this.props.friend.friendsList
+            })
+        }
+    }
 
     render() {
+        console.log(this.props.auth.user.friendsList)
         return (
+            
             <div style={friendsWrapper}>
                 <div style={innerWrapper}>
                     <form style={friendsInput} onSubmit={this.onSubmit}>
@@ -69,7 +77,11 @@ class Friends extends Component {
                             } 
                     </div>
                     <div style={friendsListWrapper}>
-                        friends list
+                        {this.state.friendsList.map((friend, index) => {
+                            return (
+                                <div key={index}>{friend.username}</div>
+                            )
+                        })}
 
                     </div>
 

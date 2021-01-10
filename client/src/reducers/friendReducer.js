@@ -3,7 +3,8 @@ import { FRIEND_FAIL, FRIEND_NOTFOUND, FRIEND_SUCCESS, FRIEND_SEARCH, CLEAR_FRIE
 const initialState = {
   user: '',
   id: '',
-  msg: ''
+  msg: '',
+  friendsList: []
 }
 
 export default function error(state = initialState, action) {
@@ -16,7 +17,7 @@ export default function error(state = initialState, action) {
         }
     case FRIEND_SUCCESS:
         return {
-            msg: action.payload.msg,
+            friendsList: action.payload
         };
     case FRIEND_NOTFOUND:
         return {

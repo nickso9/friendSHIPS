@@ -15,7 +15,7 @@ class Navbar extends Component {
 
     render() {
 
-        const { isAuthenticated } = this.props.auth;
+        const { isAuthenticated, user } = this.props.auth;
 
         let navbarSettings;
 
@@ -65,7 +65,7 @@ class Navbar extends Component {
 
             navbarSettings = (
                 <div style={navbarBrand}>
-                    <span style={navbarWelcome}>Welcome !!</span>
+                    <span style={navbarWelcome}>Welcome {user.username}!!</span>
                     <button 
                         style={inputStyle}
                         onMouseEnter={(e) => {

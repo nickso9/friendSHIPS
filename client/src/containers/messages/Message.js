@@ -15,7 +15,6 @@ class Messages extends Component {
     componentDidMount() {
         const { id } = this.props.user
         socket = io('localhost:8080')
-        console.log(id)
         socket.on("connect", () => {
             socket.emit('setUserId', id)
         });

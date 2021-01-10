@@ -38,13 +38,19 @@ export const searchFriend = (username) => dispatch => {
 };
   
 export const addFriend = (userToAdd, user) => dispatch => {
+
     axios.post('http://localhost:8080/user/addfriend', {
         body: {
             userToAdd: userToAdd,
             user: user
         }
     })
-    .then(user => console.log(user))
+    .then(user => {
+        dispatch({
+            type: FRIEND_SUCCESS,
+            payload: user.data.friends
+        })
+    })
     .catch(err => {
         dispatch({
             type: FRIEND_FAIL,
