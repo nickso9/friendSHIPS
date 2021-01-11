@@ -1,9 +1,10 @@
-import { FRIEND_FAIL, FRIEND_NOTFOUND, FRIEND_SUCCESS, FRIEND_SEARCH, CLEAR_FRIEND_ERROR } from '../actions/types';
+import { FRIEND_FAIL, FRIEND_NOTFOUND, FRIEND_SUCCESS, FRIEND_SEARCH, CLEAR_FRIEND_ERROR, LOAD_MESSAGE } from '../actions/types';
 
 const initialState = {
   user: '',
   id: '',
   msg: '',
+  messageWith: {},
   friendsList: []
 }
 
@@ -34,6 +35,11 @@ export default function error(state = initialState, action) {
             ...state,
             msg: ''
         }
+    case LOAD_MESSAGE:
+        return {
+            ...state,
+            messageWith: action.payload
+            }
     default:
       return state;
   }

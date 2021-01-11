@@ -29,9 +29,7 @@ mongoose.connect(uri,
 
 
 io.on('connection', socket => {
-    
     require('./controllers/chat')(socket)
-
     return io
 });
 

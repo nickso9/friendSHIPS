@@ -3,9 +3,8 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import { addFriend } from '../../../actions/friendActions';
-import { searchFriend } from '../../../actions/friendActions';
-import { clearFriendError } from '../../../actions/friendActions'
+import { addFriend, searchFriend, clearFriendError, removeFriend, loadMessages } from '../../../actions/friendActions';
+
 
 class Friends extends Component {
     constructor(props) {
@@ -18,11 +17,8 @@ class Friends extends Component {
         this.onSubmit = this.onSubmit.bind(this)
     }
 
-    onSubmit(e) {
-        e.preventDefault()
-        this.setState({username: ''})
-        this.props.clearFriendError()
-        this.props.searchFriend(this.state.username)
+    componentWillUnmount() {
+        this.props.loadMessages('', '')
     }
 
     componentDidUpdate(prevProps, prevState) {
@@ -34,10 +30,16 @@ class Friends extends Component {
         }
     }
 
+    onSubmit(e) {
+        e.preventDefault()
+        this.setState({username: ''})
+        this.props.clearFriendError()
+        this.props.searchFriend(this.state.username)
+    }
+
     render() {
-        console.log(this.props.auth.user.friendsList)
+
         return (
-            
             <div style={friendsWrapper}>
                 <div style={innerWrapper}>
                     <form style={friendsInput} onSubmit={this.onSubmit}>
@@ -79,7 +81,19 @@ class Friends extends Component {
                     <div style={friendsListWrapper}>
                         {this.state.friendsList.map((friend, index) => {
                             return (
-                                <div key={index}>{friend.username}</div>
+                                <div key={index}>
+                                    <input hidden id={friend._id} />
+                                    <span
+                                        onClick={e => {
+                                            this.props.loadMessages(e.target.parentNode.firstChild.id, e.target.innerHTML)
+                                        }}
+                                    >{friend.username}</span>
+                                    <button 
+                                        onClick={e => {
+                                            const { id } = this.props.auth.user
+                                            this.props.removeFriend(e.target.parentNode.firstChild.id, id)
+                                        }}>remove</button>
+                                </div>
                             )
                         })}
 
@@ -95,7 +109,9 @@ class Friends extends Component {
 Friends.propTypes = {
     searchFriend: PropTypes.func.isRequired,
     addFriend: PropTypes.func.isRequired,
-    clearFriendError: PropTypes.func.isRequired
+    clearFriendError: PropTypes.func.isRequired,
+    removeFriend: PropTypes.func.isRequired,
+    loadMessages: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -105,7 +121,13 @@ const mapStateToProps = state => ({
 
 
 
-export default connect(mapStateToProps, { searchFriend, addFriend, clearFriendError })(Friends)
+export default connect(mapStateToProps, { 
+    searchFriend, 
+    addFriend, 
+    clearFriendError, 
+    removeFriend, 
+    loadMessages
+})(Friends)
 
 const friendsWrapper = {
     border: '1px solid black',

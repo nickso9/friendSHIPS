@@ -128,7 +128,6 @@ const navbarWrapper = {
     alignItems: 'center',
     justifyContent: 'space-between',
     height: '100px',
-    boxShadow: '0 2px 3px #ccc',
     width: '100%',
     fontSize: '16px',
 }

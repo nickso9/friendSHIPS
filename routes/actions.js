@@ -2,8 +2,6 @@ const router = require('express').Router();
 const User = require('../models/user');
 // const auth = require('../auth/auth');
 
-
-
 router.get('/search', (req, res) => {
     const { user } = req.query
     User.findOne({ username: user })
@@ -42,7 +40,28 @@ router.post('/addfriend', (req, res) => {
         })
         .catch(() => {
             res.status(500).json({ msg: 'unable to add friend.' })
+    })
+
+})
+
+router.delete('/removefriend', (req, res) => {
+
+    const { userToRemove, user } = req.body;
+    console.log(userToRemove);
+    console.log(user)
+
+    User.findByIdAndUpdate({ _id: user }, { $pull: { friends: userToRemove } })
+        .then(() => {
+            return User.findById({ _id: user }).populate('friends', '-email -password -messages -friends')
         })
+        .then(result => {
+            res.status(200).json({
+                friends: result.friends
+            })
+        })
+        .catch(() => {
+            res.status(500).json({ msg: 'unable to remove friend.' })
+    })
 
 })
 
