@@ -1,4 +1,4 @@
-import { FRIEND_FAIL, FRIEND_NOTFOUND, FRIEND_SUCCESS, FRIEND_SEARCH, CLEAR_FRIEND_ERROR, LOAD_FRIEND, SAVE_MESSAGE } from '../actions/types';
+import { FRIEND_FAIL, FRIEND_NOTFOUND, FRIEND_SUCCESS, FRIEND_SEARCH, CLEAR_FRIEND_ERROR, LOAD_FRIEND, SAVE_MESSAGE, CURRENT_MESSAGE } from '../actions/types';
 
 const initialState = {
   user: '',
@@ -6,7 +6,8 @@ const initialState = {
   msg: '',
   messageWith: {},
   friendsList: [],
-  messages: []
+  messages: [],
+  currentMessages: []
 }
 
 export default function error(state = initialState, action) {
@@ -37,7 +38,6 @@ export default function error(state = initialState, action) {
             msg: ''
         }
     case LOAD_FRIEND:
-        console.log('hihi')
         return {
             ...state,
             messageWith: action.payload
@@ -49,6 +49,23 @@ export default function error(state = initialState, action) {
                 ...state.messages, action.payload
             ]
         }
+    case CURRENT_MESSAGE: 
+        const { from, to } = action.payload
+        const oldMessages = [...state.messages]
+        const currentMessages = oldMessages.filter(message => {
+            if (message.from === from && message.to === to) {
+                return message
+            } 
+            
+            if (message.from === to && message.to === from) {
+                return message
+            }
+            return ''
+        })
+        return {
+            ...state,
+            currentMessages
+        };
     default:
       return state;
   }

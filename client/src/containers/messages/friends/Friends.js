@@ -18,7 +18,7 @@ class Friends extends Component {
     }
 
     componentWillUnmount() {
-        this.props.loadMessages('', '')
+        this.props.loadFriend('', '')
     }
 
     componentDidUpdate(prevProps, prevState) {
@@ -38,8 +38,9 @@ class Friends extends Component {
     }
 
     render() {
-
+        
         return (
+            
             <div style={friendsWrapper}>
                 <div style={innerWrapper}>
                     <form style={friendsInput} onSubmit={this.onSubmit}>
@@ -86,6 +87,7 @@ class Friends extends Component {
                                     <span
                                         onClick={e => {
                                             this.props.loadFriend(e.target.parentNode.firstChild.id, e.target.innerHTML)
+                                            console.log(e.target.parentNode.firstChild.id, e.target.innerHTML)
                                         }}
                                     >{friend.username}</span>
                                     <button 

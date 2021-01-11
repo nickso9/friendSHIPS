@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-import { FRIEND_SEARCH, FRIEND_SUCCESS, FRIEND_FAIL, FRIEND_NOTFOUND, CLEAR_FRIEND_ERROR, LOAD_FRIEND, SAVE_MESSAGE } from './types'
+import { FRIEND_SEARCH, FRIEND_SUCCESS, FRIEND_FAIL, FRIEND_NOTFOUND, CLEAR_FRIEND_ERROR, LOAD_FRIEND, SAVE_MESSAGE, CURRENT_MESSAGE } from './types'
 
 
 export const searchFriend = (username) => dispatch => {
@@ -92,7 +92,7 @@ export const loadFriend = (id, username) => dispatch => {
     })
 }
 
-export const saveMessages = (from, to, message) => dispatch => {
+export const saveMessages = (from, to, message) => dispatch => {  
     dispatch({
         type: SAVE_MESSAGE,
         payload: {
@@ -102,6 +102,17 @@ export const saveMessages = (from, to, message) => dispatch => {
         }
     })
 }
+
+export const getCurrentMessages = (from, to) => dispatch => {
+    dispatch({
+        type: CURRENT_MESSAGE,
+        payload: {
+            from,
+            to,
+        }
+    })
+}
+
 
 export const clearFriendError = () => {
     return {
