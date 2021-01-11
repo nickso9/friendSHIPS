@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-import { FRIEND_SEARCH, FRIEND_SUCCESS, FRIEND_FAIL, FRIEND_NOTFOUND, CLEAR_FRIEND_ERROR, LOAD_MESSAGE } from './types'
+import { FRIEND_SEARCH, FRIEND_SUCCESS, FRIEND_FAIL, FRIEND_NOTFOUND, CLEAR_FRIEND_ERROR, LOAD_FRIEND, SAVE_MESSAGE } from './types'
 
 
 export const searchFriend = (username) => dispatch => {
@@ -82,16 +82,26 @@ export const removeFriend = (userToRemove, user) => dispatch => {
     })
 };
 
-export const loadMessages = (id, username) => dispatch => {
+export const loadFriend = (id, username) => dispatch => {
     dispatch({
-        type: LOAD_MESSAGE,
+        type: LOAD_FRIEND,
         payload: {
             id: id,
-            username: username
+            username: username,
         }
     })
 }
 
+export const saveMessages = (from, to, message) => dispatch => {
+    dispatch({
+        type: SAVE_MESSAGE,
+        payload: {
+            from,
+            to,
+            message
+        }
+    })
+}
 
 export const clearFriendError = () => {
     return {

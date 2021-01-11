@@ -1,26 +1,24 @@
-const { isValidObjectId } = require("mongoose");
 
 const connectedUsers = {}
 
-module.exports = function(socket) {
+module.exports = function (socket) {
     let usernameid;
-
+    console.log(connectedUsers)
     socket.on('setUserId', (username) => {
         connectedUsers[username] = socket.id;
         usernameid = username
     })
-    
-    // console.log(connectedUsers)
 
-    socket.on('message', (to, message) => {  
+    socket.on('message', (to, message) => {
+        
         console.log('on message.')
         console.log(to)
         console.log(message)
         const id = connectedUsers[to];
-        
-        console.log(usernameid)
-        // io.sockets.socket(id).emit('sendPrivateMessage', socket.username, message);
-    })
+        console.log(id)
+        console.log(connectedUsers)
 
+        socket.to(id).emit('sendPrivateMessage', usernameid, message);
+    })
 
 }

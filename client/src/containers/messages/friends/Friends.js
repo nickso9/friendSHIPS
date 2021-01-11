@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import { addFriend, searchFriend, clearFriendError, removeFriend, loadMessages } from '../../../actions/friendActions';
+import { addFriend, searchFriend, clearFriendError, removeFriend, loadFriend } from '../../../actions/messageActions';
 
 
 class Friends extends Component {
@@ -85,7 +85,7 @@ class Friends extends Component {
                                     <input hidden id={friend._id} />
                                     <span
                                         onClick={e => {
-                                            this.props.loadMessages(e.target.parentNode.firstChild.id, e.target.innerHTML)
+                                            this.props.loadFriend(e.target.parentNode.firstChild.id, e.target.innerHTML)
                                         }}
                                     >{friend.username}</span>
                                     <button 
@@ -111,7 +111,7 @@ Friends.propTypes = {
     addFriend: PropTypes.func.isRequired,
     clearFriendError: PropTypes.func.isRequired,
     removeFriend: PropTypes.func.isRequired,
-    loadMessages: PropTypes.func.isRequired
+    loadFriend: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -126,7 +126,7 @@ export default connect(mapStateToProps, {
     addFriend, 
     clearFriendError, 
     removeFriend, 
-    loadMessages
+    loadFriend
 })(Friends)
 
 const friendsWrapper = {

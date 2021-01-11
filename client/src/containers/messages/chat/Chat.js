@@ -3,6 +3,8 @@ import io from "socket.io-client";
 
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+
+import { saveMessages } from '../../../actions/messageActions'
 let socket;
 
 class Chat extends Component {
@@ -11,27 +13,27 @@ class Chat extends Component {
         this.state = {
             id: this.props.messages.id || '',
             username: this.props.messages.username || '',
-            messages: this.props.messages.messages || [],
-            inputText: ''
+            inputText: '',
         }
         this.onSubmit = this.onSubmit.bind(this);
     }
 
-    componentWillUnmount() {
-        console.log('unmounted')
-        this.setState({})
-        console.log(this.state)
-    }
-
+  
     componentDidMount() {
         const { id } = this.props.user
         socket = io('localhost:8080')
         socket.on("connect", () => {
             socket.emit('setUserId', id)
+
+            socket.on('sendPrivateMessage', (from, message) => {
+    
+                this.props.saveMessages(from, id, message)
+
+            })
         });
-        console.log(id)
     }
 
+   
     componentDidUpdate(prevProps, prevState) {
         if (prevProps.messages !== this.props.messages) {
             this.setState(this.props.messages)
@@ -40,14 +42,18 @@ class Chat extends Component {
 
     onSubmit(e) {
         e.preventDefault()
+        const { id } = this.props.user
         const message = this.state.inputText
         const friendId = this.state.id
-        console.log('friendid: '+ friendId + ' ' + message)
+  
         socket.emit('message', friendId, message);
+
+        this.props.saveMessages(id, friendId, message)
+        
     }
 
     render() {
-       console.log(this.state)
+        console.log(this.props.message)
         return (
             <form style={chatWrapper} onSubmit={this.onSubmit}>
                 <div style={messageBanner}>Message {this.state.username}:</div>
@@ -69,16 +75,18 @@ class Chat extends Component {
 }
 
 Chat.propTypes = {
-    messages: PropTypes.object.isRequired
+    messages: PropTypes.object.isRequired,
+    saveMessages: PropTypes.func.isRequired
 }
 
 const mapStateToProps = state => ({ 
     messages: state.friend.messageWith,
+    message: state.friend.messages,
     user: state.auth.user
 })
 
 
-export default connect(mapStateToProps, null)(Chat)
+export default connect(mapStateToProps, { saveMessages })(Chat)
 
 
 const chatWrapper = {

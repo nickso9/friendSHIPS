@@ -19,4 +19,5 @@ export const FRIEND_SEARCH = 'FRIEND_SEARCH';
 export const FRIEND_FAIL = 'FRIEND_FAIL';
 export const FRIEND_NOTFOUND = 'FRIEND_NOTFOUND';
 export const CLEAR_FRIEND_ERROR = 'CLEAR_FRIEND_ERROR';
-export const LOAD_MESSAGE = 'LOAD_MESSAGE';
+export const LOAD_FRIEND = 'LOAD_FRIEND';
+export const SAVE_MESSAGE = 'SAVE_MESSAGE';
