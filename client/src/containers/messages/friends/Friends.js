@@ -87,7 +87,6 @@ class Friends extends Component {
                                     <span
                                         onClick={e => {
                                             this.props.loadFriend(e.target.parentNode.firstChild.id, e.target.innerHTML)
-                                            console.log(e.target.parentNode.firstChild.id, e.target.innerHTML)
                                         }}
                                     >{friend.username}</span>
                                     <button 

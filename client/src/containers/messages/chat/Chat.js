@@ -15,13 +15,15 @@ class Chat extends Component {
             id: this.props.messages.id || '',
             username: this.props.messages.username || '',
             inputText: '',
-            messages: this.props.currentMessages || ''
+            messages: this.props.currentMessages || '',
+ 
         }
         this.onSubmit = this.onSubmit.bind(this);
     }
 
   
     componentDidMount() {
+        console.log('on mount')
         const { id } = this.props.user
         socket = io('localhost:8080')
         socket.on("connect", () => {
@@ -30,13 +32,22 @@ class Chat extends Component {
                 this.props.saveMessages(from, id, message)
                 this.props.getCurrentMessages(from, id)
             })
-        });    
+        });   
+
     }
 
    
     componentDidUpdate(prevProps, prevState) {
-        if (prevProps.messages !== this.props.messages) {
-            this.setState(this.props.messages)
+        
+        if (prevProps.messages !== this.props.messages && this.props.messages) {
+            console.log('update')
+            this.setState({
+                inputText: '',
+                messages: this.props.currentMessages || '',
+                id: this.props.messages.id || '',
+                username: this.props.messages.username || ''
+            })
+            this.props.getCurrentMessages(this.props.messages.id, this.props.user.id)
         }
 
     }
@@ -54,12 +65,12 @@ class Chat extends Component {
     }
 
     render() {
-        console.log(this.props.currentMessages)
+
         return (
             <form style={chatWrapper} onSubmit={this.onSubmit}>
                 <div style={messageBanner}>Message {this.state.username}:</div>
                 <div style={messageWrapper} id="message">
-                    <Message messages={this.props.currentMessages}/>
+                    <Message messages={this.props.currentMessages} switch={this.props.messages}/>
                 </div>
                 <input 
                     style={inputStyle} 
@@ -78,10 +89,10 @@ class Chat extends Component {
 }
 
 Chat.propTypes = {
-    messages: PropTypes.object.isRequired,
+    messages: PropTypes.object,
     saveMessages: PropTypes.func.isRequired,
     getCurrentMessages: PropTypes.func.isRequired,
-    currentMessages: PropTypes.array.isRequired
+    currentMessages: PropTypes.array
 }
 
 const mapStateToProps = state => ({ 

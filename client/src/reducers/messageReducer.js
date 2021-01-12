@@ -43,6 +43,12 @@ export default function error(state = initialState, action) {
             messageWith: action.payload
             }
     case SAVE_MESSAGE:
+            if (!state.messages) {
+                return {
+                    ...state,
+                    messages: [action.payload]
+                }
+            }
         return {
             ...state,
             messages: [
