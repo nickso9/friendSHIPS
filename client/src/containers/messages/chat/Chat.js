@@ -12,8 +12,8 @@ class Chat extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            id: this.props.messages.id || '',
-            username: this.props.messages.username || '',
+            // id: this.props.messages.id || '',
+            // username: this.props.messages.username || '',
             inputText: '',
             messages: this.props.currentMessages || '',
  
@@ -38,15 +38,17 @@ class Chat extends Component {
 
    
     componentDidUpdate(prevProps, prevState) {
-        
-        if (prevProps.messages !== this.props.messages && this.props.messages) {
-            console.log('update')
-            this.setState({
-                inputText: '',
-                messages: this.props.currentMessages || '',
-                id: this.props.messages.id || '',
-                username: this.props.messages.username || ''
-            })
+    
+        if (prevProps.messages.id !== this.props.messages.id && this.props.messages.id) {
+            // this.setState({
+            //     inputText: '',
+            //     messages: this.props.currentMessages || '',
+            //     id: this.props.messages.id || '',
+            //     username: this.props.messages.username || ''
+            // })
+            console.log('switched')
+            console.log(this.state)
+            console.log('switched done')
             this.props.getCurrentMessages(this.props.messages.id, this.props.user.id)
         }
 
@@ -56,7 +58,7 @@ class Chat extends Component {
         e.preventDefault()
         const { id } = this.props.user
         const message = this.state.inputText
-        const friendId = this.state.id
+        const friendId = this.props.messages.id
   
         socket.emit('message', friendId, message);
 
@@ -68,9 +70,9 @@ class Chat extends Component {
 
         return (
             <form style={chatWrapper} onSubmit={this.onSubmit}>
-                <div style={messageBanner}>Message {this.state.username}:</div>
+                <div style={messageBanner}>Message {this.props.messages.username}:</div>
                 <div style={messageWrapper} id="message">
-                    <Message messages={this.props.currentMessages} switch={this.props.messages}/>
+                    <Message messages={this.props.currentMessages} switch={this.props.messages.username}/>
                 </div>
                 <input 
                     style={inputStyle} 
@@ -97,7 +99,7 @@ Chat.propTypes = {
 
 const mapStateToProps = state => ({ 
     messages: state.friend.messageWith,
-    message: state.friend.messages,
+    // message: state.friend.messages,
     currentMessages: state.friend.currentMessages,
     user: state.auth.user
 })

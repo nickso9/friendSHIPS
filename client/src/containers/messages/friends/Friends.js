@@ -21,7 +21,7 @@ class Friends extends Component {
         this.props.loadFriend('', '')
     }
 
-    componentDidUpdate(prevProps, prevState) {
+    componentDidUpdate(prevProps) {
         if (prevProps.friend.friendsList !== this.props.friend.friendsList) {
             this.setState({
                 ...this.state,

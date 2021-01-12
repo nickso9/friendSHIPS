@@ -56,7 +56,18 @@ export default function error(state = initialState, action) {
             ]
         }
     case CURRENT_MESSAGE: 
+        console.log(state.messageWith)
         const { from, to } = action.payload
+        if (!from || !to) {
+            console.log('no user')
+            return {
+                ...state,
+                currentMessages: null
+            }
+        }
+        if (from !== state.messageWith.id && to !== state.messageWith.id) {
+            return state
+        }
         const oldMessages = [...state.messages]
         const currentMessages = oldMessages.filter(message => {
             if (message.from === from && message.to === to) {
