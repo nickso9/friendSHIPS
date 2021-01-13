@@ -23,7 +23,12 @@ const userSchema = new Schema({
     image: {
         type: String,
         required: true
-    }
+    },
+    requestedfriend: [{
+        type: Object,
+        required: true
+    }]
+
 });
 
 module.exports = mongoose.model('User', userSchema);

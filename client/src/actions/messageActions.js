@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-import { FRIEND_SEARCH, FRIEND_SUCCESS, FRIEND_FAIL, FRIEND_NOTFOUND, CLEAR_FRIEND_ERROR, LOAD_FRIEND, SAVE_MESSAGE, CURRENT_MESSAGE } from './types'
+import { FRIEND_SEARCH, FRIEND_SUCCESS, FRIEND_FAIL, FRIEND_NOTFOUND, CLEAR_FRIEND_ERROR, LOAD_FRIEND, SAVE_MESSAGE, CURRENT_MESSAGE, ADD_TO_PENDING } from './types'
 
 
 export const searchFriend = (username) => dispatch => {
@@ -36,6 +36,29 @@ export const searchFriend = (username) => dispatch => {
         })
 
 };
+
+export const addPending = (userToAdd, user, usernameToAdd) => dispatch => {
+    
+    axios.post('http://localhost:8080/user/pendingfriend', {
+        body: {
+            userToAdd: userToAdd,
+            user: user,
+            usernameToAdd
+        }
+    })
+    .then(() => {
+        dispatch({
+            type: ADD_TO_PENDING
+        })
+    })
+    .catch(err => {
+        dispatch({
+            type: FRIEND_FAIL,
+            payload: err.response.data.msg
+        })
+    })
+    
+}
 
 export const addFriend = (userToAdd, user) => dispatch => {
 

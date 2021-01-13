@@ -36,7 +36,6 @@ export const loadUser = () => async (dispatch, getState) => {
 
 
 export const register = ({ name, email, password, confirmPassword, username, image }) => dispatch => {
-
   const config = {
     headers: {
       'Content-Type': 'application/json'

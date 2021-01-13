@@ -69,14 +69,13 @@ class Register extends Component {
                     {this.state.images.map((image, index) => {
                         return (
                             <div style={innerImageWrappers} key={index} >
-                                <img src={image} alt={index}/>
+                                <img src={image} alt={index} />
                                 <input type='radio' name='uno' value={image} onChange={(e) => {
-                                    console.log(e.target.value)
                                     this.setState({
                                         ...this.state,
                                         image: e.target.value
                                     })
-                                }}/>
+                                }} />
                             </div>
                         )
                     })}

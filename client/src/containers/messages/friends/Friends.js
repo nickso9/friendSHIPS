@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import { addFriend, searchFriend, clearFriendError, removeFriend, loadFriend } from '../../../actions/messageActions';
+import { addFriend, searchFriend, clearFriendError, removeFriend, loadFriend, addPending } from '../../../actions/messageActions';
 
 
 class Friends extends Component {
@@ -11,7 +11,8 @@ class Friends extends Component {
         super(props)
         this.state = {
             username: '',
-            friendsList: this.props.auth.user.friendsList
+            friendsList: this.props.auth.user.friendsList,
+            requestedfriend: this.props.auth.user.requestedfriend
         }
 
         this.onSubmit = this.onSubmit.bind(this)
@@ -38,7 +39,7 @@ class Friends extends Component {
     }
 
     render() {
-        
+        console.log(this.props.auth)
         return (
             
             <div style={friendsWrapper}>
@@ -68,7 +69,9 @@ class Friends extends Component {
                                         <div 
                                             style={friendsInfoButton}
                                             onClick={() => {
-                                                const { id } = this.props.auth.user
+                                                const { id, username } = this.props.auth.user
+                    
+                                                this.props.addPending(this.props.friend.id, id, username)
                                                 this.props.addFriend(this.props.friend.id, id)
                                             }}
                                             >
@@ -79,8 +82,15 @@ class Friends extends Component {
                                 ''
                             } 
                     </div>
+                    <div style={pendingListWrapper}>
+                        {this.state.requestedfriend && this.state.requestedfriend.map((pendingfriend, index) => {
+                            return (
+                                <div key={index}>{pendingfriend[Object.keys(pendingfriend)]}</div>
+                            )
+                        })}
+                    </div>
                     <div style={friendsListWrapper}>
-                        {this.state.friendsList.map((friend, index) => {
+                        {this.state.friendsList && this.state.friendsList.map((friend, index) => {
                             return (
                                 <div key={index}>
                                     <input hidden id={friend._id} />
@@ -112,7 +122,8 @@ Friends.propTypes = {
     addFriend: PropTypes.func.isRequired,
     clearFriendError: PropTypes.func.isRequired,
     removeFriend: PropTypes.func.isRequired,
-    loadFriend: PropTypes.func.isRequired
+    loadFriend: PropTypes.func.isRequired,
+    addPending: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -127,7 +138,8 @@ export default connect(mapStateToProps, {
     addFriend, 
     clearFriendError, 
     removeFriend, 
-    loadFriend
+    loadFriend, 
+    addPending
 })(Friends)
 
 const friendsWrapper = {
@@ -191,4 +203,10 @@ const friendsListWrapper = {
     width: '100%',
     height: '100%',
     backgroundColor: 'pink'
+}
+
+const pendingListWrapper = {
+    width: '100%',
+    height: '100%',
+    backgroundColor: 'teal'
 }

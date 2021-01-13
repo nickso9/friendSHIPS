@@ -33,7 +33,8 @@ router.get('/', auth, async (req, res) => {
         username: user.username,
         id: user._id,
         friendsList: user.friends,
-        image: user.image
+        image: user.image,
+        requestedfriend: user.requestedfriend
     })
 })
 
@@ -42,6 +43,8 @@ router.post('/register', async (req, res) => {
     
     try {
         let { email, password, passwordCheck, username, image } = req.body;
+
+        username = username.toLowerCase()
 
         if (!image) {
             return res.status(400).json({msg: 'Please choice an avatar.'})
@@ -62,6 +65,12 @@ router.post('/register', async (req, res) => {
             return res.status(400).json({msg: 'An account with this email already exists.'})
         }; 
 
+        const existingUserName = await User.findOne({username: username})
+
+        if (existingUserName) {
+            return res.status(400).json({msg: 'An account with this username already exists.'})
+        }; 
+        
         const salt = await bcrypt.genSalt();
         const passwordHash = await bcrypt.hash(password, salt);
     
@@ -82,7 +91,8 @@ router.post('/register', async (req, res) => {
                 id: savedUser._id, 
                 username: savedUser.username,
                 friendsList: savedUser.friends,
-                image: savedUser.image
+                image: savedUser.image,
+                requestedfriend: savedUser.requestedfriend,
             }});
 
     } catch (error) {
@@ -118,7 +128,8 @@ router.post('/login', async (req, res) => {
                 id: user._id, 
                 username: user.username,
                 friendsList: user.friends,
-                image: user.image
+                image: user.image,
+                requestedfriend: user.requestedfriend
             }});
 
     } catch (error) {
