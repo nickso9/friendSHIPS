@@ -92,9 +92,7 @@ export const loadFriend = (id, username) => dispatch => {
     })
 }
 
-export const saveMessages = (from, to, message, userfrom, userto) => dispatch => {
-    console.log(userfrom)
-    console.log(userto)
+export const saveMessages = (from, to, message) => dispatch => {
     dispatch({
         type: SAVE_MESSAGE,
         payload: {

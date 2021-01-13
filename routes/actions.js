@@ -1,4 +1,5 @@
 const router = require('express').Router();
+const { ObjectID } = require('mongodb');
 const User = require('../models/user');
 // const auth = require('../auth/auth');
 
@@ -22,33 +23,41 @@ router.get('/search', (req, res) => {
 })
 
 
-router.post('/addfriend', (req, res) => {
+router.post('/addfriend', async (req, res) => {
     const { userToAdd, user } = req.body.body
 
     if (user === userToAdd) {
         return res.status(400).json({ msg: 'cannot add yourself.' })
     }
 
-    User.findByIdAndUpdate({ _id: user }, { $addToSet: { friends: userToAdd } })
-        .then(() => {
-            return User.findById({ _id: user }).populate('friends', '-email -password -messages -friends')
-        })
-        .then(result => {
-            res.status(200).json({
-                friends: result.friends
+    try {
+
+        const userCheck = await User.findById({ _id: user }).where('friends').equals(ObjectID(userToAdd))
+
+        if (userCheck) {
+            return res.status(400).json({ msg: 'user is already your friend.' })
+        }
+
+        User.findByIdAndUpdate({ _id: user }, { $addToSet: { friends: userToAdd } })
+            .then((e) => {
+                return User.findById({ _id: user }).populate('friends', '-email -password -messages -friends')
             })
-        })
-        .catch(() => {
-            res.status(500).json({ msg: 'unable to add friend.' })
-    })
+            .then(result => {
+                res.status(200).json({
+                    friends: result.friends
+                })
+            })
+
+
+    } catch (err) {
+        res.status(500).json({ msg: 'unable to add friend.' })
+    }
 
 })
 
 router.delete('/removefriend', (req, res) => {
 
     const { userToRemove, user } = req.body;
-    console.log(userToRemove);
-    console.log(user)
 
     User.findByIdAndUpdate({ _id: user }, { $pull: { friends: userToRemove } })
         .then(() => {
@@ -61,7 +70,7 @@ router.delete('/removefriend', (req, res) => {
         })
         .catch(() => {
             res.status(500).json({ msg: 'unable to remove friend.' })
-    })
+        })
 
 })
 

@@ -32,7 +32,8 @@ router.get('/', auth, async (req, res) => {
     res.json({
         username: user.username,
         id: user._id,
-        friendsList: user.friends
+        friendsList: user.friends,
+        image: user.image
     })
 })
 
@@ -40,8 +41,12 @@ router.get('/', auth, async (req, res) => {
 router.post('/register', async (req, res) => {
     
     try {
-        let { email, password, passwordCheck, username } = req.body;
-        
+        let { email, password, passwordCheck, username, image } = req.body;
+
+        if (!image) {
+            return res.status(400).json({msg: 'Please choice an avatar.'})
+        }
+
         if (!email || !password || !passwordCheck || !username) {
             return res.status(400).json({msg: 'all fields required.'})
         };
@@ -63,7 +68,8 @@ router.post('/register', async (req, res) => {
         const newUser = new User({
             email,
             password: passwordHash,
-            username
+            username,
+            image
         });
 
         const savedUser = await newUser.save();
@@ -75,7 +81,8 @@ router.post('/register', async (req, res) => {
             user: {
                 id: savedUser._id, 
                 username: savedUser.username,
-                friendsList: savedUser.friends
+                friendsList: savedUser.friends,
+                image: savedUser.image
             }});
 
     } catch (error) {
@@ -110,7 +117,8 @@ router.post('/login', async (req, res) => {
             user: {
                 id: user._id, 
                 username: user.username,
-                friendsList: user.friends
+                friendsList: user.friends,
+                image: user.image
             }});
 
     } catch (error) {

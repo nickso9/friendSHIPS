@@ -10,10 +10,23 @@ class Register extends Component {
         super(props);
         this.state = {
             email: '',
+            image: '',
             username: '',
             password: '',
             confirmPassword: '',
-            msg: ''
+            msg: '',
+            images: [
+                'https://res.cloudinary.com/dv1oijudu/image/upload/v1610513028/octopus_monster_za68wc.png',
+                'https://res.cloudinary.com/dv1oijudu/image/upload/v1610513022/Tanuki_racoon_dog_capv1e.png',
+                'https://res.cloudinary.com/dv1oijudu/image/upload/v1610513018/funny_whale_lhavyq.png',
+                'https://res.cloudinary.com/dv1oijudu/image/upload/v1610513013/snail_4_f5qoth.png',
+                'https://res.cloudinary.com/dv1oijudu/image/upload/v1610513009/horse_cartoon_zebra_auqucb.png',
+                'https://res.cloudinary.com/dv1oijudu/image/upload/v1610513004/Donkey_cartoon_tfb8wu.png',
+                'https://res.cloudinary.com/dv1oijudu/image/upload/v1610513000/Bull_cartoon_04_vsz0be.png',
+                'https://res.cloudinary.com/dv1oijudu/image/upload/v1610512995/flying_saucer_2_nvkhns.png',
+                'https://res.cloudinary.com/dv1oijudu/image/upload/v1610514779/cartoon_leopard_j8khyt.png',
+                'https://res.cloudinary.com/dv1oijudu/image/upload/v1610514784/dog_tongue_hanging_out_quvkxv.png'
+            ]
         }
 
         this.onSubmit = this.onSubmit.bind(this);
@@ -22,11 +35,11 @@ class Register extends Component {
     componentDidUpdate(prevProps) {
         const { error } = this.props;
         if (error !== prevProps.error) {
-          if (error.id === 'REGISTER_FAIL') {
-            this.setState({ msg: error.msg.msg });
-          } else {
-            this.setState({ msg: null });
-          }
+            if (error.id === 'REGISTER_FAIL') {
+                this.setState({ msg: error.msg.msg });
+            } else {
+                this.setState({ msg: null });
+            }
         }
     }
 
@@ -34,13 +47,14 @@ class Register extends Component {
     onSubmit(e) {
         e.preventDefault()
 
-        const { email, password, username, confirmPassword } = this.state;
+        const { email, password, username, confirmPassword, image } = this.state;
 
         const newUser = {
             email,
             password,
             username,
-            confirmPassword
+            confirmPassword,
+            image
         };
 
         this.props.register(newUser);
@@ -52,7 +66,24 @@ class Register extends Component {
                 <h1>Register User</h1>
 
                 <div style={inputWrapper}>
-                    <label htmlFor="email">Email:</label>
+                    {this.state.images.map((image, index) => {
+                        return (
+                            <div style={innerImageWrappers} key={index} >
+                                <img src={image} alt={index}/>
+                                <input type='radio' name='uno' value={image} onChange={(e) => {
+                                    console.log(e.target.value)
+                                    this.setState({
+                                        ...this.state,
+                                        image: e.target.value
+                                    })
+                                }}/>
+                            </div>
+                        )
+                    })}
+                </div>
+
+                <div style={inputWrapper}>
+                    <label>Email:</label>
                     <input
                         style={inputClass}
                         value={this.state.email}
@@ -61,7 +92,7 @@ class Register extends Component {
                 </div>
 
                 <div style={inputWrapper}>
-                    <label htmlFor="username">Username:</label>
+                    <label>Username:</label>
                     <input
                         style={inputClass}
                         value={this.state.username}
@@ -70,7 +101,7 @@ class Register extends Component {
                 </div>
 
                 <div style={inputWrapper}>
-                    <label htmlFor="password">Password:</label>
+                    <label>Password:</label>
                     <input
                         style={inputClass}
                         type="password"
@@ -81,7 +112,7 @@ class Register extends Component {
                 </div>
 
                 <div style={inputWrapper}>
-                    <label htmlFor='confirmpassword'>Confirm password:</label>
+                    <label>Confirm password:</label>
                     <input
                         style={inputClass}
                         type="password"
@@ -115,22 +146,20 @@ class Register extends Component {
 
 Register.propTypes = {
     register: PropTypes.func.isRequired,
-    
+
 }
 
 const mapStateToProps = state => ({
     error: state.error
-  });
+});
 
 
 export default connect(mapStateToProps, { register })(Register);
 
 const registerWrapper = {
     width: '500px',
-    height: '525px',
     boxShadow: '2px 2px 2px 3px #ccc',
-    margin: 'auto',
-    marginTop: '50px',
+    margin: '50px auto',
     padding: '35px'
 }
 
@@ -139,6 +168,10 @@ const inputWrapper = {
     margin: 'auto'
 }
 
+const innerImageWrappers = {
+    display: 'inline-flex',
+    margin: '8px'
+}
 
 const inputClass = {
     display: 'block',
@@ -155,7 +188,8 @@ const inputButton = {
     border: '1px solid black',
     padding: '10px 20px',
     outline: 'none',
-    float: 'right'
+    marginLeft: 'auto',
+    marginRight: '0'
 }
 
 const errorWrapper = {

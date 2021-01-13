@@ -21,7 +21,7 @@ class Chat extends Component {
 
   
     componentDidMount() {
-        const { id, username } = this.props.user
+        const { id } = this.props.user
         socket = io('localhost:8080')
         socket.on("connect", () => {
             socket.emit('setUserId', id)
@@ -59,9 +59,9 @@ class Chat extends Component {
 
         return (
             <form style={chatWrapper} onSubmit={this.onSubmit}>
-                <div style={messageBanner}>Message {this.props.messages.username}:</div>
+                <div style={messageBanner}>Message {this.props.messages.username ? this.props.messages.username : ''}:</div>
                 <div style={messageWrapper} id="message">
-                    <Message messages={this.props.currentMessages} switch={this.props.messages.username}/>
+                    <Message messages={this.props.currentMessages} switch={this.props.messages}/>
                 </div>
                 <input 
                     style={inputStyle} 

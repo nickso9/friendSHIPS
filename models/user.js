@@ -20,19 +20,10 @@ const userSchema = new Schema({
         ref: 'User',
         required: true
     }],
-    messages: [{
-        recipient: {
-            type: Schema.Types.ObjectId,
-            required: true
-        },
-        message: {
-            type: String,
-            required: true
-        },
-        timestamp: {
-            type: Date
-        }
-    }]
+    image: {
+        type: String,
+        required: true
+    }
 });
 
 module.exports = mongoose.model('User', userSchema);

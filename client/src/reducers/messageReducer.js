@@ -20,6 +20,9 @@ export default function error(state = initialState, action) {
         }
     case FRIEND_SUCCESS:
         return {
+            ...state,
+            user: '',
+            id: '',
             friendsList: action.payload
         };
     case FRIEND_NOTFOUND:
@@ -43,8 +46,6 @@ export default function error(state = initialState, action) {
             messageWith: action.payload
             }
     case SAVE_MESSAGE:
-        console.log(state)
-        console.log(state.messageWith.username)
 
             if (!state.messages) {
                 return {
@@ -62,7 +63,6 @@ export default function error(state = initialState, action) {
         
         const { from, to } = action.payload
         if (!from || !to) {
-            console.log('no user')
             return {
                 ...state,
                 currentMessages: null
