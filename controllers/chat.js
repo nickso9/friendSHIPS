@@ -10,14 +10,8 @@ module.exports = function (socket) {
     })
 
     socket.on('message', (to, message) => {
-        
-        console.log('on message.')
-        console.log(to)
-        console.log(message)
-        const id = connectedUsers[to];
-        console.log(id)
-        console.log(connectedUsers)
 
+        const id = connectedUsers[to];
         socket.to(id).emit('sendPrivateMessage', usernameid, message);
     })
 

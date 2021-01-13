@@ -12,7 +12,6 @@ class Message extends Component {
     
     componentDidUpdate(prevProps, prevState) {
         if (this.state.user !== this.props.switch) {
-            console.log('in component did updated')
             this.setState({
                 messages: this.props.messages,
                 user: this.props.switch
@@ -22,7 +21,6 @@ class Message extends Component {
     }
 
     render() {
-        console.log(this.props.messages)
         return (
             <div>
             {this.props.messages && this.props.messages.map((e, index) => {

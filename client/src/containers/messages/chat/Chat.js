@@ -12,8 +12,6 @@ class Chat extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            // id: this.props.messages.id || '',
-            // username: this.props.messages.username || '',
             inputText: '',
             messages: this.props.currentMessages || '',
  
@@ -23,8 +21,7 @@ class Chat extends Component {
 
   
     componentDidMount() {
-        console.log('on mount')
-        const { id } = this.props.user
+        const { id, username } = this.props.user
         socket = io('localhost:8080')
         socket.on("connect", () => {
             socket.emit('setUserId', id)
@@ -37,18 +34,9 @@ class Chat extends Component {
     }
 
    
-    componentDidUpdate(prevProps, prevState) {
+    componentDidUpdate(prevProps) {
     
         if (prevProps.messages.id !== this.props.messages.id && this.props.messages.id) {
-            // this.setState({
-            //     inputText: '',
-            //     messages: this.props.currentMessages || '',
-            //     id: this.props.messages.id || '',
-            //     username: this.props.messages.username || ''
-            // })
-            console.log('switched')
-            console.log(this.state)
-            console.log('switched done')
             this.props.getCurrentMessages(this.props.messages.id, this.props.user.id)
         }
 
@@ -61,6 +49,7 @@ class Chat extends Component {
         const friendId = this.props.messages.id
   
         socket.emit('message', friendId, message);
+
 
         this.props.saveMessages(id, friendId, message)
         this.props.getCurrentMessages(id, friendId)
@@ -99,7 +88,6 @@ Chat.propTypes = {
 
 const mapStateToProps = state => ({ 
     messages: state.friend.messageWith,
-    // message: state.friend.messages,
     currentMessages: state.friend.currentMessages,
     user: state.auth.user
 })

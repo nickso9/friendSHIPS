@@ -43,6 +43,9 @@ export default function error(state = initialState, action) {
             messageWith: action.payload
             }
     case SAVE_MESSAGE:
+        console.log(state)
+        console.log(state.messageWith.username)
+
             if (!state.messages) {
                 return {
                     ...state,
@@ -56,7 +59,7 @@ export default function error(state = initialState, action) {
             ]
         }
     case CURRENT_MESSAGE: 
-        console.log(state.messageWith)
+        
         const { from, to } = action.payload
         if (!from || !to) {
             console.log('no user')

@@ -35,9 +35,6 @@ io.on('connection', socket => {
 
 
 
-
-
-
 const usersRoute = require('./routes/user');
 const userRoute = require('./routes/actions')
 

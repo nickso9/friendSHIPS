@@ -10,33 +10,33 @@ export const searchFriend = (username) => dispatch => {
             user: username
         }
     })
-    .then(res => {
-        dispatch({
-            type: FRIEND_SEARCH,
-            payload: res.data
+        .then(res => {
+            dispatch({
+                type: FRIEND_SEARCH,
+                payload: res.data
+            })
         })
-    })
-    .catch(err => {
-        console.log(err.response.data.msg)
-        if (err.response.status === 400) {
+        .catch(err => {
+            console.log(err.response.data.msg)
+            if (err.response.status === 400) {
 
-            dispatch({
-                type: FRIEND_NOTFOUND,
-                payload: err.response.data.msg
-            })
+                dispatch({
+                    type: FRIEND_NOTFOUND,
+                    payload: err.response.data.msg
+                })
 
-        } else {
+            } else {
 
-            dispatch({
-                type: FRIEND_FAIL,
-                payload: err.response.data.msg
-            })
-        }
-        
-    })
-   
+                dispatch({
+                    type: FRIEND_FAIL,
+                    payload: err.response.data.msg
+                })
+            }
+
+        })
+
 };
-  
+
 export const addFriend = (userToAdd, user) => dispatch => {
 
     axios.post('http://localhost:8080/user/addfriend', {
@@ -45,18 +45,18 @@ export const addFriend = (userToAdd, user) => dispatch => {
             user: user
         }
     })
-    .then(user => {
-        dispatch({
-            type: FRIEND_SUCCESS,
-            payload: user.data.friends
+        .then(user => {
+            dispatch({
+                type: FRIEND_SUCCESS,
+                payload: user.data.friends
+            })
         })
-    })
-    .catch(err => {
-        dispatch({
-            type: FRIEND_FAIL,
-            payload: err.response.data.msg
+        .catch(err => {
+            dispatch({
+                type: FRIEND_FAIL,
+                payload: err.response.data.msg
+            })
         })
-    })
 };
 
 
@@ -68,18 +68,18 @@ export const removeFriend = (userToRemove, user) => dispatch => {
             user: user
         }
     })
-    .then(user => {
-        dispatch({
-            type: FRIEND_SUCCESS,
-            payload: user.data.friends
+        .then(user => {
+            dispatch({
+                type: FRIEND_SUCCESS,
+                payload: user.data.friends
+            })
         })
-    })
-    .catch(err => {
-        dispatch({
-            type: FRIEND_FAIL,
-            payload: err.response.data.msg
+        .catch(err => {
+            dispatch({
+                type: FRIEND_FAIL,
+                payload: err.response.data.msg
+            })
         })
-    })
 };
 
 export const loadFriend = (id, username) => dispatch => {
@@ -92,7 +92,9 @@ export const loadFriend = (id, username) => dispatch => {
     })
 }
 
-export const saveMessages = (from, to, message) => dispatch => {  
+export const saveMessages = (from, to, message, userfrom, userto) => dispatch => {
+    console.log(userfrom)
+    console.log(userto)
     dispatch({
         type: SAVE_MESSAGE,
         payload: {
