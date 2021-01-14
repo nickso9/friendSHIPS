@@ -40,18 +40,17 @@ router.post('/addfriend', async (req, res) => {
         let friendresult;
 
         User.findByIdAndUpdate({ _id: user }, { $addToSet: { friends: userToAdd } })
-            .then(() => {     
-                return User.findByIdAndUpdate({ _id: user }, { "$pull": { 'requestedfriend': { "id": userToAdd } } })     
+            .then(() => {    
+                return User.findByIdAndUpdate({_id: userToAdd}, { $addToSet: { friends: user } })       
             })
             .then(() => {     
                 return User.findById({ _id: user }).populate('friends', '-email -password -messages -friends')
             })
             .then((result) => {
                 friendresult = result
-                return User.findByIdAndUpdate({_id: userToAdd}, { $addToSet: { friends: user } })
+                return User.findByIdAndUpdate({ _id: user }, { "$pull": { 'requestedfriend': { "id": userToAdd } } })   
             })
-            .then(() => {   
-               
+            .then(() => {     
                 res.status(200).json({
                     friends: friendresult.friends
                 })
@@ -115,12 +114,12 @@ router.post('/pendingfriend', async (req, res) => {
 router.get('/updatefriend', async (req, res) => {
     const { id } = req.query
     try {
-        const findUser = await User.findById(id)
+        const findUser = await User.findById(id).populate('friends', '-email -password -messages -friends')
          
         if (!findUser) {
             res.status(400).json({msg: 'user not found.'})
         }
-
+        console.log(findUser)
         res.json({ 
                 id: findUser._id, 
                 username: findUser.username,

@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import { friendListUpdater } from '../../../actions/userActions'
+
 import { addFriend, searchFriend, clearFriendError, removeFriend, loadFriend, addPending } from '../../../actions/messageActions';
 
 
@@ -20,8 +20,6 @@ class Friends extends Component {
         
     }
 
-   
-
     componentWillUnmount() {
         this.props.loadFriend('', '')
     }
@@ -33,8 +31,10 @@ class Friends extends Component {
                 friendsList: this.props.friend.friendsList
             })
         }
-
+        // console.log(prevProps.auth.user)
+        // console.log(this.props.auth.user)
         if (prevProps.auth.user !== this.props.auth.user) {
+            console.log(this.props.auth.user)
             this.setState({
                 ...this.state,
                 friendsList: this.props.auth.user.friendsList,
@@ -104,11 +104,13 @@ class Friends extends Component {
                                     <button onClick={()=> {
                                         console.log('decline')
                                     }}>Decline</button>
-                                    <button onClick={async (e)=> {
-                                        const { id } = this.props.auth.user                             
-                                        // await this.props.addFriend(pendingfriend.id, id)
-                                        // e.target.parentNode.remove()
-                                        this.props.onGrabId(pendingfriend.id)
+                                    <button onClick={(e)=> {
+                                        const { id } = this.props.auth.user   
+                                        this.props.addFriend(pendingfriend.id, id)  
+                                        e.target.parentNode.remove()
+                                        setTimeout(() => {
+                                            this.props.onGrabId(pendingfriend.id)
+                                        }, 1000) 
                                     }}>Accept</button>
                                 </div>
                             )
@@ -150,7 +152,6 @@ Friends.propTypes = {
     removeFriend: PropTypes.func.isRequired,
     loadFriend: PropTypes.func.isRequired,
     addPending: PropTypes.func.isRequired,
-    friendListUpdater: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -166,8 +167,7 @@ export default connect(mapStateToProps, {
     clearFriendError, 
     removeFriend, 
     loadFriend, 
-    addPending,
-    friendListUpdater
+    addPending
 })(Friends)
 
 const friendsWrapper = {

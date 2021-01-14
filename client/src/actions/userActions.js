@@ -65,7 +65,6 @@ export const register = ({ name, email, password, confirmPassword, username, ima
 };
 
 export const friendListUpdater = (id) => dispatch => {
-  console.log(id)
   axios.get('http://localhost:8080/user/updatefriend',{
     params: {
       id: id

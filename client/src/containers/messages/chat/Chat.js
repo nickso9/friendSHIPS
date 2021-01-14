@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Message from './message/Message'
 
+import { friendListUpdater } from '../../../actions/userActions'
 import { saveMessages, getCurrentMessages } from '../../../actions/messageActions'
 let socket;
 
@@ -28,6 +29,11 @@ class Chat extends Component {
             socket.on('sendPrivateMessage', (from, message) => {
                 this.props.saveMessages(from, id, message)
                 this.props.getCurrentMessages(from, id)
+            })
+            socket.on('pushAction', (to) => {
+                console.log('IT TRANSFERED')
+                console.log(to)
+                this.props.friendListUpdater(to)
             })
             this.props.onPassId(socket)  
         });   
@@ -81,7 +87,8 @@ Chat.propTypes = {
     messages: PropTypes.object,
     saveMessages: PropTypes.func.isRequired,
     getCurrentMessages: PropTypes.func.isRequired,
-    currentMessages: PropTypes.array
+    currentMessages: PropTypes.array,
+    friendListUpdater: PropTypes.func.isRequired
 }
 
 const mapStateToProps = state => ({ 
@@ -91,7 +98,7 @@ const mapStateToProps = state => ({
 })
 
 
-export default connect(mapStateToProps, { saveMessages, getCurrentMessages })(Chat)
+export default connect(mapStateToProps, { saveMessages, getCurrentMessages, friendListUpdater })(Chat)
 
 
 const chatWrapper = {

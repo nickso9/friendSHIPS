@@ -14,9 +14,8 @@ module.exports = function (socket) {
     })
 
     socket.on('action', (to) => {
-        // const id = connectedUsers[to]
-        // socket.io(id).emit('pushAction', usernameid)
-        console.log('hihhii')
+        const id = connectedUsers[to]
+        socket.to(id).emit('pushAction', to)
     })
 
 }

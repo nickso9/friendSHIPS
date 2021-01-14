@@ -7,6 +7,7 @@ import Chat from './chat/Chat';
 import Friends from './friends/Friends'
 
 
+
 let socket;
 class Messages extends Component {
     constructor(props) {
@@ -28,6 +29,7 @@ class Messages extends Component {
         socket = io
         socket.emit('action', id)
     }
+    
 
     render() {
     
@@ -45,7 +47,7 @@ class Messages extends Component {
 
 
 Messages.propTypes = {
-    user: PropTypes.object.isRequired
+    user: PropTypes.object.isRequired,
 }
 
 const mapStateToProps = state => ({ 
