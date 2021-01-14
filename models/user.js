@@ -25,8 +25,18 @@ const userSchema = new Schema({
         required: true
     },
     requestedfriend: [{
-        type: Object,
-        required: true
+        id: {
+            type: Schema.Types.ObjectId,
+            required: true
+        },
+        username: {
+            type: String,
+            required: true
+        },
+        image: {
+            type: String,
+            required: true
+        }
     }]
 
 });

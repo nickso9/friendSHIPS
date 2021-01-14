@@ -56,21 +56,37 @@ router.post('/addfriend', async (req, res) => {
 })
 
 router.post('/pendingfriend', async (req, res) => {
+    console.log('pending friend')
+    const { userToAdd, user, usernameToAdd, image } = req.body.body
 
-    const { userToAdd, user, usernameToAdd } = req.body.body
+    const addMe = {
+        id: user,
+        username: usernameToAdd,
+        image
+    }
 
     if (user === userToAdd) {
         return res.status(400).json({ msg: 'cannot add yourself.' })
     }
 
     try {
-        const userCheck = await User.findById({ _id: userToAdd }).where('requestedfriend').equals(ObjectID(user))
+        console.log(userToAdd)
+        console.log(user)
 
-        if (userCheck) {
+        const alreadyPending = await User.find({ _id: user }).where('requestedfriend.id').equals(ObjectID(userToAdd))
+        if (alreadyPending.length > 0) {
+            console.log('already pending you')
+            return res.status(400).json({ msg: 'Your Friendship has already been requested.' })
+        }
+
+        const userCheck = await await User.find({ _id: userToAdd }).where('requestedfriend.id').equals(ObjectID(user))
+
+        if (userCheck.length > 0) {
+            console.log('already pending them.')
             return res.status(400).json({ msg: 'Friend request already pending.' })
         }
 
-        await User.findByIdAndUpdate({ _id: userToAdd }, { $addToSet: { requestedfriend: { [user]: usernameToAdd } } })
+        await User.findByIdAndUpdate({ _id: userToAdd }, { $addToSet: { requestedfriend: addMe } })
             .then(() => {
                 res.status(200).json({
                     msg: 'Requested friend.'

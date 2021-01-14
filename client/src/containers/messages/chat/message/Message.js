@@ -26,7 +26,10 @@ class Message extends Component {
             {this.props.messages && this.props.messages.map((e, index) => {
                 if (e.from === this.props.switch.id) {
                     return (
-                        <div key={index}>{this.state.user.slice(0,1).toUpperCase() + this.state.user.slice(1).toLowerCase()}: {e.message}</div>
+                        <div key={index}>
+                            {this.state.user.slice(0,1).toUpperCase()
+                             + this.state.user.slice(1).toLowerCase()}: {e.message}
+                        </div>
                     )
                 } 
                 

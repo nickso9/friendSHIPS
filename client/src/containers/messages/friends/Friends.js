@@ -39,7 +39,6 @@ class Friends extends Component {
     }
 
     render() {
-        console.log(this.props.auth)
         return (
             
             <div style={friendsWrapper}>
@@ -69,10 +68,10 @@ class Friends extends Component {
                                         <div 
                                             style={friendsInfoButton}
                                             onClick={() => {
-                                                const { id, username } = this.props.auth.user
-                    
-                                                this.props.addPending(this.props.friend.id, id, username)
-                                                this.props.addFriend(this.props.friend.id, id)
+                                                const { id, username, image } = this.props.auth.user
+                                                this.props.addPending(this.props.friend.id, id, username, image)
+                                                
+                                                // this.props.addFriend(this.props.friend.id, id)
                                             }}
                                             >
                                             <button>Add Friend</button>
@@ -83,13 +82,24 @@ class Friends extends Component {
                             } 
                     </div>
                     <div style={pendingListWrapper}>
+                        <span>Friend requests:</span>
                         {this.state.requestedfriend && this.state.requestedfriend.map((pendingfriend, index) => {
                             return (
-                                <div key={index}>{pendingfriend[Object.keys(pendingfriend)]}</div>
+                                <div key={index}>
+                                    <span>{pendingfriend[Object.keys(pendingfriend)]}</span>
+                                    <button onClick={()=> {
+                                        console.log('decline')
+                                    }}>Decline</button>
+                                    <button onClick={()=> {
+                                        console.log('hhihi')
+                                        // this.props.addFriend(this.props.friend.id, id)
+                                    }}>Accept</button>
+                                </div>
                             )
                         })}
                     </div>
                     <div style={friendsListWrapper}>
+                        <span>Friends</span>
                         {this.state.friendsList && this.state.friendsList.map((friend, index) => {
                             return (
                                 <div key={index}>

@@ -37,13 +37,14 @@ export const searchFriend = (username) => dispatch => {
 
 };
 
-export const addPending = (userToAdd, user, usernameToAdd) => dispatch => {
+export const addPending = (userToAdd, user, usernameToAdd, image) => dispatch => {
     
     axios.post('http://localhost:8080/user/pendingfriend', {
         body: {
             userToAdd: userToAdd,
             user: user,
-            usernameToAdd
+            usernameToAdd,
+            image
         }
     })
     .then(() => {
