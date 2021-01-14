@@ -119,7 +119,7 @@ router.get('/updatefriend', async (req, res) => {
         if (!findUser) {
             res.status(400).json({msg: 'user not found.'})
         }
-        console.log(findUser)
+        
         res.json({ 
                 id: findUser._id, 
                 username: findUser.username,

@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-
+import { friendListUpdater } from '../../../actions/userActions'
 import { addFriend, searchFriend, clearFriendError, removeFriend, loadFriend, addPending } from '../../../actions/messageActions';
 
 
@@ -31,10 +31,8 @@ class Friends extends Component {
                 friendsList: this.props.friend.friendsList
             })
         }
-        // console.log(prevProps.auth.user)
-        // console.log(this.props.auth.user)
         if (prevProps.auth.user !== this.props.auth.user) {
-            console.log(this.props.auth.user)
+            console.log(this.props.auth.user.requestedfriend)
             this.setState({
                 ...this.state,
                 friendsList: this.props.auth.user.friendsList,
@@ -81,9 +79,12 @@ class Friends extends Component {
                                         <div 
                                             style={friendsInfoButton}
                                             onClick={() => {
+                                                const friendId = this.props.friend.id
                                                 const { id, username, image } = this.props.auth.user
                                                 this.props.addPending(this.props.friend.id, id, username, image)
-                        
+                                                setTimeout(() => {
+                                                    this.props.onGrabId(friendId)
+                                                }, 500) 
                                             }}
                                             >
                                             <button>Add Friend</button>
@@ -107,10 +108,10 @@ class Friends extends Component {
                                     <button onClick={(e)=> {
                                         const { id } = this.props.auth.user   
                                         this.props.addFriend(pendingfriend.id, id)  
-                                        e.target.parentNode.remove()
                                         setTimeout(() => {
+                                            this.props.friendListUpdater(id)
                                             this.props.onGrabId(pendingfriend.id)
-                                        }, 1000) 
+                                        }, 500) 
                                     }}>Accept</button>
                                 </div>
                             )
@@ -129,8 +130,12 @@ class Friends extends Component {
                                     >{friend.username}</span>
                                     <button 
                                         onClick={e => {
+                                            const friendId = e.target.parentNode.firstChild.id
                                             const { id } = this.props.auth.user
-                                            this.props.removeFriend(e.target.parentNode.firstChild.id, id)
+                                            this.props.removeFriend(friendId, id)
+                                            setTimeout(() => {
+                                                this.props.onGrabId(friendId)
+                                            }, 500) 
                                         }}>remove</button>
                                 </div>
                             )
@@ -152,6 +157,7 @@ Friends.propTypes = {
     removeFriend: PropTypes.func.isRequired,
     loadFriend: PropTypes.func.isRequired,
     addPending: PropTypes.func.isRequired,
+    friendListUpdater: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -167,7 +173,8 @@ export default connect(mapStateToProps, {
     clearFriendError, 
     removeFriend, 
     loadFriend, 
-    addPending
+    addPending,
+    friendListUpdater
 })(Friends)
 
 const friendsWrapper = {

@@ -21,11 +21,13 @@ class Messages extends Component {
     }
 
     onGrabId(id) {
+        console.log('on grab id')
         this.onPassId(socket, id)
     }
 
     
     onPassId(io, id) {
+        console.log(id)
         socket = io
         socket.emit('action', id)
     }

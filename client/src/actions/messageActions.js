@@ -71,7 +71,6 @@ export const addFriend = (userToAdd, user) => dispatch => {
         }
         })
         .then(user => {
-            console.log(user)
             dispatch({
                 type: FRIEND_SUCCESS,
                 payload: user.data.friends

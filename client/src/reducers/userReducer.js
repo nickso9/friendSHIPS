@@ -32,7 +32,6 @@ export default function user(state = initialState, action) {
         isLoading: false
       };
     case USER_UPDATER: 
-      console.log(action.payload)
       return {
         ...state,
         user: action.payload
