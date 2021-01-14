@@ -18,6 +18,13 @@ export default function error(state = initialState, action) {
             user: action.payload.user,
             id: action.payload.id,
         }
+    case ADD_TO_PENDING:
+        return {
+            ...state,
+            user: '',
+            id: '',
+            msg: 'Friendship requested.'
+        }
     case FRIEND_SUCCESS:
         return {
             ...state,
@@ -84,7 +91,6 @@ export default function error(state = initialState, action) {
             ...state,
             currentMessages
         };
-    case ADD_TO_PENDING:
     default:
       return state;
   }

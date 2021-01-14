@@ -13,9 +13,13 @@ import { logout } from '../../actions/userActions'
 class Navbar extends Component {
 
 
+
+
     render() {
 
         const { isAuthenticated, user } = this.props.auth;
+
+
 
         let navbarSettings;
 
@@ -62,7 +66,6 @@ class Navbar extends Component {
                
             )
         } else {
-
             navbarSettings = (
                 <div style={navbarBrand}>
                     <span style={navbarWelcome}>Welcome {user.username}!!</span>

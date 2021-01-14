@@ -1,6 +1,7 @@
 import axios from 'axios'
 
-import { FRIEND_SEARCH, FRIEND_SUCCESS, FRIEND_FAIL, FRIEND_NOTFOUND, CLEAR_FRIEND_ERROR, LOAD_FRIEND, SAVE_MESSAGE, CURRENT_MESSAGE, ADD_TO_PENDING } from './types'
+import { FRIEND_SEARCH, FRIEND_SUCCESS, FRIEND_FAIL, FRIEND_NOTFOUND, CLEAR_FRIEND_ERROR,
+     LOAD_FRIEND, SAVE_MESSAGE, CURRENT_MESSAGE, ADD_TO_PENDING } from './types'
 
 
 export const searchFriend = (username) => dispatch => {
@@ -62,14 +63,15 @@ export const addPending = (userToAdd, user, usernameToAdd, image) => dispatch =>
 }
 
 export const addFriend = (userToAdd, user) => dispatch => {
-
+    console.log('hihi')
     axios.post('http://localhost:8080/user/addfriend', {
         body: {
             userToAdd: userToAdd,
             user: user
         }
-    })
+        })
         .then(user => {
+            console.log(user)
             dispatch({
                 type: FRIEND_SUCCESS,
                 payload: user.data.friends
@@ -106,6 +108,7 @@ export const removeFriend = (userToRemove, user) => dispatch => {
         })
 };
 
+
 export const loadFriend = (id, username) => dispatch => {
     dispatch({
         type: LOAD_FRIEND,
@@ -136,7 +139,6 @@ export const getCurrentMessages = (from, to) => dispatch => {
         }
     })
 }
-
 
 export const clearFriendError = () => {
     return {

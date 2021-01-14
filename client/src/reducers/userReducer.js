@@ -1,5 +1,5 @@
 import { USER_LOADED, USER_LOADING, AUTH_ERROR, LOGIN_SUCCESS,
-  LOGIN_FAIL, LOGOUT_SUCCESS, REGISTER_SUCCESS, REGISTER_FAIL } from '../actions/types';
+  LOGIN_FAIL, LOGOUT_SUCCESS, REGISTER_SUCCESS, REGISTER_FAIL, USER_UPDATER } from '../actions/types';
 
 const initialState = {
   token: localStorage.getItem('auth-token'),
@@ -31,6 +31,12 @@ export default function user(state = initialState, action) {
         isAuthenticated: true,
         isLoading: false
       };
+    case USER_UPDATER: 
+      console.log(action.payload)
+      return {
+        ...state,
+        user: action.payload
+      }
     case AUTH_ERROR:
     case LOGIN_FAIL:
     case LOGOUT_SUCCESS:

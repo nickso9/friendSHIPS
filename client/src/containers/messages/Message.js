@@ -7,17 +7,36 @@ import Chat from './chat/Chat';
 import Friends from './friends/Friends'
 
 
-
+let socket;
 class Messages extends Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            socket: null
+        }
+
+        this.onGrabId = this.onGrabId.bind(this)
+        this.onPassId = this.onPassId.bind(this)
+    }
+
+    onGrabId(id) {
+        this.onPassId(socket, id)
+    }
+
     
+    onPassId(io, id) {
+        socket = io
+        socket.emit('action', id)
+    }
+
     render() {
-        
+    
         return (
             <div>
                 <div>Message</div>
                 <div style={messageWrapper}>
-                    <Chat />
-                    <Friends />
+                    <Chat onPassId={this.onPassId}/>
+                    <Friends onGrabId={this.onGrabId}/>
                 </div>
             </div>
         )

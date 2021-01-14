@@ -14,9 +14,9 @@ class Chat extends Component {
         this.state = {
             inputText: '',
             messages: this.props.currentMessages || '',
- 
         }
         this.onSubmit = this.onSubmit.bind(this);
+
     }
 
   
@@ -29,18 +29,18 @@ class Chat extends Component {
                 this.props.saveMessages(from, id, message)
                 this.props.getCurrentMessages(from, id)
             })
+            this.props.onPassId(socket)  
         });   
-
+        
     }
 
    
     componentDidUpdate(prevProps) {
-    
         if (prevProps.messages.id !== this.props.messages.id && this.props.messages.id) {
             this.props.getCurrentMessages(this.props.messages.id, this.props.user.id)
         }
-
     }
+    
 
     onSubmit(e) {
         e.preventDefault()
@@ -49,8 +49,6 @@ class Chat extends Component {
         const friendId = this.props.messages.id
   
         socket.emit('message', friendId, message);
-
-
         this.props.saveMessages(id, friendId, message)
         this.props.getCurrentMessages(id, friendId)
     }

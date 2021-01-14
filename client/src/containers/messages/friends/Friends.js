@@ -3,6 +3,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
+import { friendListUpdater } from '../../../actions/userActions'
 import { addFriend, searchFriend, clearFriendError, removeFriend, loadFriend, addPending } from '../../../actions/messageActions';
 
 
@@ -16,7 +17,10 @@ class Friends extends Component {
         }
 
         this.onSubmit = this.onSubmit.bind(this)
+        
     }
+
+   
 
     componentWillUnmount() {
         this.props.loadFriend('', '')
@@ -29,13 +33,22 @@ class Friends extends Component {
                 friendsList: this.props.friend.friendsList
             })
         }
+
+        if (prevProps.auth.user !== this.props.auth.user) {
+            this.setState({
+                ...this.state,
+                friendsList: this.props.auth.user.friendsList,
+                requestedfriend: this.props.auth.user.requestedfriend
+            })
+        }
     }
+
 
     onSubmit(e) {
         e.preventDefault()
-        this.setState({username: ''})
         this.props.clearFriendError()
         this.props.searchFriend(this.state.username)
+        this.setState({username: ''})
     }
 
     render() {
@@ -57,7 +70,7 @@ class Friends extends Component {
                     <div style={searchWrapper}>
                             { this.props.friend.msg  ? 
                                 (
-                                    <div style={errorMessage}>{this.props.friend.msg}</div>
+                                    <div style={this.props.friend.msg === 'Friendship requested.' ? successMessage : errorMessage}>{this.props.friend.msg}</div>
                                 ):
                                 this.props.friend.user ?
                                 (
@@ -70,8 +83,7 @@ class Friends extends Component {
                                             onClick={() => {
                                                 const { id, username, image } = this.props.auth.user
                                                 this.props.addPending(this.props.friend.id, id, username, image)
-                                                
-                                                // this.props.addFriend(this.props.friend.id, id)
+                        
                                             }}
                                             >
                                             <button>Add Friend</button>
@@ -84,15 +96,19 @@ class Friends extends Component {
                     <div style={pendingListWrapper}>
                         <span>Friend requests:</span>
                         {this.state.requestedfriend && this.state.requestedfriend.map((pendingfriend, index) => {
+                            
                             return (
                                 <div key={index}>
-                                    <span>{pendingfriend[Object.keys(pendingfriend)]}</span>
+                                    <img src={pendingfriend.image} alt=''/>
+                                    <span>{pendingfriend.username}</span>
                                     <button onClick={()=> {
                                         console.log('decline')
                                     }}>Decline</button>
-                                    <button onClick={()=> {
-                                        console.log('hhihi')
-                                        // this.props.addFriend(this.props.friend.id, id)
+                                    <button onClick={async (e)=> {
+                                        const { id } = this.props.auth.user                             
+                                        // await this.props.addFriend(pendingfriend.id, id)
+                                        // e.target.parentNode.remove()
+                                        this.props.onGrabId(pendingfriend.id)
                                     }}>Accept</button>
                                 </div>
                             )
@@ -133,7 +149,8 @@ Friends.propTypes = {
     clearFriendError: PropTypes.func.isRequired,
     removeFriend: PropTypes.func.isRequired,
     loadFriend: PropTypes.func.isRequired,
-    addPending: PropTypes.func.isRequired
+    addPending: PropTypes.func.isRequired,
+    friendListUpdater: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -149,7 +166,8 @@ export default connect(mapStateToProps, {
     clearFriendError, 
     removeFriend, 
     loadFriend, 
-    addPending
+    addPending,
+    friendListUpdater
 })(Friends)
 
 const friendsWrapper = {
@@ -175,6 +193,10 @@ const searchInput = {
 
 const errorMessage = {
     color: 'red'
+}
+
+const successMessage = {
+    color: 'green'
 }
 
 const searchButton = {

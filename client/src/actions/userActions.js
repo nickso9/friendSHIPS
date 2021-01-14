@@ -1,7 +1,8 @@
 import axios from 'axios'
 import {
   USER_LOADED, USER_LOADING, AUTH_ERROR, LOGIN_SUCCESS,
-  LOGIN_FAIL, LOGOUT_SUCCESS, REGISTER_SUCCESS, REGISTER_FAIL
+  LOGIN_FAIL, LOGOUT_SUCCESS, REGISTER_SUCCESS, REGISTER_FAIL,
+  USER_UPDATER
 } from '../actions/types';
 import { returnErrors } from './errorActions'
 
@@ -63,7 +64,21 @@ export const register = ({ name, email, password, confirmPassword, username, ima
     });
 };
 
-
+export const friendListUpdater = (id) => dispatch => {
+  console.log(id)
+  axios.get('http://localhost:8080/user/updatefriend',{
+    params: {
+      id: id
+    }
+  })
+  .then(res => {
+    dispatch({
+      type: USER_UPDATER,
+      payload: res.data
+    })
+  })
+  .catch(err => console.log(err))
+}
 
 
 export const logout = () => {
