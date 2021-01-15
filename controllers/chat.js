@@ -5,9 +5,7 @@ module.exports = function (socket) {
     let usernameid;
     socket.on('setUserId', (username) => {
         connectedUsers[username] = socket.id;
-        usernameid = username
-
-        
+        usernameid = username 
     })
 
     socket.on('setOnlineFriends', (friends) => {
@@ -28,4 +26,8 @@ module.exports = function (socket) {
         socket.to(id).emit('pushAction', to)
     })
 
+    socket.on('disconnect', () => {
+        delete connectedUsers[usernameid]
+        console.log('socket disconnected')
+    })
 }

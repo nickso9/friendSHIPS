@@ -41,23 +41,27 @@ class Chat extends Component {
             })
             
             socket.on('userFriends', (friendsArr) => {
-                console.log(friendsArr)
+                this.setState({
+                    ...this.state,
+                    onlineFriends: friendsArr
+                })
             })
 
             
-
             this.props.onPassId(socket)  
         });   
        
     }
 
+    componentWillUnmount() {
+        const { id } = this.props.user
+        socket.disconnect(id)
+    }
    
     componentDidUpdate(prevProps) {
         if (prevProps.messages.id !== this.props.messages.id && this.props.messages.id) {
             this.props.getCurrentMessages(this.props.messages.id, this.props.user.id)
-        }
-
-        
+        }    
     }
 
     onSubmit(e) {
@@ -72,7 +76,7 @@ class Chat extends Component {
     }
 
     render() {
-
+        console.log(this.state.onlineFriends)
         return (
             <form style={chatWrapper} onSubmit={this.onSubmit}>
                 <div style={messageBanner}>Message {this.props.messages.username ? this.props.messages.username : ''}:</div>
