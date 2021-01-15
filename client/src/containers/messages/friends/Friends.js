@@ -32,7 +32,6 @@ class Friends extends Component {
             })
         }
         if (prevProps.auth.user !== this.props.auth.user) {
-            console.log(this.props.auth.user.requestedfriend)
             this.setState({
                 ...this.state,
                 friendsList: this.props.auth.user.friendsList,

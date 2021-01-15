@@ -6,10 +6,20 @@ module.exports = function (socket) {
     socket.on('setUserId', (username) => {
         connectedUsers[username] = socket.id;
         usernameid = username
+
+        
     })
+
+    socket.on('setOnlineFriends', (friends) => {
+        let friendArry = [...friends]
+        const onlineFriends = friendArry.filter(friend => connectedUsers[friend] ? true : '')
+        socket.emit('userFriends', onlineFriends)
+    })
+
 
     socket.on('message', (to, message) => {
         const id = connectedUsers[to];
+        console.log(id)
         socket.to(id).emit('sendPrivateMessage', usernameid, message);
     })
 

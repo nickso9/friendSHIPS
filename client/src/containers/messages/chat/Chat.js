@@ -15,29 +15,40 @@ class Chat extends Component {
         this.state = {
             inputText: '',
             messages: this.props.currentMessages || '',
+            onlineFriends: ''
         }
         this.onSubmit = this.onSubmit.bind(this);
-
+    
     }
 
   
     componentDidMount() {
+        const friendId = this.props.user.friendsList.map(e => e._id)
         const { id } = this.props.user
         socket = io('localhost:8080')
         socket.on("connect", () => {
             socket.emit('setUserId', id)
+
+            socket.emit('setOnlineFriends', friendId)
+
             socket.on('sendPrivateMessage', (from, message) => {
                 this.props.saveMessages(from, id, message)
                 this.props.getCurrentMessages(from, id)
             })
+
             socket.on('pushAction', (to) => {
-                console.log('IT TRANSFERED')
-                console.log(to)
                 this.props.friendListUpdater(to)
             })
+            
+            socket.on('userFriends', (friendsArr) => {
+                console.log(friendsArr)
+            })
+
+            
+
             this.props.onPassId(socket)  
         });   
-        
+       
     }
 
    
@@ -45,8 +56,9 @@ class Chat extends Component {
         if (prevProps.messages.id !== this.props.messages.id && this.props.messages.id) {
             this.props.getCurrentMessages(this.props.messages.id, this.props.user.id)
         }
+
+        
     }
-    
 
     onSubmit(e) {
         e.preventDefault()
