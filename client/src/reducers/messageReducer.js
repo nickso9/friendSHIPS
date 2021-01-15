@@ -1,4 +1,4 @@
-import { FRIEND_FAIL, FRIEND_NOTFOUND, FRIEND_SUCCESS, FRIEND_SEARCH, CLEAR_FRIEND_ERROR, LOAD_FRIEND, SAVE_MESSAGE, CURRENT_MESSAGE, ADD_TO_PENDING } from '../actions/types';
+import { FRIEND_FAIL, FRIEND_NOTFOUND, FRIEND_SUCCESS, FRIEND_SEARCH, CLEAR_FRIEND_ERROR, LOAD_FRIEND, SAVE_MESSAGE, CURRENT_MESSAGE, ADD_TO_PENDING, REMOVE_PENDING } from '../actions/types';
 
 const initialState = {
   user: '',
@@ -91,6 +91,7 @@ export default function error(state = initialState, action) {
             ...state,
             currentMessages
         };
+    case REMOVE_PENDING:
     default:
       return state;
   }

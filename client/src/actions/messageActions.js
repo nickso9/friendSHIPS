@@ -1,7 +1,9 @@
 import axios from 'axios'
 
-import { FRIEND_SEARCH, FRIEND_SUCCESS, FRIEND_FAIL, FRIEND_NOTFOUND, CLEAR_FRIEND_ERROR,
-     LOAD_FRIEND, SAVE_MESSAGE, CURRENT_MESSAGE, ADD_TO_PENDING } from './types'
+import {
+    FRIEND_SEARCH, FRIEND_SUCCESS, FRIEND_FAIL, FRIEND_NOTFOUND, CLEAR_FRIEND_ERROR,
+    LOAD_FRIEND, SAVE_MESSAGE, CURRENT_MESSAGE, ADD_TO_PENDING, REMOVE_PENDING
+} from './types'
 
 
 export const searchFriend = (username) => dispatch => {
@@ -39,7 +41,7 @@ export const searchFriend = (username) => dispatch => {
 };
 
 export const addPending = (userToAdd, user, usernameToAdd, image) => dispatch => {
-    
+
     axios.post('http://localhost:8080/user/pendingfriend', {
         body: {
             userToAdd: userToAdd,
@@ -48,18 +50,18 @@ export const addPending = (userToAdd, user, usernameToAdd, image) => dispatch =>
             image
         }
     })
-    .then(() => {
-        dispatch({
-            type: ADD_TO_PENDING
+        .then(() => {
+            dispatch({
+                type: ADD_TO_PENDING
+            })
         })
-    })
-    .catch(err => {
-        dispatch({
-            type: FRIEND_FAIL,
-            payload: err.response.data.msg
+        .catch(err => {
+            dispatch({
+                type: FRIEND_FAIL,
+                payload: err.response.data.msg
+            })
         })
-    })
-    
+
 }
 
 export const addFriend = (userToAdd, user) => dispatch => {
@@ -69,7 +71,7 @@ export const addFriend = (userToAdd, user) => dispatch => {
             userToAdd: userToAdd,
             user: user
         }
-        })
+    })
         .then(user => {
             dispatch({
                 type: FRIEND_SUCCESS,
@@ -107,6 +109,27 @@ export const removeFriend = (userToRemove, user) => dispatch => {
         })
 };
 
+export const removePending = (userToRemove, user) => dispatch => {
+
+    axios.put('http://localhost:8080/user/removepending', {
+        data: {
+            id: user,
+            userToRemove
+        }
+    })
+        .then(() => {
+            dispatch({
+                type: REMOVE_PENDING
+            })
+        })
+        .catch(err => {
+            dispatch({
+                type: FRIEND_FAIL,
+                payload: err.response.data.msg
+            })
+        })
+
+}
 
 export const loadFriend = (id, username) => dispatch => {
     dispatch({

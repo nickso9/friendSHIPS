@@ -111,6 +111,21 @@ router.post('/pendingfriend', async (req, res) => {
 
 })
 
+router.put('/removepending' , (req, res) => {
+    const { id, userToRemove } = req.body.data
+    try {
+
+        User.findByIdAndUpdate({ _id: id }, { "$pull": { 'requestedfriend': { "id": userToRemove } } }) 
+        .then(() => {
+            res.status(201).json({msg: 'success.'})
+        })
+        
+    } catch(err) {
+        res.status(500).json({msg: 'network error.'})
+    }
+    
+})
+
 router.get('/updatefriend', async (req, res) => {
     const { id } = req.query
     try {

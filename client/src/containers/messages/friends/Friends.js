@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import { friendListUpdater } from '../../../actions/userActions'
-import { addFriend, searchFriend, clearFriendError, removeFriend, loadFriend, addPending } from '../../../actions/messageActions';
+import { addFriend, searchFriend, clearFriendError, removeFriend, loadFriend, addPending, removePending } from '../../../actions/messageActions';
 
 
 class Friends extends Component {
@@ -103,7 +103,11 @@ class Friends extends Component {
                                     <img src={pendingfriend.image} alt=''/>
                                     <span>{pendingfriend.username}</span>
                                     <button onClick={()=> {
-                                        console.log('decline')
+                                        const { id } = this.props.auth.user
+                                        this.props.removePending(pendingfriend.id, id)
+                                        setTimeout(() => {
+                                            this.props.friendListUpdater(id)
+                                        }, 500) 
                                     }}>Decline</button>
                                     <button onClick={(e)=> {
                                         const { id } = this.props.auth.user   
@@ -157,7 +161,8 @@ Friends.propTypes = {
     removeFriend: PropTypes.func.isRequired,
     loadFriend: PropTypes.func.isRequired,
     addPending: PropTypes.func.isRequired,
-    friendListUpdater: PropTypes.func.isRequired
+    friendListUpdater: PropTypes.func.isRequired,
+    removePending: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -174,7 +179,8 @@ export default connect(mapStateToProps, {
     removeFriend, 
     loadFriend, 
     addPending,
-    friendListUpdater
+    friendListUpdater,
+    removePending
 })(Friends)
 
 const friendsWrapper = {
