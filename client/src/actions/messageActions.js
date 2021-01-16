@@ -2,7 +2,8 @@ import axios from 'axios'
 
 import {
     FRIEND_SEARCH, FRIEND_SUCCESS, FRIEND_FAIL, FRIEND_NOTFOUND, CLEAR_FRIEND_ERROR,
-    LOAD_FRIEND, SAVE_MESSAGE, CURRENT_MESSAGE, ADD_TO_PENDING, REMOVE_PENDING
+    LOAD_FRIEND, SAVE_MESSAGE, CURRENT_MESSAGE, ADD_TO_PENDING, REMOVE_PENDING,
+    ONLINE_FRIENDS, NEWONLINE_FRIEND, NEWOFFLINE_FRIEND
 } from './types'
 
 
@@ -65,7 +66,7 @@ export const addPending = (userToAdd, user, usernameToAdd, image) => dispatch =>
 }
 
 export const addFriend = (userToAdd, user) => dispatch => {
-    console.log('hihi')
+  
     axios.post('http://localhost:8080/user/addfriend', {
         body: {
             userToAdd: userToAdd,
@@ -166,4 +167,25 @@ export const clearFriendError = () => {
     return {
         type: CLEAR_FRIEND_ERROR
     };
+}
+
+export const setOnlineFriends = (friendsArr) => {
+    return {
+        type: ONLINE_FRIENDS,
+        payload: friendsArr
+    }
+}
+
+export const newOnlineFriend = (id) => {
+    return {
+        type: NEWONLINE_FRIEND,
+        payload: id
+    }
+}
+
+export const newOfflineFriend = (id) => {
+    return {
+        type: NEWOFFLINE_FRIEND,
+        payload: id
+    }
 }

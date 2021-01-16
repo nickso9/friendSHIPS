@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import Message from './message/Message'
 
 import { friendListUpdater } from '../../../actions/userActions'
-import { saveMessages, getCurrentMessages } from '../../../actions/messageActions'
+import { saveMessages, getCurrentMessages, setOnlineFriends, newOnlineFriend, newOfflineFriend } from '../../../actions/messageActions'
 let socket;
 
 class Chat extends Component {
@@ -15,13 +15,12 @@ class Chat extends Component {
         this.state = {
             inputText: '',
             messages: this.props.currentMessages || '',
-            onlineFriends: ''
         }
         this.onSubmit = this.onSubmit.bind(this);
-    
+
     }
 
-  
+
     componentDidMount() {
         const friendId = this.props.user.friendsList.map(e => e._id)
         const { id } = this.props.user
@@ -31,6 +30,19 @@ class Chat extends Component {
 
             socket.emit('setOnlineFriends', friendId)
 
+            setTimeout(() => {
+                socket.emit('setToFriendsOnline', id)
+            },500)
+            
+            socket.on('onlineReciever', (newOnlineFriend) => {
+                this.props.newOnlineFriend(newOnlineFriend)
+            })
+
+            socket.on('offlineReciever', (newOfflineFriend) => {
+                this.props.newOfflineFriend(newOfflineFriend)
+            })
+            
+
             socket.on('sendPrivateMessage', (from, message) => {
                 this.props.saveMessages(from, id, message)
                 this.props.getCurrentMessages(from, id)
@@ -39,29 +51,29 @@ class Chat extends Component {
             socket.on('pushAction', (to) => {
                 this.props.friendListUpdater(to)
             })
-            
+
             socket.on('userFriends', (friendsArr) => {
-                this.setState({
-                    ...this.state,
-                    onlineFriends: friendsArr
-                })
+                this.props.setOnlineFriends(friendsArr)
             })
 
-            
-            this.props.onPassId(socket)  
-        });   
-       
+            this.props.onPassId(socket)
+        });
+
     }
 
     componentWillUnmount() {
         const { id } = this.props.user
+        socket.emit('setToFriendsOffline', id)
         socket.disconnect(id)
     }
-   
+
     componentDidUpdate(prevProps) {
         if (prevProps.messages.id !== this.props.messages.id && this.props.messages.id) {
             this.props.getCurrentMessages(this.props.messages.id, this.props.user.id)
-        }    
+        }
+
+
+
     }
 
     onSubmit(e) {
@@ -69,31 +81,31 @@ class Chat extends Component {
         const { id } = this.props.user
         const message = this.state.inputText
         const friendId = this.props.messages.id
-  
+
         socket.emit('message', friendId, message);
         this.props.saveMessages(id, friendId, message)
         this.props.getCurrentMessages(id, friendId)
     }
 
     render() {
-        console.log(this.state.onlineFriends)
+
         return (
             <form style={chatWrapper} onSubmit={this.onSubmit}>
                 <div style={messageBanner}>Message {this.props.messages.username ? this.props.messages.username : ''}:</div>
                 <div style={messageWrapper} id="message">
-                    <Message messages={this.props.currentMessages} switch={this.props.messages}/>
+                    <Message messages={this.props.currentMessages} switch={this.props.messages} />
                 </div>
-                <input 
-                    style={inputStyle} 
-                    type='text' 
-                    value={this.inputText} 
+                <input
+                    style={inputStyle}
+                    type='text'
+                    value={this.inputText}
                     onChange={(e) => {
                         this.setState({
                             ...this.state,
                             inputText: e.target.value
                         })
-                    }}/> 
-                <button type="submit">Send</button>   
+                    }} />
+                <button type="submit">Send</button>
             </form>
         )
     }
@@ -104,17 +116,20 @@ Chat.propTypes = {
     saveMessages: PropTypes.func.isRequired,
     getCurrentMessages: PropTypes.func.isRequired,
     currentMessages: PropTypes.array,
-    friendListUpdater: PropTypes.func.isRequired
+    friendListUpdater: PropTypes.func.isRequired,
+    setOnlineFriends: PropTypes.func.isRequired, 
+    newOnlineFriend: PropTypes.func.isRequired,
+    newOfflineFriend: PropTypes.func.isRequired
 }
 
-const mapStateToProps = state => ({ 
+const mapStateToProps = state => ({
     messages: state.friend.messageWith,
     currentMessages: state.friend.currentMessages,
     user: state.auth.user
 })
 
 
-export default connect(mapStateToProps, { saveMessages, getCurrentMessages, friendListUpdater })(Chat)
+export default connect(mapStateToProps, { saveMessages, getCurrentMessages, friendListUpdater, setOnlineFriends, newOfflineFriend, newOnlineFriend })(Chat)
 
 
 const chatWrapper = {

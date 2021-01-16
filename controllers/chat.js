@@ -2,22 +2,37 @@
 const connectedUsers = {}
 
 module.exports = function (socket) {
+
     let usernameid;
+    let friendsArray = []
+
     socket.on('setUserId', (username) => {
         connectedUsers[username] = socket.id;
         usernameid = username 
     })
 
     socket.on('setOnlineFriends', (friends) => {
-        let friendArry = [...friends]
-        const onlineFriends = friendArry.filter(friend => connectedUsers[friend] ? true : '')
+        friendsArray.push(...friends)
+        const onlineFriends = friendsArray.filter(friend => connectedUsers[friend] ? true : '')
         socket.emit('userFriends', onlineFriends)
     })
 
+    socket.on('setToFriendsOnline', (id) => {
+        let tellFriends = [...friendsArray]
+        for (let i = 0; i < friendsArray.length; i++) {
+            socket.to(connectedUsers[tellFriends[i]]).emit('onlineReciever', id)
+        }   
+    })
+
+    socket.on('setToFriendsOffline', (id) => {
+        let tellFriends = [...friendsArray]
+        for (let i = 0; i < friendsArray.length; i++) {
+            socket.to(connectedUsers[tellFriends[i]]).emit('offlineReciever', id)
+        }  
+    })
 
     socket.on('message', (to, message) => {
         const id = connectedUsers[to];
-        console.log(id)
         socket.to(id).emit('sendPrivateMessage', usernameid, message);
     })
 
@@ -28,6 +43,5 @@ module.exports = function (socket) {
 
     socket.on('disconnect', () => {
         delete connectedUsers[usernameid]
-        console.log('socket disconnected')
     })
 }

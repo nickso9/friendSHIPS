@@ -13,7 +13,8 @@ class Friends extends Component {
         this.state = {
             username: '',
             friendsList: this.props.auth.user.friendsList,
-            requestedfriend: this.props.auth.user.requestedfriend
+            requestedfriend: this.props.auth.user.requestedfriend,
+            onlineFriends: this.props.friend.friendsOnline
         }
 
         this.onSubmit = this.onSubmit.bind(this)
@@ -38,6 +39,13 @@ class Friends extends Component {
                 requestedfriend: this.props.auth.user.requestedfriend
             })
         }
+
+        if (prevProps.friend.friendsOnline !== this.props.friend.friendsOnline) {
+            this.setState({
+                ...this.state,
+                onlineFriends: this.props.friend.friendsOnline
+            })
+        }
     }
 
 
@@ -49,8 +57,8 @@ class Friends extends Component {
     }
 
     render() {
+        console.log(this.state.onlineFriends)
         return (
-            
             <div style={friendsWrapper}>
                 <div style={innerWrapper}>
                     <form style={friendsInput} onSubmit={this.onSubmit}>
@@ -166,7 +174,8 @@ Friends.propTypes = {
 
 const mapStateToProps = state => ({
     auth: state.auth,
-    friend: state.friend
+    friend: state.friend,
+    friendsOnline: state.friend
 });
 
 

@@ -1,4 +1,4 @@
-import { FRIEND_FAIL, FRIEND_NOTFOUND, FRIEND_SUCCESS, FRIEND_SEARCH, CLEAR_FRIEND_ERROR, LOAD_FRIEND, SAVE_MESSAGE, CURRENT_MESSAGE, ADD_TO_PENDING, REMOVE_PENDING } from '../actions/types';
+import { FRIEND_FAIL, FRIEND_NOTFOUND, FRIEND_SUCCESS, FRIEND_SEARCH, CLEAR_FRIEND_ERROR, LOAD_FRIEND, SAVE_MESSAGE, CURRENT_MESSAGE, ADD_TO_PENDING, REMOVE_PENDING, ONLINE_FRIENDS, NEWONLINE_FRIEND, NEWOFFLINE_FRIEND } from '../actions/types';
 
 const initialState = {
   user: '',
@@ -7,7 +7,8 @@ const initialState = {
   messageWith: {},
   friendsList: [],
   messages: [],
-  currentMessages: []
+  currentMessages: [],
+  friendsOnline: []
 }
 
 export default function error(state = initialState, action) {
@@ -32,6 +33,36 @@ export default function error(state = initialState, action) {
             id: '',
             friendsList: action.payload
         };
+    case ONLINE_FRIENDS:
+        return {
+            ...state,
+            friendsOnline: action.payload
+        }
+    case NEWONLINE_FRIEND: {
+        if (state.friendsOnline.indexOf(action.payload) !== -1) {
+            return {
+                ...state,
+            }
+        }
+        const updateFriends = [...state.friendsOnline]
+        updateFriends.push(action.payload)
+        return {
+            ...state,
+            friendsOnline: updateFriends
+        }
+    }
+    case NEWOFFLINE_FRIEND: {
+        if (state.friendsOnline.indexOf(action.payload) == -1) {
+            return {
+                ...state,
+            }
+        }
+        const updateFriends = [...state.friendsOnline].filter(e => e !== action.payload)
+        return {
+            ...state,
+            friendsOnline: updateFriends
+        }
+    }
     case FRIEND_NOTFOUND:
         return {
             ...state,

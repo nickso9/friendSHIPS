@@ -13,7 +13,7 @@ class Messages extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            socket: null
+            
         }
 
         this.onGrabId = this.onGrabId.bind(this)
@@ -26,7 +26,7 @@ class Messages extends Component {
         this.onPassId(socket, id)
     }
 
-    
+
     onPassId(io, id) {
         socket = io
         socket.emit('action', id)
@@ -34,7 +34,6 @@ class Messages extends Component {
     
 
     render() {
-    
         return (
             <div>
                 <div>Message</div>
