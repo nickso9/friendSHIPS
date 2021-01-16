@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import { friendListUpdater } from '../../../actions/userActions'
-import { addFriend, searchFriend, clearFriendError, removeFriend, loadFriend, addPending, removePending } from '../../../actions/messageActions';
+import { addFriend, searchFriend, clearFriendError, removeFriend, loadFriend, addPending, removePending, newOfflineFriend } from '../../../actions/messageActions';
 
 
 class Friends extends Component {
@@ -57,6 +57,7 @@ class Friends extends Component {
     }
 
     render() {
+        
         console.log(this.state.onlineFriends)
         return (
             <div style={friendsWrapper}>
@@ -90,8 +91,9 @@ class Friends extends Component {
                                                 const { id, username, image } = this.props.auth.user
                                                 this.props.addPending(this.props.friend.id, id, username, image)
                                                 setTimeout(() => {
-                                                    this.props.onGrabId(friendId)
+                                                    this.props.onGrabId(friendId)                                                    
                                                 }, 500) 
+
                                             }}
                                             >
                                             <button>Add Friend</button>
@@ -122,6 +124,7 @@ class Friends extends Component {
                                         setTimeout(() => {
                                             this.props.friendListUpdater(id)
                                             this.props.onGrabId(pendingfriend.id)
+                                            this.props.onAddFriend(pendingfriend.id, id)
                                         }, 500) 
                                     }}>Accept</button>
                                 </div>
@@ -146,6 +149,8 @@ class Friends extends Component {
                                             this.props.removeFriend(friendId, id)
                                             setTimeout(() => {
                                                 this.props.onGrabId(friendId)
+                                                this.props.onRemoveFriend(friendId, id)
+                                                this.props.newOfflineFriend(friendId)
                                             }, 500) 
                                         }}>remove</button>
                                 </div>
@@ -169,7 +174,8 @@ Friends.propTypes = {
     loadFriend: PropTypes.func.isRequired,
     addPending: PropTypes.func.isRequired,
     friendListUpdater: PropTypes.func.isRequired,
-    removePending: PropTypes.func.isRequired
+    removePending: PropTypes.func.isRequired,
+    newOfflineFriend: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -188,7 +194,8 @@ export default connect(mapStateToProps, {
     loadFriend, 
     addPending,
     friendListUpdater,
-    removePending
+    removePending,
+    newOfflineFriend
 })(Friends)
 
 const friendsWrapper = {

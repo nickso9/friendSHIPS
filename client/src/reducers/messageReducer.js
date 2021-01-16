@@ -52,7 +52,7 @@ export default function error(state = initialState, action) {
         }
     }
     case NEWOFFLINE_FRIEND: {
-        if (state.friendsOnline.indexOf(action.payload) == -1) {
+        if (state.friendsOnline.indexOf(action.payload) === -1) {
             return {
                 ...state,
             }

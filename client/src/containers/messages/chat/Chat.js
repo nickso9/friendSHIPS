@@ -16,8 +16,8 @@ class Chat extends Component {
             inputText: '',
             messages: this.props.currentMessages || '',
         }
-        this.onSubmit = this.onSubmit.bind(this);
 
+        this.onSubmit = this.onSubmit.bind(this);
     }
 
 
@@ -57,6 +57,7 @@ class Chat extends Component {
             })
 
             this.props.onPassId(socket)
+        
         });
 
     }

@@ -41,6 +41,17 @@ module.exports = function (socket) {
         socket.to(id).emit('pushAction', to)
     })
 
+    socket.on('onlineNow', (from, to) => {
+        if (connectedUsers[from]) {
+            socket.emit('onlineReciever', from)
+            socket.to(connectedUsers[from]).emit('onlineReciever', to) 
+        }
+    })
+
+    socket.on('removeFriend', (from, to) => {
+        socket.to(connectedUsers[from]).emit('offlineReciever', to)     
+    })
+
     socket.on('disconnect', () => {
         delete connectedUsers[usernameid]
     })
