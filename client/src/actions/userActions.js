@@ -71,7 +71,6 @@ export const friendListUpdater = (id) => dispatch => {
     }
   })
   .then(res => {
-    console.log(res)
     dispatch({
       type: USER_UPDATER,
       payload: res.data

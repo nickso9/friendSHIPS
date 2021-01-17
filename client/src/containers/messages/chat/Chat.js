@@ -86,10 +86,13 @@ class Chat extends Component {
         socket.emit('message', friendId, message);
         this.props.saveMessages(id, friendId, message)
         this.props.getCurrentMessages(id, friendId)
+        this.setState({
+            ...this.state,
+            inputText: ''
+        })
     }
 
     render() {
-
         return (
             <form style={chatWrapper} onSubmit={this.onSubmit}>
                 <div style={messageBanner}>Message {this.props.messages.username ? this.props.messages.username : ''}:</div>
@@ -99,7 +102,7 @@ class Chat extends Component {
                 <input
                     style={inputStyle}
                     type='text'
-                    value={this.inputText}
+                    value={this.state.inputText}
                     onChange={(e) => {
                         this.setState({
                             ...this.state,

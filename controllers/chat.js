@@ -5,10 +5,10 @@ module.exports = function (socket) {
 
     let usernameid;
     let friendsArray = []
-
+    
     socket.on('setUserId', (username) => {
         connectedUsers[username] = socket.id;
-        usernameid = username 
+        usernameid = username
     })
 
     socket.on('setOnlineFriends', (friends) => {
@@ -21,14 +21,14 @@ module.exports = function (socket) {
         let tellFriends = [...friendsArray]
         for (let i = 0; i < friendsArray.length; i++) {
             socket.to(connectedUsers[tellFriends[i]]).emit('onlineReciever', id)
-        }   
+        }
     })
 
     socket.on('setToFriendsOffline', (id) => {
         let tellFriends = [...friendsArray]
         for (let i = 0; i < friendsArray.length; i++) {
             socket.to(connectedUsers[tellFriends[i]]).emit('offlineReciever', id)
-        }  
+        }
     })
 
     socket.on('message', (to, message) => {
@@ -44,15 +44,19 @@ module.exports = function (socket) {
     socket.on('onlineNow', (from, to) => {
         if (connectedUsers[from]) {
             socket.emit('onlineReciever', from)
-            socket.to(connectedUsers[from]).emit('onlineReciever', to) 
+            socket.to(connectedUsers[from]).emit('onlineReciever', to)
         }
     })
 
     socket.on('removeFriend', (from, to) => {
-        socket.to(connectedUsers[from]).emit('offlineReciever', to)     
+        socket.to(connectedUsers[from]).emit('offlineReciever', to)
     })
 
     socket.on('disconnect', () => {
+        console.log(connectedUsers)
         delete connectedUsers[usernameid]
+        console.log(connectedUsers)
     })
+
+    
 }

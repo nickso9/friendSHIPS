@@ -41,6 +41,7 @@ class Friends extends Component {
         }
 
         if (prevProps.friend.friendsOnline !== this.props.friend.friendsOnline) {
+         
             this.setState({
                 ...this.state,
                 onlineFriends: this.props.friend.friendsOnline
@@ -58,7 +59,6 @@ class Friends extends Component {
 
     render() {
         
-        console.log(this.state.onlineFriends)
         return (
             <div style={friendsWrapper}>
                 <div style={innerWrapper}>
@@ -106,7 +106,6 @@ class Friends extends Component {
                     <div style={pendingListWrapper}>
                         <span>Friend requests:</span>
                         {this.state.requestedfriend && this.state.requestedfriend.map((pendingfriend, index) => {
-                            
                             return (
                                 <div key={index}>
                                     <img src={pendingfriend.image} alt=''/>
@@ -132,10 +131,12 @@ class Friends extends Component {
                         })}
                     </div>
                     <div style={friendsListWrapper}>
-                        <span>Friends</span>
+                        <span style={friendsListTitle}>Online</span>
                         {this.state.friendsList && this.state.friendsList.map((friend, index) => {
+                            if (this.state.onlineFriends.indexOf(friend._id) !== -1 ) {
                             return (
                                 <div key={index}>
+                                    
                                     <input hidden id={friend._id} />
                                     <span
                                         onClick={e => {
@@ -155,8 +156,40 @@ class Friends extends Component {
                                         }}>remove</button>
                                 </div>
                             )
+                            } else {
+                                return ''
+                            }
                         })}
-
+                        <br />
+                        <span style={friendsListTitle}>Offline</span>
+                        {this.state.friendsList && this.state.friendsList.map((friend, index) => {
+                            if (this.state.onlineFriends.indexOf(friend._id) === -1 ) {
+                            return (
+                                <div key={index}>
+                                    
+                                    <input hidden id={friend._id} />
+                                    <span
+                                        onClick={e => {
+                                            this.props.loadFriend(e.target.parentNode.firstChild.id, e.target.innerHTML)
+                                        }}
+                                    >{friend.username}</span>
+                                    <button 
+                                        onClick={e => {
+                                            const friendId = e.target.parentNode.firstChild.id
+                                            const { id } = this.props.auth.user
+                                            this.props.removeFriend(friendId, id)
+                                            setTimeout(() => {
+                                                this.props.onGrabId(friendId)
+                                                this.props.onRemoveFriend(friendId, id)
+                                                this.props.newOfflineFriend(friendId)
+                                            }, 500) 
+                                        }}>remove</button>
+                                </div>
+                            )
+                            } else {
+                                return ''
+                            }
+                        })}
                     </div>
 
                 </div>
@@ -269,4 +302,14 @@ const pendingListWrapper = {
     width: '100%',
     height: '100%',
     backgroundColor: 'teal'
+}
+
+const friendsListTitle = {
+    backgroundColor: 'white',
+    display: 'block',
+    width: '100%',
+    marginBottom: '5px',
+    padding: '5px 0',
+    textAlign: 'center'
+
 }

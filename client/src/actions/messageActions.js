@@ -3,7 +3,7 @@ import axios from 'axios'
 import {
     FRIEND_SEARCH, FRIEND_SUCCESS, FRIEND_FAIL, FRIEND_NOTFOUND, CLEAR_FRIEND_ERROR,
     LOAD_FRIEND, SAVE_MESSAGE, CURRENT_MESSAGE, ADD_TO_PENDING, REMOVE_PENDING,
-    ONLINE_FRIENDS, NEWONLINE_FRIEND, NEWOFFLINE_FRIEND
+    ONLINE_FRIENDS, NEWONLINE_FRIEND, NEWOFFLINE_FRIEND, LOGOUT_MESSAGE
 } from './types'
 
 
@@ -190,3 +190,8 @@ export const newOfflineFriend = (id) => {
     }
 }
 
+export const logoutMessage = () => {
+    return {
+        type: LOGOUT_MESSAGE
+    }
+}

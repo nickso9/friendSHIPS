@@ -4,11 +4,9 @@ import { NavLink } from 'react-router-dom'
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import { goLogin } from '../../actions/pageActions'
-import { goLogout } from '../../actions/pageActions'
-import { goRegister } from '../../actions/pageActions'
-import { goMessage } from '../../actions/pageActions'
+import { goLogin, goLogout, goRegister, goMessage } from '../../actions/pageActions'
 import { logout } from '../../actions/userActions'
+import { logoutMessage } from '../../actions/messageActions'
 
 class Navbar extends Component {
 
@@ -80,6 +78,7 @@ class Navbar extends Component {
                         onClick={() => {
                             this.props.logout()
                             this.props.goLogout()
+                            this.props.logoutMessage()
                         }}
                     >Logout</button>
                 </div> 
@@ -114,7 +113,8 @@ Navbar.propTypes = {
     goLogin: PropTypes.func.isRequired,
     goRegister: PropTypes.func.isRequired,
     goLogout: PropTypes.func.isRequired,
-    logout: PropTypes.func.isRequired
+    logout: PropTypes.func.isRequired,
+    logoutMessage: PropTypes.func.isRequired
 }
 
 
@@ -123,7 +123,7 @@ const mapStateToProps = state => ({
 });
 
 
-export default connect(mapStateToProps, { goLogin, goLogout, goMessage, goRegister, logout })(Navbar);
+export default connect(mapStateToProps, { goLogin, goLogout, goMessage, goRegister, logout, logoutMessage })(Navbar);
 
 
 const navbarWrapper = {

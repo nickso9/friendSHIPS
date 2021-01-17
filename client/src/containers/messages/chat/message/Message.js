@@ -4,7 +4,6 @@ class Message extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            messages: this.props.messages || [],
             user: this.props.switch.username
         }
     }
@@ -13,12 +12,13 @@ class Message extends Component {
     componentDidUpdate(prevProps, prevState) {
         if (this.state.user !== this.props.switch.username) {
             this.setState({
-                messages: this.props.messages,
                 user: this.props.switch.username
             })
 
         }
     }
+ 
+    
 
     render() {
         return (
