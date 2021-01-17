@@ -234,7 +234,7 @@ export default connect(mapStateToProps, {
 const friendsWrapper = {
     border: '1px solid black',
     height: '500px',
-    width: '600px',
+    width: '300px',
     margin: 'auto',
 }
 

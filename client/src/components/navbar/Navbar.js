@@ -93,7 +93,7 @@ class Navbar extends Component {
                 <div style={navbarWrapper}>
                     <div style={navbarBrandWrapper}>
                         <NavLink to='/' style={navbarBrand}>
-                            <h1>Message/Query</h1>
+                            <h1>FriendSHIPS</h1>
                         </NavLink>  
                     </div>
                 
@@ -133,16 +133,18 @@ const navbarWrapper = {
     height: '100px',
     width: '100%',
     fontSize: '16px',
+    backgroundColor: '#0067a5',
+
 }
 
 const navbarBrandWrapper = {
     marginLeft: '5px', 
-    marginTop: '-10px' 
+    marginTop: '-10px',
 }
 
 const navbarBrand = {
     textDecoration: 'none',
-    color: 'black'
+    color: 'white'
 }
 
 const inputWrapper = {

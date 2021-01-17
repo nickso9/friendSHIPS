@@ -39,8 +39,8 @@ class Messages extends Component {
 
     render() {
         return (
-            <div>
-                <div>Message</div>
+            <div style={messageOuterWrapper}>
+                
                 <div style={messageWrapper}>
                     <Chat onPassId={this.onPassId} />
                     <Friends onGrabId={this.onGrabId} onAddFriend={this.onAddFriend} onRemoveFriend={this.onRemoveFriend}/>
@@ -63,6 +63,14 @@ export default connect(mapStateToProps, null)(Messages)
 
 const messageWrapper = {
     margin: 'auto',
-    display: 'flex'
+    display: 'flex',
+    width: '700px',
+    backgroundColor: 'white',
+    padding: '15px',
+    borderRadius: '2%'
+}
 
+const messageOuterWrapper = {
+    backgroundColor: '#0067a5',
+    height: '100vh'
 }

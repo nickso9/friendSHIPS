@@ -95,7 +95,17 @@ class Chat extends Component {
     render() {
         return (
             <form style={chatWrapper} onSubmit={this.onSubmit}>
-                <div style={messageBanner}>Message {this.props.messages.username ? this.props.messages.username : ''}:</div>
+                <div style={this.props.messages.username ? messageBanner : null}>
+                    {this.props.messages.username ? 
+                        (
+                            <div>Message {this.props.messages.username}</div>
+                        )
+                     : 
+                        (
+                            ''
+                        )
+                     }
+                    </div>
                 <div style={messageWrapper} id="message">
                     <Message messages={this.props.currentMessages} switch={this.props.messages} />
                 </div>
