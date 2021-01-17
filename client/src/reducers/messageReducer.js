@@ -76,6 +76,8 @@ export default function error(state = initialState, action) {
         case CLEAR_FRIEND_ERROR:
             return {
                 ...state,
+                user: '',
+                id: '',
                 msg: ''
             }
         case LOAD_FRIEND:

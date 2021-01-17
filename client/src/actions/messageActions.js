@@ -21,7 +21,6 @@ export const searchFriend = (username) => dispatch => {
             })
         })
         .catch(err => {
-            console.log(err.response.data.msg)
             if (err.response.status === 400) {
 
                 dispatch({

@@ -16,7 +16,6 @@ class Chat extends Component {
             inputText: '',
             messages: this.props.currentMessages || '',
         }
-
         this.onSubmit = this.onSubmit.bind(this);
     }
 
@@ -109,17 +108,22 @@ class Chat extends Component {
                 <div style={messageWrapper} id="message">
                     <Message messages={this.props.currentMessages} switch={this.props.messages} />
                 </div>
-                <input
-                    style={inputStyle}
-                    type='text'
-                    value={this.state.inputText}
-                    onChange={(e) => {
-                        this.setState({
-                            ...this.state,
-                            inputText: e.target.value
-                        })
-                    }} />
-                <button type="submit">Send</button>
+                <div style={inputWrapper}>
+                    <input
+                        style={inputStyle}
+                        type='text'
+                        value={this.state.inputText}
+                        onChange={(e) => {
+                            this.setState({
+                                ...this.state,
+                                inputText: e.target.value
+                            })
+                        }} />
+                    <button 
+                        type="submit"
+                        style={buttonStyle}
+                    >Send</button>
+                </div>
             </form>
         )
     }
@@ -147,7 +151,6 @@ export default connect(mapStateToProps, { saveMessages, getCurrentMessages, frie
 
 
 const chatWrapper = {
-    border: '1px solid black',
     height: '500px',
     width: '600px',
     margin: 'auto',
@@ -155,14 +158,20 @@ const chatWrapper = {
 
 const messageWrapper = {
     height: '90%',
-    border: '1px solid red'
 }
 
 const inputStyle = {
     display: 'inline-block',
-    width: '90%',
-    fontSize: '16px',
+    width: '80%',
+    fontSize: '20px',
+    border: '1px solid black',
     margin: 'auto'
+}
+
+const buttonStyle = {
+    padding: '6px 7px',
+    border: '1px solid black',
+    backgroundColor: 'white'
 }
 
 const messageBanner = {
@@ -171,3 +180,10 @@ const messageBanner = {
     backgroundColor: 'orange'
 }
 
+const inputWrapper = {
+    // textAlign: 'center',
+    display: 'flex',
+    justifyContent: 'space-around',
+    
+    margin: 'auto'
+}

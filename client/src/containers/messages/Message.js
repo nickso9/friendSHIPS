@@ -66,7 +66,6 @@ const messageWrapper = {
     display: 'flex',
     width: '700px',
     backgroundColor: 'white',
-    padding: '15px',
     borderRadius: '2%'
 }
 
