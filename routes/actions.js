@@ -87,7 +87,7 @@ router.post('/pendingfriend', async (req, res) => {
         const alreadyPending = await User.find({ _id: user }).where('requestedfriend.id').equals(ObjectID(userToAdd))
         if (alreadyPending.length > 0) {
         
-            return res.status(400).json({ msg: 'Your Friendship has already been requested.' })
+            return res.status(400).json({ msg: 'Already waiting on you.' })
         }
 
         const userCheck = await await User.find({ _id: userToAdd }).where('requestedfriend.id').equals(ObjectID(user))

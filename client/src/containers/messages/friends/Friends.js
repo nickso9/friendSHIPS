@@ -282,19 +282,20 @@ const searchInput = {
 }
 
 const closeButtonWrapper = {
+    marginTop: '7px',
     textAlign: 'right',
-    backgroundColor: 'whitesmoke',
+    backgroundColor: '#f8f8f8',
 }
 
 const closeButton = {
-    backgroundColor: 'whitesmoke',
+    backgroundColor: '#f8f8f8',
     border: 'none',
     color: 'black',
 }
 
 const errorMessage = {
     color: 'red',
-    textAlign: 'left',
+    textAlign: 'center',
     fontSize: '12px',
     padding: '0px 3px 5px 3px',
     letterSpacing: '0px'
@@ -302,7 +303,7 @@ const errorMessage = {
 
 const successMessage = {
     color: 'green',
-    textAlign: 'left',
+    textAlign: 'center',
     fontSize: '12px',
     padding: '0px 3px 5px 3px',
     letterSpacing: '0px'
@@ -340,14 +341,13 @@ const friendsInfoButton = {
     backgroundColor: 'white',
     border: 'none',
     fontSize: '10px',
-    color: 'blue'
+    color: 'green'
 
 }
 
 const friendsListWrapper = {
     width: '100%',
     height: '100%',
-    backgroundColor: 'pink'
 }
 
 const pendingListWrapper = {
@@ -383,7 +383,7 @@ const friendsListTitle = {
     width: '100%',
     marginBottom: '5px',
     padding: '5px 0',
-    textAlign: 'center'
-
+    textAlign: 'center',
+    borderBottom: '1px solid grey'
 }
 
