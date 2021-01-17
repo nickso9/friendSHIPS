@@ -124,7 +124,7 @@ class Friends extends Component {
                                     <div key={index} style={friendCard}>
                                         <img src={pendingfriend.image} alt='' />
                                         <span>{pendingfriend.username}</span>
-                                        <button 
+                                        <button
                                             style={noSign}
                                             onClick={() => {
                                                 const { id } = this.props.auth.user
@@ -132,8 +132,8 @@ class Friends extends Component {
                                                 setTimeout(() => {
                                                     this.props.friendListUpdater(id)
                                                 }, 500)
-                                        }}><span style={noSign} className="glyphicon glyphicon-remove"></span></button>
-                                        <button 
+                                            }}><span style={noSign} className="glyphicon glyphicon-remove"></span></button>
+                                        <button
                                             style={okSign}
                                             onClick={(e) => {
                                                 const { id } = this.props.auth.user
@@ -143,16 +143,16 @@ class Friends extends Component {
                                                     this.props.onGrabId(pendingfriend.id)
                                                     this.props.onAddFriend(pendingfriend.id, id)
                                                 }, 500)
-                                            
-                                        }}><span style={okSign} className="glyphicon glyphicon-ok"></span></button>
+
+                                            }}><span style={okSign} className="glyphicon glyphicon-ok"></span></button>
                                     </div>
                                 )
                             })}
                         </div>
-                    ) : ( 
+                    ) : (
 
-                        ''
-                    )
+                            ''
+                        )
                     }
                     <div style={friendsListWrapper}>
                         <span style={friendsListTitle}>Online</span>
@@ -336,7 +336,7 @@ const friendInfo = {
     display: 'flex',
     alignItems: 'center',
 }
-
+//
 const friendsInfoButton = {
     backgroundColor: 'white',
     border: 'none',
