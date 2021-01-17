@@ -336,7 +336,7 @@ const friendInfo = {
     display: 'flex',
     alignItems: 'center',
 }
-//
+////
 const friendsInfoButton = {
     backgroundColor: 'white',
     border: 'none',
