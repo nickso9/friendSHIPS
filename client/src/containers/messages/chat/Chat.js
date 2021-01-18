@@ -92,41 +92,50 @@ class Chat extends Component {
     }
 
     render() {
-        return (
-            <form style={chatWrapper} onSubmit={this.onSubmit}>
-                <div style={this.props.messages.username ? messageBanner : null}>
-                    {this.props.messages.username ? 
-                        (
-                            <div>Message {this.props.messages.username}</div>
-                        )
-                     : 
-                        (
-                            ''
-                        )
-                     }
-                    </div>
-                <div style={messageWrapper} id="message">
-                    <Message messages={this.props.currentMessages} switch={this.props.messages} />
-                </div>
-                <div style={inputWrapper}>
-                    <input
-                        style={inputStyle}
-                        type='text'
-                        value={this.state.inputText}
-                        onChange={(e) => {
-                            this.setState({
-                                ...this.state,
-                                inputText: e.target.value
-                            })
-                        }} />
-                    <button 
-                        type="submit"
-                        style={buttonStyle}
-                    >Send</button>
-                </div>
-            </form>
-        )
-    }
+            if (this.props.messages.username) {
+                    return (
+                        <div style={chatWrapper} >
+                            <div style={messageBanner}>
+                                
+                                        <div style={headerDiv}>
+                                            <div>{this.props.messages.username.slice(0,1).toUpperCase() + this.props.messages.username.slice(1).toLowerCase()}</div>
+                                            <div><img src={this.props.messages.image} /></div>    
+                                        </div>
+                                
+                            </div>
+
+                            <div style={messageWrapper} id="message">
+                                    <Message messages={this.props.currentMessages} switch={this.props.messages} />
+                            </div>
+
+
+                            <form style={chatBox} onSubmit={this.onSubmit}> 
+                                <div style={inputWrapper}>
+                                    <input
+                                        style={inputStyle}
+                                        type='text'
+                                        value={this.state.inputText}
+                                        onChange={(e) => {
+                                            this.setState({
+                                                ...this.state,
+                                                inputText: e.target.value
+                                            })
+                                        }} />
+                                    <button 
+                                        type="submit"
+                                        style={buttonStyle}
+                                    >Send</button>
+                                </div>
+                            </form>
+                        </div>
+                    ) 
+                        } else {
+                    return (
+                        <></>
+                    )
+                    }
+                }
+    
 }
 
 Chat.propTypes = {
@@ -151,18 +160,21 @@ export default connect(mapStateToProps, { saveMessages, getCurrentMessages, frie
 
 
 const chatWrapper = {
-    height: '500px',
+    height: '600px',
     width: '600px',
     margin: 'auto',
 }
 
 const messageWrapper = {
-    height: '90%',
+    overflowY: 'auto',
+    height: '475px',
+    display: 'flex',
+    alignItems: 'flex-end',
 }
 
 const inputStyle = {
     display: 'inline-block',
-    width: '80%',
+    width: '400px',
     fontSize: '20px',
     border: '1px solid black',
     margin: 'auto'
@@ -175,15 +187,27 @@ const buttonStyle = {
 }
 
 const messageBanner = {
-    height: '25px',
-    width: '100%',
-    backgroundColor: 'orange'
+    fontSize: '25px',
+    height: '67px',
+    borderBottom: '1px solid grey',
+    padding: '10px',
+}
+
+const chatBox = {
+    display: 'flex',
+    alignItems: 'center',
+    height: '60px',
+
+
 }
 
 const inputWrapper = {
-    // textAlign: 'center',
     display: 'flex',
-    justifyContent: 'space-around',
-    
-    margin: 'auto'
+    justifyContent: 'space-around', 
+    margin: 'auto',
+}
+
+const headerDiv = {
+    display: 'flex',
+    justifyContent: 'space-between'
 }

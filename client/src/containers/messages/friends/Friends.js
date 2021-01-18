@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import { friendListUpdater } from '../../../actions/userActions'
-import { addFriend, searchFriend, clearFriendError, removeFriend, loadFriend, addPending, removePending, newOfflineFriend } from '../../../actions/messageActions';
+import { addFriend, searchFriend, clearFriendError, removeFriend, loadFriend, addPending, removePending, newOfflineFriend, unloadFriend } from '../../../actions/messageActions';
 
 
 class Friends extends Component {
@@ -58,9 +58,8 @@ class Friends extends Component {
     }
 
     render() {
-        console.log(this.state.requestedfriend)
         return (
-            <div style={friendsWrapper}>
+            <div style={this.props.messages && this.props.messages.id ? friendsWrapper : nonFriendsWrapper}>
                 <div style={innerWrapper}>
                     <form style={friendsInput} onSubmit={this.onSubmit}>
                         <input
@@ -122,29 +121,38 @@ class Friends extends Component {
                             {this.state.requestedfriend.map((pendingfriend, index) => {
                                 return (
                                     <div key={index} style={friendCard}>
-                                        <img src={pendingfriend.image} alt='' />
-                                        <span>{pendingfriend.username}</span>
-                                        <button
-                                            style={noSign}
-                                            onClick={() => {
-                                                const { id } = this.props.auth.user
-                                                this.props.removePending(pendingfriend.id, id)
-                                                setTimeout(() => {
-                                                    this.props.friendListUpdater(id)
-                                                }, 500)
-                                            }}><span style={noSign} className="glyphicon glyphicon-remove"></span></button>
-                                        <button
-                                            style={okSign}
-                                            onClick={(e) => {
-                                                const { id } = this.props.auth.user
-                                                this.props.addFriend(pendingfriend.id, id)
-                                                setTimeout(() => {
-                                                    this.props.friendListUpdater(id)
-                                                    this.props.onGrabId(pendingfriend.id)
-                                                    this.props.onAddFriend(pendingfriend.id, id)
-                                                }, 500)
+                                        <div 
+                                            style={friendImgAndName}
+                                            onClick={()=> {
+                                                this.props.unloadFriend()
+                                            }}    
+                                        >
+                                            <img src={pendingfriend.image} alt='' />
+                                            <span style={friendName}>{pendingfriend.username.slice(0,1).toUpperCase() + pendingfriend.username.slice(1).toLowerCase()}</span>
+                                        </div>
+                                        <div style={friendButtons}>
+                                            <button
+                                                style={noSign}
+                                                onClick={() => {
+                                                    const { id } = this.props.auth.user
+                                                    this.props.removePending(pendingfriend.id, id)
+                                                    setTimeout(() => {
+                                                        this.props.friendListUpdater(id)
+                                                    }, 500)
+                                                }}><span style={noSign} className="glyphicon glyphicon-remove"></span></button>
+                                            <button
+                                                style={okSign}
+                                                onClick={(e) => {
+                                                    const { id } = this.props.auth.user
+                                                    this.props.addFriend(pendingfriend.id, id)
+                                                    setTimeout(() => {
+                                                        this.props.friendListUpdater(id)
+                                                        this.props.onGrabId(pendingfriend.id)
+                                                        this.props.onAddFriend(pendingfriend.id, id)
+                                                    }, 500)
 
-                                            }}><span style={okSign} className="glyphicon glyphicon-ok"></span></button>
+                                                }}><span style={okSign} className="glyphicon glyphicon-ok"></span></button>
+                                        </div>
                                     </div>
                                 )
                             })}
@@ -155,21 +163,24 @@ class Friends extends Component {
                         )
                     }
                     <div style={friendsListWrapper}>
-                        <span style={friendsListTitle}>Online</span>
+                        <span style={friendsListTitleOnline}>Online</span>
                         {this.state.friendsList && this.state.friendsList.map((friend, index) => {
                             if (this.state.onlineFriends.indexOf(friend._id) !== -1) {
                                 return (
-                                    <div key={index}>
-
-                                        <input hidden id={friend._id} />
-                                        <span
+                                    <div key={index} style={currentOnlineFriendCard}>
+                                        <div 
+                                            style={friendImgAndName}
                                             onClick={e => {
-                                                this.props.loadFriend(e.target.parentNode.firstChild.id, e.target.innerHTML)
+                                                this.props.loadFriend(friend._id, friend.username, friend.image)
                                             }}
-                                        >{friend.username}</span>
+                                        >
+                                            <img src={friend.image} />
+                                            <span style={friendNameOnline}>{friend.username.slice(0,1).toUpperCase() + friend.username.slice(1).toLowerCase()}</span>
+                                        </div>
                                         <button
+                                            style={friendRemoveBtn} 
                                             onClick={e => {
-                                                const friendId = e.target.parentNode.firstChild.id
+                                                const friendId = friend._id
                                                 const { id } = this.props.auth.user
                                                 this.props.removeFriend(friendId, id)
                                                 setTimeout(() => {
@@ -177,7 +188,7 @@ class Friends extends Component {
                                                     this.props.onRemoveFriend(friendId, id)
                                                     this.props.newOfflineFriend(friendId)
                                                 }, 500)
-                                            }}>remove</button>
+                                            }}><span style={friendRemoveBtn} className='glyphicon glyphicon-remove'></span></button>
                                     </div>
                                 )
                             } else {
@@ -185,29 +196,37 @@ class Friends extends Component {
                             }
                         })}
                         <br />
-                        <span style={friendsListTitle}>Offline</span>
+                        <span style={friendsListTitleOffline}>Offline</span>
                         {this.state.friendsList && this.state.friendsList.map((friend, index) => {
                             if (this.state.onlineFriends.indexOf(friend._id) === -1) {
                                 return (
-                                    <div key={index}>
-
-                                        <input hidden id={friend._id} />
-                                        <span
-                                            onClick={e => {
-                                                this.props.loadFriend(e.target.parentNode.firstChild.id, e.target.innerHTML)
+                                    <div key={index} style={currentFriendCard}>
+                                        <div 
+                                            style={friendImgAndName}
+                                            onClick={()=> {
+                                                this.props.unloadFriend()
                                             }}
-                                        >{friend.username}</span>
-                                        <button
-                                            onClick={e => {
-                                                const friendId = e.target.parentNode.firstChild.id
-                                                const { id } = this.props.auth.user
-                                                this.props.removeFriend(friendId, id)
-                                                setTimeout(() => {
-                                                    this.props.onGrabId(friendId)
-                                                    this.props.onRemoveFriend(friendId, id)
-                                                    this.props.newOfflineFriend(friendId)
-                                                }, 500)
-                                            }}>remove</button>
+                                        >
+                                            <span
+                                                style={friendName}
+                                            >{friend.username.slice(0,1).toUpperCase() + friend.username.slice(1).toLowerCase()}</span>
+                                        </div>
+                                        <div style={friendListButtons}>
+                                            <button
+                                                style={friendRemoveBtn}
+                                                onClick={e => {
+                                                    const friendId = friend._id
+                                                    const { id } = this.props.auth.user
+                                                    this.props.removeFriend(friendId, id)
+                                                    
+                                                    setTimeout(() => {
+                                                        this.props.onGrabId(friendId)
+                                                        this.props.onRemoveFriend(friendId, id)
+                                                        this.props.newOfflineFriend(friendId)
+                                                    }, 500)
+                                                }}><span style={friendRemoveBtn} className='glyphicon glyphicon-remove'></span>
+                                            </button>
+                                        </div>
                                     </div>
                                 )
                             } else {
@@ -232,13 +251,16 @@ Friends.propTypes = {
     addPending: PropTypes.func.isRequired,
     friendListUpdater: PropTypes.func.isRequired,
     removePending: PropTypes.func.isRequired,
-    newOfflineFriend: PropTypes.func.isRequired
+    newOfflineFriend: PropTypes.func.isRequired,
+    unloadFriend: PropTypes.func.isRequired,
+    messages: PropTypes.object
 };
 
 const mapStateToProps = state => ({
     auth: state.auth,
     friend: state.friend,
-    friendsOnline: state.friend
+    friendsOnline: state.friend,
+    messages: state.friend.messageWith,
 });
 
 
@@ -252,13 +274,21 @@ export default connect(mapStateToProps, {
     addPending,
     friendListUpdater,
     removePending,
-    newOfflineFriend
+    newOfflineFriend, 
+    unloadFriend
 })(Friends)
 
 const friendsWrapper = {
-    borderLeft: '1px solid black',
     padding: '5px',
-    height: '500px',
+    height: '600px',
+    width: '300px',
+    margin: 'auto',
+    borderLeft: '1px solid black'
+}
+
+const nonFriendsWrapper = {
+    padding: '5px',
+    height: '600px',
     width: '300px',
     margin: 'auto',
 }
@@ -336,7 +366,7 @@ const friendInfo = {
     display: 'flex',
     alignItems: 'center',
 }
-////
+
 const friendsInfoButton = {
     backgroundColor: 'white',
     border: 'none',
@@ -362,7 +392,54 @@ const pendingTitle = {
 }
 
 const friendCard = {
-    padding: '5px'
+    padding: '5px',
+    marginBottom: '3px',
+    border: '1px solid blue',
+    display: 'inline-flex',
+    width: '100%',
+    justifyContent: 'space-between'
+}
+
+const currentFriendCard = {
+    padding: '5px',
+    marginBottom: '3px',
+    display: 'inline-flex',
+    width: '100%',
+    justifyContent: 'space-between',
+    fontSize: '10px'
+}
+
+const currentOnlineFriendCard = {
+    padding: '5px',
+    marginBottom: '3px',
+    display: 'inline-flex',
+    width: '100%',
+    justifyContent: 'space-between',
+    border: '1px solid green'
+}
+
+const friendImgAndName = {
+    display: 'flex',
+    alignItems: 'start',
+}
+
+const friendName = {
+    marginLeft: '5px',
+}
+
+const friendNameOnline = {
+    marginLeft: '5px',
+    color: 'green'
+}
+
+const friendButtons = {
+    display: 'flex',
+    alignItems: 'end'
+}
+
+const friendListButtons = {
+    display: 'flex',
+    alignItems: 'start'
 }
 
 const okSign = {
@@ -377,13 +454,30 @@ const noSign = {
     backgroundColor: 'white'
 }
 
-const friendsListTitle = {
+const friendsListTitleOnline = {
     backgroundColor: 'white',
     display: 'block',
     width: '100%',
     marginBottom: '5px',
     padding: '5px 0',
     textAlign: 'center',
-    borderBottom: '1px solid grey'
+    borderBottom: '1px solid green',
+    color: 'green'
 }
 
+const friendsListTitleOffline = {
+    backgroundColor: 'white',
+    display: 'block',
+    width: '100%',
+    marginBottom: '5px',
+    padding: '5px 0',
+    textAlign: 'center',
+    borderBottom: '1px solid grey',
+    fontSize: '10px'
+}
+
+const friendRemoveBtn = {
+    backgroundColor: 'white',
+    border: 'none',
+    color: 'red'
+}

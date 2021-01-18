@@ -3,7 +3,7 @@ import axios from 'axios'
 import {
     FRIEND_SEARCH, FRIEND_SUCCESS, FRIEND_FAIL, FRIEND_NOTFOUND, CLEAR_FRIEND_ERROR,
     LOAD_FRIEND, SAVE_MESSAGE, CURRENT_MESSAGE, ADD_TO_PENDING, REMOVE_PENDING,
-    ONLINE_FRIENDS, NEWONLINE_FRIEND, NEWOFFLINE_FRIEND, LOGOUT_MESSAGE
+    ONLINE_FRIENDS, NEWONLINE_FRIEND, NEWOFFLINE_FRIEND, LOGOUT_MESSAGE, UNLOAD_FRIEND
 } from './types'
 
 
@@ -65,7 +65,7 @@ export const addPending = (userToAdd, user, usernameToAdd, image) => dispatch =>
 }
 
 export const addFriend = (userToAdd, user) => dispatch => {
-  
+
     axios.post('http://localhost:8080/user/addfriend', {
         body: {
             userToAdd: userToAdd,
@@ -131,13 +131,20 @@ export const removePending = (userToRemove, user) => dispatch => {
 
 }
 
-export const loadFriend = (id, username) => dispatch => {
+export const loadFriend = (id, username, image) => dispatch => {
     dispatch({
         type: LOAD_FRIEND,
         payload: {
             id: id,
             username: username,
+            image: image
         }
+    })
+}
+
+export const unloadFriend = () => dispatch => {
+    dispatch({
+        type: UNLOAD_FRIEND
     })
 }
 

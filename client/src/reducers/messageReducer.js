@@ -1,4 +1,4 @@
-import { FRIEND_FAIL, FRIEND_NOTFOUND, FRIEND_SUCCESS, FRIEND_SEARCH, CLEAR_FRIEND_ERROR, LOAD_FRIEND, SAVE_MESSAGE, CURRENT_MESSAGE, ADD_TO_PENDING, REMOVE_PENDING, ONLINE_FRIENDS, NEWONLINE_FRIEND, NEWOFFLINE_FRIEND, LOGOUT_MESSAGE } from '../actions/types';
+import { FRIEND_FAIL, FRIEND_NOTFOUND, FRIEND_SUCCESS, FRIEND_SEARCH, CLEAR_FRIEND_ERROR, LOAD_FRIEND, SAVE_MESSAGE, CURRENT_MESSAGE, ADD_TO_PENDING, REMOVE_PENDING, ONLINE_FRIENDS, NEWONLINE_FRIEND, NEWOFFLINE_FRIEND, LOGOUT_MESSAGE, UNLOAD_FRIEND } from '../actions/types';
 
 const initialState = {
     user: '',
@@ -84,6 +84,11 @@ export default function error(state = initialState, action) {
             return {
                 ...state,
                 messageWith: action.payload
+            }
+        case UNLOAD_FRIEND: 
+            return {
+                ...state,
+                messageWith: {}
             }
         case SAVE_MESSAGE:
             if (!state.messages) {

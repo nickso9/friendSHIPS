@@ -1,13 +1,22 @@
 @import url('https://fonts.googleapis.com/css2?family=Yusei+Magic&display=swap');
 @import url("//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css");
 
+html {
+  height: 100%;
+  width: 100%;
+}
+
 body {
+  padding: 0;
   margin: 0;
   font-family: 'Yusei Magic', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   letter-spacing: 1px;
+  height: 100%;
+  
 }
+
 
 input:focus {
   outline: none

@@ -38,10 +38,11 @@ class Messages extends Component {
     }
 
     render() {
+        console.log(this.props.messages)
         return (
             <div style={messageOuterWrapper}>
                 
-                <div style={messageWrapper}>
+                <div style={this.props.messages.id ? messageWrapper : noneMessageWrapper}>
                     <Chat onPassId={this.onPassId} />
                     <Friends onGrabId={this.onGrabId} onAddFriend={this.onAddFriend} onRemoveFriend={this.onRemoveFriend}/>
                 </div>
@@ -53,9 +54,11 @@ class Messages extends Component {
 
 Messages.propTypes = {
     user: PropTypes.object.isRequired,
+    messages: PropTypes.object,
 }
 
 const mapStateToProps = state => ({ 
+    messages: state.friend.messageWith,
     user: state.auth.user
 })
 
@@ -69,7 +72,16 @@ const messageWrapper = {
     borderRadius: '2%'
 }
 
+const noneMessageWrapper = {
+    margin: 'auto',
+    display: 'flex',
+    width: '300px',
+    backgroundColor: 'white',
+    borderRadius: '2%'
+}
+
 const messageOuterWrapper = {
+    paddingTop: '25px',
     backgroundColor: '#0067a5',
-    height: '100vh'
+    height: '100vh',
 }
