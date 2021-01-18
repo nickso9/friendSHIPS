@@ -174,7 +174,7 @@ const messageWrapper = {
 
 const inputStyle = {
     display: 'inline-block',
-    width: '400px',
+    width: '300px',
     fontSize: '20px',
     border: '1px solid black',
     margin: 'auto'
@@ -182,29 +182,32 @@ const inputStyle = {
 
 const buttonStyle = {
     padding: '6px 7px',
-    border: '1px solid black',
-    backgroundColor: 'white'
+    border: 'none',
+    backgroundColor: 'blue',
+    marginLeft: '10px',
+    color: 'white', 
+    letterSpacing: '1px'
 }
 
 const messageBanner = {
     fontSize: '25px',
     height: '67px',
     borderBottom: '1px solid grey',
-    padding: '10px',
+    padding: '10px 20px',
 }
 
 const chatBox = {
     display: 'flex',
     alignItems: 'center',
     height: '60px',
-
-
+    backgroundColor: 'gainsboro'
 }
 
 const inputWrapper = {
     display: 'flex',
     justifyContent: 'space-around', 
     margin: 'auto',
+
 }
 
 const headerDiv = {

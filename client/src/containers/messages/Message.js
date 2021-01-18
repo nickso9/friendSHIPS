@@ -69,7 +69,8 @@ const messageWrapper = {
     display: 'flex',
     width: '700px',
     backgroundColor: 'white',
-    borderRadius: '2%'
+    borderRadius: '25px',
+    overflow: 'hidden',
 }
 
 const noneMessageWrapper = {
@@ -77,7 +78,7 @@ const noneMessageWrapper = {
     display: 'flex',
     width: '300px',
     backgroundColor: 'white',
-    borderRadius: '2%'
+    borderRadius: '25px'
 }
 
 const messageOuterWrapper = {

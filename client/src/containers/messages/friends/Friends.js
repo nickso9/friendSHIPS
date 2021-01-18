@@ -301,7 +301,7 @@ const innerWrapper = {
 const friendsInput = {
     width: '100%',
     padding: '15px 5px',
-    borderBottom: '1px solid grey'
+    // borderBottom: '1px solid grey'
 }
 
 const searchInput = {
@@ -411,7 +411,8 @@ const currentFriendCard = {
 
 const currentOnlineFriendCard = {
     padding: '5px',
-    marginBottom: '3px',
+    marginTop: '-1px',
+    // marginBottom: '0',
     display: 'inline-flex',
     width: '100%',
     justifyContent: 'space-between',
@@ -458,7 +459,6 @@ const friendsListTitleOnline = {
     backgroundColor: 'white',
     display: 'block',
     width: '100%',
-    marginBottom: '5px',
     padding: '5px 0',
     textAlign: 'center',
     borderBottom: '1px solid green',
