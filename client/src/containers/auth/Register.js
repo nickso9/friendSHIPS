@@ -63,9 +63,9 @@ class Register extends Component {
     render() {
         return (
             <form style={registerWrapper} onSubmit={this.onSubmit}>
-                <h1>Register User</h1>
+                <span style={registerText}>Register User</span>
 
-                <div style={inputWrapper}>
+                <div style={outterImageWrapper}>
                     {this.state.images.map((image, index) => {
                         return (
                             <div style={innerImageWrappers} key={index} >
@@ -157,14 +157,20 @@ export default connect(mapStateToProps, { register })(Register);
 
 const registerWrapper = {
     width: '500px',
-    boxShadow: '2px 2px 2px 3px #ccc',
     margin: '50px auto',
-    padding: '35px'
+    padding: '35px',
+    backgroundColor: 'white',
+    borderRadius: '25px'
 }
 
 const inputWrapper = {
     width: '90%',
-    margin: 'auto'
+    margin: 'auto',
+    color: '#ff4500',
+}
+
+const outterImageWrapper = {
+    margin: '15px 0'
 }
 
 const innerImageWrappers = {
@@ -174,15 +180,16 @@ const innerImageWrappers = {
 
 const inputClass = {
     display: 'block',
-    margin: '15px auto',
+    margin: '5px auto',
     width: '100%',
-    fontSize: '25px'
+    fontSize: '25px',
+    border: '1px solid #0067a5'
 }
 
 const inputButton = {
     fontSize: '15px',
     display: 'block',
-    marginTop: '50px',
+    marginTop: '35px',
     backgroundColor: 'white',
     border: '1px solid black',
     padding: '10px 20px',
@@ -192,8 +199,13 @@ const inputButton = {
 }
 
 const errorWrapper = {
-    height: '40px',
+    height: '20px',
     color: 'red',
     fontSize: '12px',
     width: '90%'
+}
+
+const registerText = {
+    fontSize: '26px',
+    // color: '#ff4500',
 }

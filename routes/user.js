@@ -57,7 +57,7 @@ router.post('/register', async (req, res) => {
             return res.status(400).json({ msg: 'password needs to be atleast 5 characters.' })
         };
         if (password !== passwordCheck) {
-            return res.status(400).json({ msg: "password doesn't match." })
+            return res.status(400).json({ msg: "passwords don't match." })
         };
 
         const existingUser = await User.findOne({ email: email });

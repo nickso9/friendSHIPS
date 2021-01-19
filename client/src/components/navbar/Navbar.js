@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { NavLink } from 'react-router-dom'
-import shipLogo from '../../images/smallship.png'
+import shipLogo from '../../images/smallshiplogo.png'
 
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -10,9 +10,6 @@ import { logout } from '../../actions/userActions'
 import { logoutMessage } from '../../actions/messageActions'
 
 class Navbar extends Component {
-
-
-
 
     render() {
 
@@ -65,7 +62,7 @@ class Navbar extends Component {
         } else {
             navbarSettings = (
                 <div style={navbarBrand}>
-                    <span style={navbarWelcome}>Welcome {user.username}!!</span>
+                    {/* <span style={navbarWelcome}>Welcome {user.username}!!</span> */}
                     <button 
                         style={inputStyle}
                         onMouseEnter={(e) => {
@@ -155,12 +152,15 @@ const brandWrapper = {
 
 const navbarBrand = {
     textDecoration: 'none',
-    color: 'white'
+    color: '#ff4500',
+    // paddingRight: '10px'
 }
 
 const brandText = {
     fontSize: '25px',
-    alignSelf: 'flex-end'
+    alignSelf: 'flex-end',
+    marginLeft: '5px',
+    fontWeight: '900',
 }
 
 const inputWrapper = {
@@ -175,7 +175,8 @@ const inputStyle = {
     backgroundColor: 'white',
     border: '0',
     padding: '15px',
-    outline: 'none'
+    outline: 'none',
+    marginRight: '5px'
 }
 
 const navbarWelcome = {

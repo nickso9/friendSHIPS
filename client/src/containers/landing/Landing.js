@@ -7,10 +7,15 @@ class Landing extends Component {
     render() {
         
         return (
-            <div>Landing</div>
+            <div style={landingWrapper}>Landing</div>
         )
     }
 }
 
 
 export default Landing
+
+const landingWrapper = {
+    backgroundColor: '#0067a5',
+    height: '100%',
+}

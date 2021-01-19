@@ -48,7 +48,7 @@ class Login extends Component {
     render() {
         return (
             <form style={loginWrapper} onSubmit={this.onSubmit}>
-                <h1>Login</h1>
+                <span style={loginText}>Login</span>
 
                 <div style={inputWrapper}>
                     <label htmlFor="email">Email:</label>
@@ -116,24 +116,26 @@ export default connect(mapStateToProps, { login, clearErrors })(Login);
 
 const loginWrapper = {
     width: '500px',
-    height: '350px',
-    boxShadow: '2px 2px 2px 3px #ccc',
     margin: 'auto',
     marginTop: '50px',
-    padding: '35px'
+    padding: '35px',
+    backgroundColor: 'white',
+    color: '#ff4500'
 }
 
 const inputWrapper = {
     width: '90%',
-    margin: 'auto'
+    margin: 'auto',
+    marginTop: '15px'
 }
 
 
 const inputClass = {
     display: 'block',
-    margin: '15px auto',
+    margin: '5px auto',
     width: '100%',
-    fontSize: '25px'
+    fontSize: '25px',
+    border: '1px solid #0067a5'
 }
 
 const inputButton = {
@@ -152,4 +154,9 @@ const errorWrapper = {
     color: 'red',
     fontSize: '12px',
     width: '90%'
+}
+
+const loginText = {
+    fontSize: '26px',
+    color: 'black',
 }
