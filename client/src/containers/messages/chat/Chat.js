@@ -98,8 +98,11 @@ class Chat extends Component {
                             <div style={messageBanner}>
                                 
                                         <div style={headerDiv}>
-                                            <div>{this.props.messages.username.slice(0,1).toUpperCase() + this.props.messages.username.slice(1).toLowerCase()}</div>
-                                            <div><img src={this.props.messages.image} /></div>    
+                                            <div style={messagingWrapper}>
+                                                <p style={messagingText}>Messaging:</p>
+                                                {this.props.messages.username.slice(0,1).toUpperCase() + this.props.messages.username.slice(1).toLowerCase()}
+                                            </div>
+                                            <div><img src={this.props.messages.image} alt=''/></div>    
                                         </div>
                                 
                             </div>
@@ -213,4 +216,13 @@ const inputWrapper = {
 const headerDiv = {
     display: 'flex',
     justifyContent: 'space-between'
+}
+
+const messagingWrapper = {
+    display: 'inline-block'
+}
+
+const messagingText = {
+    fontSize: '9px',
+    marginBottom: '0'
 }

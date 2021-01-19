@@ -174,7 +174,7 @@ class Friends extends Component {
                                                 this.props.loadFriend(friend._id, friend.username, friend.image)
                                             }}
                                         >
-                                            <img src={friend.image} />
+                                            <img src={friend.image} alt=''/>
                                             <span style={friendNameOnline}>{friend.username.slice(0,1).toUpperCase() + friend.username.slice(1).toLowerCase()}</span>
                                         </div>
                                         <button

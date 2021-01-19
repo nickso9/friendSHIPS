@@ -38,7 +38,7 @@ class Messages extends Component {
     }
 
     render() {
-        console.log(this.props.messages)
+        
         return (
             <div style={messageOuterWrapper}>
                 
@@ -82,7 +82,7 @@ const noneMessageWrapper = {
 }
 
 const messageOuterWrapper = {
-    paddingTop: '25px',
+    paddingTop: '5px',
     backgroundColor: '#0067a5',
     height: '100vh',
 }

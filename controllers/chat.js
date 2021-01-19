@@ -53,9 +53,7 @@ module.exports = function (socket) {
     })
 
     socket.on('disconnect', () => {
-        console.log(connectedUsers)
         delete connectedUsers[usernameid]
-        console.log(connectedUsers)
     })
 
     

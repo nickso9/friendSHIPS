@@ -1,4 +1,5 @@
 import axios from 'axios'
+import moment from 'moment';
 
 import {
     FRIEND_SEARCH, FRIEND_SUCCESS, FRIEND_FAIL, FRIEND_NOTFOUND, CLEAR_FRIEND_ERROR,
@@ -149,9 +150,13 @@ export const unloadFriend = () => dispatch => {
 }
 
 export const saveMessages = (from, to, message) => dispatch => {
+    const d = new Date()
+    const timeOfMessage = moment(d).format('MM/DD, h:mm a')
+
     dispatch({
         type: SAVE_MESSAGE,
         payload: {
+            timeOfMessage,
             from,
             to,
             message

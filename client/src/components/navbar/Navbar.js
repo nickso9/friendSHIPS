@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { NavLink } from 'react-router-dom'
+import shipLogo from '../../images/smallship.png'
 
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -16,8 +17,6 @@ class Navbar extends Component {
     render() {
 
         const { isAuthenticated, user } = this.props.auth;
-
-
 
         let navbarSettings;
 
@@ -93,7 +92,9 @@ class Navbar extends Component {
                 <div style={navbarWrapper}>
                     <div style={navbarBrandWrapper}>
                         <NavLink to='/' style={navbarBrand}>
-                            <h1>FriendSHIPS</h1>
+                            <div style={brandWrapper}>
+                            <span style={brandText}>FriendSHIPS</span>
+                            </div>
                         </NavLink>  
                     </div>
                 
@@ -130,7 +131,7 @@ const navbarWrapper = {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
-    height: '100px',
+    height: '125px',
     width: '100%',
     fontSize: '16px',
     backgroundColor: '#0067a5',
@@ -142,9 +143,24 @@ const navbarBrandWrapper = {
     marginTop: '-10px',
 }
 
+const brandWrapper = {
+    width: '300px',
+    marginLeft: '20px',
+    backgroundRepeat: 'no-repeat',
+    backgroundImage: `url(${shipLogo})`,
+    height: '100px',
+    display: 'flex',
+    alignItems: 'end'
+}
+
 const navbarBrand = {
     textDecoration: 'none',
     color: 'white'
+}
+
+const brandText = {
+    fontSize: '25px',
+    alignSelf: 'flex-end'
 }
 
 const inputWrapper = {
@@ -158,8 +174,7 @@ const inputStyle = {
     marginTop: '3px',
     backgroundColor: 'white',
     border: '0',
-    boxShadow:  '2px 3px 2px #ccc',
-    padding: '10px',
+    padding: '15px',
     outline: 'none'
 }
 

@@ -26,20 +26,26 @@ class Message extends Component {
             {this.props.messages && this.props.messages.map((e, index) => {
                 if (e.from === this.props.switch.id) {
                     return (
+                        
                         <div key={index} style={messageBox}>
                             <div style={imageWrapper}>
-                                <img src={this.state.image} style={messageBoxImage}/>
+                                <img src={this.state.image} style={messageBoxImage} alt=''/>
                             </div> 
                             <div style={messageBoxText}>
-                                {e.message}
+                                <div style={messageYou}>{e.message}</div>
+                                <div style={timeStampYou}>{e.timeOfMessage}</div>
                             </div>
                         </div>
+                        
                     )
                 } 
                 
                 return (
                     <div key={index} style={messageMeBox}>
-                        <div style={messageMeBoxText}>{e.message}</div>
+                        <div style={messageMeBoxText}>
+                            <div style={messageMe}>{e.message}</div>
+                            <div style={timeStampMe}>{e.timeOfMessage}</div>
+                        </div>
                     </div>
                 )
             })}
@@ -68,7 +74,6 @@ const messageBox = {
 }
 
 const messageBoxText = {
-    backgroundColor: '#bcd4e6',
     maxWidth: '100%',
     wordWrap: 'break-word',
     marginLeft: '10px',
@@ -86,14 +91,23 @@ const messageMeBox = {
     justifyContent: 'end'
 }
 
+const messageYou = {
+    backgroundColor: '#bcd4e6',
+    padding: '10px'
+}
+
 const messageMeBoxText = {
     marginRight: '10px',
     marginLeft: 'auto',
-    backgroundColor: '#F0F0F0',
     maxWidth: '100%',
     wordWrap: 'break-word',
     padding: '3px 10px',
     overflow: 'hidden'
+}
+
+const messageMe = {
+    backgroundColor: '#F0F0F0',
+    padding: '10px'
 }
 
 const imageWrapper = {
@@ -105,5 +119,13 @@ const messageBoxImage = {
     width: '25px'
 }
 
+const timeStampMe = {
+    fontSize: '8px',
+    marginTop: '3px',
+    textAlign: 'right'
+}
 
-
+const timeStampYou = {
+    fontSize: '8px',
+    marginTop: '3px'
+}
