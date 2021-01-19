@@ -124,7 +124,7 @@ class Chat extends Component {
                                     <button 
                                         type="submit"
                                         style={buttonStyle}
-                                    >Send</button>
+                                    ><span className='glyphicon glyphicon-send'></span></button>
                                 </div>
                             </form>
                         </div>
@@ -166,26 +166,26 @@ const chatWrapper = {
 }
 
 const messageWrapper = {
-    overflowY: 'auto',
+    overflow: 'scroll',
     height: '475px',
     display: 'flex',
-    alignItems: 'flex-end',
+    flexDirection: 'column-reverse'
 }
 
 const inputStyle = {
     display: 'inline-block',
     width: '300px',
-    fontSize: '20px',
-    border: '1px solid black',
+    fontSize: '15px',
+    border: '1px solid lightgrey',
     margin: 'auto'
 }
 
 const buttonStyle = {
-    padding: '6px 7px',
     border: 'none',
-    backgroundColor: 'blue',
+    borderBottom: '1px solid blue',
+    backgroundColor: 'gainsboro',
     marginLeft: '10px',
-    color: 'white', 
+    color: 'blue', 
     letterSpacing: '1px'
 }
 
