@@ -116,11 +116,11 @@ export default connect(mapStateToProps, { login, clearErrors })(Login);
 
 const loginWrapper = {
     width: '500px',
-    margin: 'auto',
-    marginTop: '50px',
+    margin: '50px auto',
     padding: '35px',
     backgroundColor: 'white',
-    color: '#ff4500'
+    color: '#ff4500',
+    borderRadius: '25px'
 }
 
 const inputWrapper = {
@@ -141,12 +141,13 @@ const inputClass = {
 const inputButton = {
     fontSize: '15px',
     display: 'block',
-    marginTop: '25px',
+    marginTop: '35px',
     backgroundColor: 'white',
     border: '1px solid black',
     padding: '10px 20px',
     outline: 'none',
-    float: 'right'
+    marginLeft: 'auto',
+    marginRight: '0'
 }
 
 const errorWrapper = {
