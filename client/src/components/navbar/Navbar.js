@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import { NavLink } from 'react-router-dom'
 import shipLogo from '../../images/smallshiplogo.png'
 
 import PropTypes from 'prop-types';
@@ -86,11 +85,15 @@ class Navbar extends Component {
         return (
                 <div style={navbarWrapper}>
                     <div style={navbarBrandWrapper}>
-                        <NavLink to='/' style={navbarBrand}>
+                        <div 
+                            onClick={()=> {
+                                this.props.goLogout()
+                            }}
+                            style={navbarBrand}>
                             <div style={brandWrapper}>
                             <span style={brandText}>FriendSHIPS</span>
                             </div>
-                        </NavLink>  
+                        </div>  
                     </div>
                 
                     <div style={inputWrapper}>
