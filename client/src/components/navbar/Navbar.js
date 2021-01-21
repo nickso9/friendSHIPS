@@ -62,7 +62,6 @@ class Navbar extends Component {
         } else {
             navbarSettings = (
                 <div style={navbarBrand}>
-                    {/* <span style={navbarWelcome}>Welcome {user.username}!!</span> */}
                     <button 
                         style={inputStyle}
                         onMouseEnter={(e) => {
@@ -85,7 +84,6 @@ class Navbar extends Component {
 
 
         return (
-            <React.Fragment>
                 <div style={navbarWrapper}>
                     <div style={navbarBrandWrapper}>
                         <NavLink to='/' style={navbarBrand}>
@@ -99,7 +97,7 @@ class Navbar extends Component {
                         {navbarSettings}
                     </div>
                 </div>
-            </React.Fragment>
+    
         )
     }
 }   
