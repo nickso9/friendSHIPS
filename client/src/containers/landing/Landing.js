@@ -93,9 +93,8 @@ const brandTitleSmall = {
 }
 
 const imageOneWrapper = {
-    marginTop: '25px',
+    marginTop: '-55px',
     display: 'flex',
-    marginTop: '-20px'
 }
 
 const imageOneChat = {

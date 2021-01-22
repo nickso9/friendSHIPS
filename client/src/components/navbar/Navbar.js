@@ -12,7 +12,7 @@ class Navbar extends Component {
 
     render() {
 
-        const { isAuthenticated, user } = this.props.auth;
+        const { isAuthenticated } = this.props.auth;
 
         let navbarSettings;
 
@@ -180,7 +180,4 @@ const inputStyle = {
     marginRight: '5px'
 }
 
-const navbarWelcome = {
-    display: 'inline'
-}
 
