@@ -181,9 +181,7 @@ export default function error(state = initialState, action) {
                     ]
                 }
         case REMOVE_NEW_MESSAGE:
-            console.log(state.newMessages)
             const updatedNewMessage = [...state.newMessages].filter(e => e !== action.payload)
-            console.log(updatedNewMessage)
             return {
                 ...state,
                 newMessages: updatedNewMessage

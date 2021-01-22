@@ -91,7 +91,9 @@ class Navbar extends Component {
                             }}
                             style={navbarBrand}>
                             <div style={brandWrapper}>
-                            <span style={brandText}>FriendSHIPS</span>
+                            <span style={brandText}>
+                                {/* FriendSHIPS */}
+                                </span>
                             </div>
                         </div>  
                     </div>

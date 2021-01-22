@@ -70,7 +70,9 @@ class Friends extends Component {
         
 
         return (
+           
             <div style={this.props.messages && this.props.messages.id ? friendsWrapper : nonFriendsWrapper}>
+                <div style={welcomeName}>Welcome {this.props.auth.user.username} !</div>
                 <div style={innerWrapper}>
                     <form style={friendsInput} onSubmit={this.onSubmit}>
                         <input
@@ -251,9 +253,20 @@ class Friends extends Component {
                             }
                         })}
                     </div>
-
+                    
                 </div>
+                <div style={closeIcon}>
+                    <span 
+                        onClick={()=> {
+                            this.props.loadFriend('', '')
+                        }}
+                        className='glyphicon glyphicon-eye-close'>
+                        
+                    </span>
+                </div>        
             </div>
+            
+           
         )
     }
 
@@ -303,6 +316,7 @@ export default connect(mapStateToProps, {
 })(Friends)
 
 const friendsWrapper = {
+    position: 'relative',
     padding: '5px',
     height: '600px',
     width: '300px',
@@ -311,6 +325,7 @@ const friendsWrapper = {
 }
 
 const nonFriendsWrapper = {
+    position: 'relative',
     padding: '5px',
     height: '600px',
     width: '300px',
@@ -321,6 +336,9 @@ const innerWrapper = {
     display: 'block'
 }
 
+const welcomeName = {
+    textAlign: 'center'
+}
 
 const friendsInput = {
     width: '100%',
@@ -511,4 +529,11 @@ const friendRemoveBtn = {
     backgroundColor: 'white',
     border: 'none',
     color: 'red'
+}
+
+const closeIcon = {
+    color: '#0067a5',
+    position: 'absolute',
+    bottom: '1%',
+    left: '48%'
 }
