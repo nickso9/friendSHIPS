@@ -6,12 +6,7 @@ require('dotenv').config();
 const app = express();
 const port = process.env.PORT || 5000
 
-if (process.env.NODE_ENV === 'production') {
-    app.use(express.static('client/build'))
-    app.get('*', (req,res) => {
-        res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'))
-    })
-}
+
 
 const server = app.listen(port, () => console.log('server running.'))
 const io = require('./socket').init(server);
@@ -22,17 +17,17 @@ const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@${p
 
 app.use(express.json())
 
-mongoose.connect(uri, 
-    { 
-        useNewUrlParser: true, 
-        useUnifiedTopology: true , 
+mongoose.connect(uri,
+    {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
         useCreateIndex: true,
-        useFindAndModify: false 
+        useFindAndModify: false
     }
-).then(() => { 
+).then(() => {
     console.log('db connected')
 })
-.catch(err => console.log(err))
+    .catch(err => console.log(err))
 
 
 
@@ -48,3 +43,10 @@ const userRoute = require('./routes/actions')
 
 app.use('/users', usersRoute)
 app.use('/user', userRoute)
+
+if (process.env.NODE_ENV === 'production') {
+    app.use(express.static('client/build'))
+    app.get('*', (req, res) => {
+        res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'))
+    })
+}
