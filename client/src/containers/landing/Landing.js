@@ -71,7 +71,7 @@ const landingWrapper = {
     width: '800px',
     margin: '0 auto',
     color: 'white',
-    fontSize: '18px'
+    fontSize: '18px',
 }
 
 const brandWrapper = {
@@ -94,7 +94,8 @@ const brandTitleSmall = {
 
 const imageOneWrapper = {
     marginTop: '25px',
-    display: 'flex'
+    display: 'flex',
+    marginTop: '-20px'
 }
 
 const imageOneChat = {
