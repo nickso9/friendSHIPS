@@ -6,8 +6,13 @@ require('dotenv').config();
 const app = express();
 const port = process.env.PORT || 5000
 
+if (process.env.NODE_ENV === 'production') {
+    app.use(express.static('client/build'))
+    app.get('*', (req, res) => {
+        res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'))
+    })
+}
 
-app.use((req, res) => res.sendFile(__dirname + './index.html'))
 const server = app.listen(port, () => console.log('server running.'))
 const io = require('./socket').init(server);
 
@@ -44,9 +49,3 @@ const userRoute = require('./routes/actions')
 app.use('/users', usersRoute)
 app.use('/user', userRoute)
 
-if (process.env.NODE_ENV === 'production') {
-    app.use(express.static('client/build'))
-    app.get('*', (req, res) => {
-        res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'))
-    })
-}
