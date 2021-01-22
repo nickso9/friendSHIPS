@@ -7,7 +7,7 @@ const app = express();
 const port = process.env.PORT || 5000
 
 
-app.use((req, res) => res.sendFile(INDEX, { root: __dirname }))
+app.use((req, res) => res.sendFile(__dirname + './index.html'))
 const server = app.listen(port, () => console.log('server running.'))
 const io = require('./socket').init(server);
 
