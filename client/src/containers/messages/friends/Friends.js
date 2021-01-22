@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import { friendListUpdater } from '../../../actions/userActions'
-import { addFriend, searchFriend, clearFriendError, removeFriend, loadFriend, addPending, removePending, newOfflineFriend, unloadFriend } from '../../../actions/messageActions';
+import { setUserId, addFriend, searchFriend, clearFriendError, removeFriend, loadFriend, addPending, removePending, newOfflineFriend, unloadFriend, removeNewMessage } from '../../../actions/messageActions';
 
 
 class Friends extends Component {
@@ -14,11 +14,16 @@ class Friends extends Component {
             username: '',
             friendsList: this.props.auth.user.friendsList,
             requestedfriend: this.props.auth.user.requestedfriend,
-            onlineFriends: this.props.friend.friendsOnline
+            onlineFriends: this.props.friend.friendsOnline,
+            unreadMessages: []
         }
 
         this.onSubmit = this.onSubmit.bind(this)
 
+    }
+
+    componentDidMount() {
+        this.props.setUserId(this.props.auth.user.id)
     }
 
     componentWillUnmount() {
@@ -57,7 +62,13 @@ class Friends extends Component {
         this.setState({ ...this.state, username: '' })
     }
 
+
+
     render() {
+
+        
+        console.log(this.props.unreadMessages)
+
         return (
             <div style={this.props.messages && this.props.messages.id ? friendsWrapper : nonFriendsWrapper}>
                 <div style={innerWrapper}>
@@ -172,6 +183,7 @@ class Friends extends Component {
                                             style={friendImgAndName}
                                             onClick={e => {
                                                 this.props.loadFriend(friend._id, friend.username, friend.image)
+                                                this.props.removeNewMessage(friend._id)
                                             }}
                                         >
                                             <img src={friend.image} alt=''/>
@@ -253,7 +265,11 @@ Friends.propTypes = {
     removePending: PropTypes.func.isRequired,
     newOfflineFriend: PropTypes.func.isRequired,
     unloadFriend: PropTypes.func.isRequired,
-    messages: PropTypes.object
+    messages: PropTypes.object,
+    totalMessages: PropTypes.array,
+    removeNewMessage: PropTypes.func.isRequired,
+    unreadMessages: PropTypes.array,
+    setUserId: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -261,8 +277,9 @@ const mapStateToProps = state => ({
     friend: state.friend,
     friendsOnline: state.friend,
     messages: state.friend.messageWith,
+    totalMessages: state.friend.messages,
+    unreadMessages: state.friend.newMessages
 });
-
 
 
 export default connect(mapStateToProps, {
@@ -275,7 +292,9 @@ export default connect(mapStateToProps, {
     friendListUpdater,
     removePending,
     newOfflineFriend, 
-    unloadFriend
+    unloadFriend,
+    removeNewMessage,
+    setUserId
 })(Friends)
 
 const friendsWrapper = {
@@ -301,7 +320,6 @@ const innerWrapper = {
 const friendsInput = {
     width: '100%',
     padding: '15px 5px',
-    // borderBottom: '1px solid grey'
 }
 
 const searchInput = {

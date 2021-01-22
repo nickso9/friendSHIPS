@@ -21,6 +21,7 @@ class Message extends Component {
  
 
     render() {
+        
         return (
             <div style={messageWrapper}>
             {this.props.messages && this.props.messages.map((e, index) => {

@@ -92,6 +92,7 @@ class Chat extends Component {
     }
 
     render() {
+        
             if (this.props.messages.username) {
                     return (
                         <div style={chatWrapper} >

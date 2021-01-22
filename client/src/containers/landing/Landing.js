@@ -8,7 +8,6 @@ import { goRegister } from '../../actions/pageActions'
 import picture1 from '../../images/MiL5KjLia.png'
 import picture2 from '../../images/MTLkzKxzc.png'
 import picture3 from '../../images/ship-clipart-15.png'
-import e from 'cors';
 
 class Landing extends Component {
 
@@ -28,14 +27,14 @@ class Landing extends Component {
                 </div>
                 <div style={imageTwoWrapper}>
                     <div style={imageTwoChat}>
-                        <span>I sure am, I can easily chat with my friends!</span>
+                        <span>I sure am, I can easily chat with all of my friends!</span>
                     </div>
                     <img src={picture2} alt='chat cartoon'/>
                 </div>
                 <div style={imageThreeWrapper}>
                     <img src={picture3} alt='chat cartoon'/>
                     <div style={imageThreeChat}>
-                        <span>You can chat too! Click 
+                        <span>Hey you! You can chat too. Click 
                             <span
                                 style={registerLink}
                                 onMouseEnter={(e)=> {

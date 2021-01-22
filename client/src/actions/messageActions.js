@@ -4,7 +4,8 @@ import moment from 'moment';
 import {
     FRIEND_SEARCH, FRIEND_SUCCESS, FRIEND_FAIL, FRIEND_NOTFOUND, CLEAR_FRIEND_ERROR,
     LOAD_FRIEND, SAVE_MESSAGE, CURRENT_MESSAGE, ADD_TO_PENDING, REMOVE_PENDING,
-    ONLINE_FRIENDS, NEWONLINE_FRIEND, NEWOFFLINE_FRIEND, LOGOUT_MESSAGE, UNLOAD_FRIEND
+    ONLINE_FRIENDS, NEWONLINE_FRIEND, NEWOFFLINE_FRIEND, LOGOUT_MESSAGE, UNLOAD_FRIEND,
+    REMOVE_NEW_MESSAGE, SET_USER_ID
 } from './types'
 
 
@@ -159,7 +160,7 @@ export const saveMessages = (from, to, message) => dispatch => {
             timeOfMessage,
             from,
             to,
-            message
+            message,
         }
     })
 }
@@ -205,4 +206,18 @@ export const logoutMessage = () => {
     return {
         type: LOGOUT_MESSAGE
     }
+}
+
+export const removeNewMessage = (id) => dispatch => {
+    dispatch({
+        type: REMOVE_NEW_MESSAGE,
+        payload: id
+    })
+}
+
+export const setUserId = (id) => dispatch => {
+    dispatch({
+        type: SET_USER_ID,
+        payload: id
+    })
 }

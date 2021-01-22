@@ -133,7 +133,7 @@ const navbarWrapper = {
     width: '100%',
     fontSize: '16px',
     backgroundColor: '#0067a5',
-
+    borderBottom: '2px solid white'
 }
 
 const navbarBrandWrapper = {

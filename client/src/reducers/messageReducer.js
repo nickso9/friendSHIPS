@@ -1,4 +1,4 @@
-import { FRIEND_FAIL, FRIEND_NOTFOUND, FRIEND_SUCCESS, FRIEND_SEARCH, CLEAR_FRIEND_ERROR, LOAD_FRIEND, SAVE_MESSAGE, CURRENT_MESSAGE, ADD_TO_PENDING, REMOVE_PENDING, ONLINE_FRIENDS, NEWONLINE_FRIEND, NEWOFFLINE_FRIEND, LOGOUT_MESSAGE, UNLOAD_FRIEND } from '../actions/types';
+import { SET_USER_ID, FRIEND_FAIL, FRIEND_NOTFOUND, FRIEND_SUCCESS, FRIEND_SEARCH, CLEAR_FRIEND_ERROR, LOAD_FRIEND, SAVE_MESSAGE, CURRENT_MESSAGE, ADD_TO_PENDING, REMOVE_PENDING, ONLINE_FRIENDS, NEWONLINE_FRIEND, NEWOFFLINE_FRIEND, LOGOUT_MESSAGE, UNLOAD_FRIEND, REMOVE_NEW_MESSAGE } from '../actions/types';
 
 const initialState = {
     user: '',
@@ -8,11 +8,19 @@ const initialState = {
     friendsList: [],
     messages: [],
     currentMessages: [],
-    friendsOnline: []
+    friendsOnline: [],
+    newMessages: [],
+    me: ''
 }
 
 export default function error(state = initialState, action) {
     switch (action.type) {
+        case SET_USER_ID:
+            console.log(action.payload)
+            return {
+                ...state,
+                me: action.payload
+            }
         case FRIEND_SEARCH:
             return {
                 ...state,
@@ -85,23 +93,94 @@ export default function error(state = initialState, action) {
                 ...state,
                 messageWith: action.payload
             }
-        case UNLOAD_FRIEND: 
+        case UNLOAD_FRIEND:
             return {
                 ...state,
                 messageWith: {}
             }
         case SAVE_MESSAGE:
+
+            if (action.payload.from === state.me) {
+                if (!state.messages) {
+                    return {
+                        ...state,
+                        messages: [action.payload]
+                    }
+                }
+                return {
+                    ...state,
+                    messages: [
+                        ...state.messages, action.payload
+                    ]
+                }
+            }
+
             if (!state.messages) {
+                if (state.messageWith.id !== action.payload.from) {
+
+                    if (!state.newMessages) {
+                        return {
+                            ...state,
+                            newMessages: [action.payload.from],
+                            messages: [action.payload]
+                        }
+                    } else {
+                        return {
+                            ...state,
+                            newMessages: [
+                                ...state.newMessages,
+                                action.payload.from
+                            ],
+                            messages: [action.payload]
+                        }
+                    }
+
+                }
                 return {
                     ...state,
                     messages: [action.payload]
                 }
             }
+
+            if (state.messageWith.id !== action.payload.from) {
+
+                if (!state.newMessages) {
+
+                    return {
+                        ...state,
+                        newMessages: [action.payload.from],
+                        messages: [
+                            ...state.messages, action.payload
+                        ]
+                    }
+                } else {
+
+                    return {
+                        ...state,
+                        newMessages: [
+                            ...state.newMessages,
+                            action.payload.from
+                        ],
+                        messages: [
+                            ...state.messages, action.payload
+                        ]
+                    }
+                }
+            }
+
             return {
                 ...state,
                 messages: [
                     ...state.messages, action.payload
                 ]
+            }
+        case REMOVE_NEW_MESSAGE:
+            console.log(state.newMessages)
+            const updatedNewMessage = [...state.newMessages].filter(e => e !== action.payload)
+            console.log(updatedNewMessage)
+            return {
+                ...state,
+                newMessages: updatedNewMessage
             }
         case CURRENT_MESSAGE:
             const { from, to } = action.payload

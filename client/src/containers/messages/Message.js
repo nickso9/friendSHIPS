@@ -41,7 +41,6 @@ class Messages extends Component {
         
         return (
             <div style={messageOuterWrapper}>
-                
                 <div style={this.props.messages.id ? messageWrapper : noneMessageWrapper}>
                     <Chat onPassId={this.onPassId} />
                     <Friends onGrabId={this.onGrabId} onAddFriend={this.onAddFriend} onRemoveFriend={this.onRemoveFriend}/>
