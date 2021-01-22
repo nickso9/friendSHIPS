@@ -98,7 +98,7 @@ export default function error(state = initialState, action) {
                 messageWith: {}
             }
         case SAVE_MESSAGE:
-            
+
 
             if (action.payload.from === state.me) {
                 if (!state.messages) {
@@ -115,72 +115,81 @@ export default function error(state = initialState, action) {
                 }
             }
 
-            const messageCheck = [...state.newMessages].some(e => e=== action.payload.from)
-            
-            
+            let messageCheck = false
+
+            if (state.newMessages) {
+                messageCheck = [...state.newMessages].some(e => e === action.payload.from)
+            }
+
             if (!messageCheck) {
 
-                    if (!state.messages) {
-                        if (state.messageWith.id !== action.payload.from) {
-
-                            if (!state.newMessages) {
-                                return {
-                                    ...state,
-                                    newMessages: [action.payload.from],
-                                    messages: [action.payload]
-                                }
-                            } else {
-                                return {
-                                    ...state,
-                                    newMessages: [
-                                        ...state.newMessages,
-                                        action.payload.from
-                                    ],
-                                    messages: [action.payload]
-                                }
-                            }
-
-                        }
-                        return {
-                            ...state,
-                            messages: [action.payload]
-                        }
-                    }
-
+                if (!state.messages) {
                     if (state.messageWith.id !== action.payload.from) {
 
                         if (!state.newMessages) {
-
                             return {
                                 ...state,
                                 newMessages: [action.payload.from],
-                                messages: [
-                                    ...state.messages, action.payload
-                                ]
+                                messages: [action.payload]
                             }
                         } else {
-
                             return {
                                 ...state,
                                 newMessages: [
                                     ...state.newMessages,
                                     action.payload.from
                                 ],
-                                messages: [
-                                    ...state.messages, action.payload
-                                ]
+                                messages: [action.payload]
                             }
                         }
+
                     }
+                    return {
+                        ...state,
+                        messages: [action.payload]
+                    }
+                }
+
+                if (state.messageWith.id !== action.payload.from) {
+
+                    if (!state.newMessages) {
+
+                        return {
+                            ...state,
+                            newMessages: [action.payload.from],
+                            messages: [
+                                ...state.messages, action.payload
+                            ]
+                        }
+                    } else {
+
+                        return {
+                            ...state,
+                            newMessages: [
+                                ...state.newMessages,
+                                action.payload.from
+                            ],
+                            messages: [
+                                ...state.messages, action.payload
+                            ]
+                        }
+                    }
+                }
 
             }
+            return {
+                ...state,
+                messages: [
+                    ...state.messages, action.payload
+                ]
+            }
+        case REMOVE_NEW_MESSAGE:
+            if (!state.newMessages) {
                 return {
                     ...state,
-                    messages: [
-                        ...state.messages, action.payload
-                    ]
                 }
-        case REMOVE_NEW_MESSAGE:
+            }
+
             const updatedNewMessage = [...state.newMessages].filter(e => e !== action.payload)
             return {
                 ...state,

@@ -94,7 +94,8 @@ const messageMeBox = {
 
 const messageYou = {
     backgroundColor: '#bcd4e6',
-    padding: '10px'
+    padding: '10px',
+    borderRadius: '10px'
 }
 
 const messageMeBoxText = {
@@ -108,7 +109,8 @@ const messageMeBoxText = {
 
 const messageMe = {
     backgroundColor: '#F0F0F0',
-    padding: '10px'
+    padding: '10px',
+    borderRadius: '10px'
 }
 
 const imageWrapper = {

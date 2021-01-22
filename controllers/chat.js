@@ -24,9 +24,10 @@ module.exports = function (socket) {
         }
     })
 
-    socket.on('setToFriendsOffline', (id) => {
-        let tellFriends = [...friendsArray]
-        for (let i = 0; i < friendsArray.length; i++) {
+    socket.on('setToFriendsOffline', (id, friendsList) => {
+        console.log(friendsList)
+        let tellFriends = [...friendsList]
+        for (let i = 0; i < friendsList.length; i++) {
             socket.to(connectedUsers[tellFriends[i]]).emit('offlineReciever', id)
         }
     })

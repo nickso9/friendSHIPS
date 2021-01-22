@@ -67,12 +67,12 @@ class Friends extends Component {
     render() {
 
         
-        
+        console.log(this.props.friend.friendsOnline)
 
         return (
            
             <div style={this.props.messages && this.props.messages.id ? friendsWrapper : nonFriendsWrapper}>
-                <div style={welcomeName}>Welcome {this.props.auth.user.username} !</div>
+                <div style={welcomeName}>Welcome {this.props.auth.user.username.slice(0, 1).toUpperCase() + this.props.auth.user.username.slice(1).toLowerCase()} !</div>
                 <div style={innerWrapper}>
                     <form style={friendsInput} onSubmit={this.onSubmit}>
                         <input
@@ -179,8 +179,10 @@ class Friends extends Component {
                         <span style={friendsListTitleOnline}>Online</span>
                         {this.state.friendsList && this.state.friendsList.map((friend, index) => {
                
-                            const messageCheck = this.props.unreadMessages.some(e => e === friend._id)
-                
+                            let messageCheck = false
+                            if (this.props.unreadMessages && this.props.unreadMessages.length > 0) {
+                                messageCheck = this.props.unreadMessages.some(e => e === friend._id)
+                            }
                             
                             if (this.state.onlineFriends.indexOf(friend._id) !== -1) {
                                 return (

@@ -21,6 +21,7 @@ class Chat extends Component {
 
 
     componentDidMount() {
+        console.log(this.props.user.friendsList)
         const friendId = this.props.user.friendsList.map(e => e._id)
         const { id } = this.props.user
         socket = io('localhost:8080')
@@ -62,8 +63,9 @@ class Chat extends Component {
     }
 
     componentWillUnmount() {
+        // console.log(this.props.user.friendsList)
         const { id } = this.props.user
-        socket.emit('setToFriendsOffline', id)
+        socket.emit('setToFriendsOffline', id, this.props.friendsList)
         socket.disconnect(id)
     }
 
@@ -92,7 +94,7 @@ class Chat extends Component {
     }
 
     render() {
-        
+            console.log(this.props)
             if (this.props.messages.username) {
                     return (
                         <div style={chatWrapper} >
@@ -150,11 +152,13 @@ Chat.propTypes = {
     friendListUpdater: PropTypes.func.isRequired,
     setOnlineFriends: PropTypes.func.isRequired, 
     newOnlineFriend: PropTypes.func.isRequired,
-    newOfflineFriend: PropTypes.func.isRequired
+    newOfflineFriend: PropTypes.func.isRequired,
+    friendsList: PropTypes.array
 }
 
 const mapStateToProps = state => ({
     messages: state.friend.messageWith,
+    friendsList: state.friend.friendsOnline,
     currentMessages: state.friend.currentMessages,
     user: state.auth.user
 })
