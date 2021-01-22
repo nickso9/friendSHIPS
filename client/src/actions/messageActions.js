@@ -11,7 +11,7 @@ import {
 
 export const searchFriend = (username) => dispatch => {
 
-    axios.get('http://localhost:8080/user/search', {
+    axios.get('/user/search', {
         params: {
             user: username
         }
@@ -44,7 +44,7 @@ export const searchFriend = (username) => dispatch => {
 
 export const addPending = (userToAdd, user, usernameToAdd, image) => dispatch => {
 
-    axios.post('http://localhost:8080/user/pendingfriend', {
+    axios.post('/user/pendingfriend', {
         body: {
             userToAdd: userToAdd,
             user: user,
@@ -68,7 +68,7 @@ export const addPending = (userToAdd, user, usernameToAdd, image) => dispatch =>
 
 export const addFriend = (userToAdd, user) => dispatch => {
 
-    axios.post('http://localhost:8080/user/addfriend', {
+    axios.post('/user/addfriend', {
         body: {
             userToAdd: userToAdd,
             user: user
@@ -91,7 +91,7 @@ export const addFriend = (userToAdd, user) => dispatch => {
 
 export const removeFriend = (userToRemove, user) => dispatch => {
 
-    axios.delete('http://localhost:8080/user/removefriend', {
+    axios.delete('/user/removefriend', {
         data: {
             userToRemove: userToRemove,
             user: user
@@ -113,7 +113,7 @@ export const removeFriend = (userToRemove, user) => dispatch => {
 
 export const removePending = (userToRemove, user) => dispatch => {
 
-    axios.put('http://localhost:8080/user/removepending', {
+    axios.put('/user/removepending', {
         data: {
             id: user,
             userToRemove

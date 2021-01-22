@@ -13,11 +13,11 @@ export const loadUser = () => async (dispatch, getState) => {
   try {
 
     const tokenResults = await axios.post(
-      'http://localhost:8080/users/tokenIsValid', null, tokenConfig(getState))
+      '/users/tokenIsValid', null, tokenConfig(getState))
       
 
     if (tokenResults.data) {
-      const userResults = await axios.get('http://localhost:8080/users',tokenConfig(getState));
+      const userResults = await axios.get('/users',tokenConfig(getState));
       
       dispatch({
         type: USER_LOADED,
@@ -47,7 +47,7 @@ export const register = ({ name, email, password, confirmPassword, username, ima
 
   const body = JSON.stringify({ name, email, password, passwordCheck, username, image });
 
-  axios.post('http://localhost:8080/users/register', body, config)
+  axios.post('/users/register', body, config)
     .then(res =>
         dispatch({
           type: REGISTER_SUCCESS,
@@ -65,7 +65,7 @@ export const register = ({ name, email, password, confirmPassword, username, ima
 };
 
 export const friendListUpdater = (id) => dispatch => {
-  axios.get('http://localhost:8080/user/updatefriend',{
+  axios.get('/user/updatefriend',{
     params: {
       id: id
     }
@@ -97,7 +97,7 @@ export const login = ({ email, password }) => dispatch => {
 
   const body = JSON.stringify({ email, password });
 
-  axios.post('http://localhost:8080/users/login', body, config)
+  axios.post('/users/login', body, config)
   .then(res => {
     dispatch({
       type: LOGIN_SUCCESS,
