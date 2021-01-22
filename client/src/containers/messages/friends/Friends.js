@@ -67,7 +67,7 @@ class Friends extends Component {
     render() {
 
         
-        console.log(this.props.unreadMessages)
+        
 
         return (
             <div style={this.props.messages && this.props.messages.id ? friendsWrapper : nonFriendsWrapper}>
@@ -176,6 +176,10 @@ class Friends extends Component {
                     <div style={friendsListWrapper}>
                         <span style={friendsListTitleOnline}>Online</span>
                         {this.state.friendsList && this.state.friendsList.map((friend, index) => {
+               
+                            const messageCheck = this.props.unreadMessages.some(e => e === friend._id)
+                
+                            
                             if (this.state.onlineFriends.indexOf(friend._id) !== -1) {
                                 return (
                                     <div key={index} style={currentOnlineFriendCard}>
@@ -188,6 +192,7 @@ class Friends extends Component {
                                         >
                                             <img src={friend.image} alt=''/>
                                             <span style={friendNameOnline}>{friend.username.slice(0,1).toUpperCase() + friend.username.slice(1).toLowerCase()}</span>
+                                            <span style={newMessageCheck} className={messageCheck ? 'glyphicon glyphicon-envelope' : ''}></span>
                                         </div>
                                         <button
                                             style={friendRemoveBtn} 
@@ -446,9 +451,17 @@ const friendName = {
     marginLeft: '5px',
 }
 
+
 const friendNameOnline = {
     marginLeft: '5px',
     color: 'green'
+}
+
+const newMessageCheck = {
+    width: '25px',
+    marginLeft: '10px',
+    height: '25px',
+    color: '#a17f1a'
 }
 
 const friendButtons = {
