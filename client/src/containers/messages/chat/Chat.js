@@ -24,7 +24,7 @@ class Chat extends Component {
         console.log(this.props.user.friendsList)
         const friendId = this.props.user.friendsList.map(e => e._id)
         const { id } = this.props.user
-        socket = io('localhost:8080')
+        socket = io()
         socket.on("connect", () => {
             socket.emit('setUserId', id)
 
@@ -32,8 +32,8 @@ class Chat extends Component {
 
             setTimeout(() => {
                 socket.emit('setToFriendsOnline', id)
-            },500)
-            
+            }, 500)
+
             socket.on('onlineReciever', (newOnlineFriend) => {
                 this.props.newOnlineFriend(newOnlineFriend)
             })
@@ -41,7 +41,7 @@ class Chat extends Component {
             socket.on('offlineReciever', (newOfflineFriend) => {
                 this.props.newOfflineFriend(newOfflineFriend)
             })
-            
+
 
             socket.on('sendPrivateMessage', (from, message) => {
                 this.props.saveMessages(from, id, message)
@@ -57,7 +57,7 @@ class Chat extends Component {
             })
 
             this.props.onPassId(socket)
-        
+
         });
 
     }
@@ -94,54 +94,54 @@ class Chat extends Component {
     }
 
     render() {
-            console.log(this.props)
-            if (this.props.messages.username) {
-                    return (
-                        <div style={chatWrapper} >
-                            <div style={messageBanner}>
-                                
-                                        <div style={headerDiv}>
-                                            <div style={messagingWrapper}>
-                                                <p style={messagingText}>Messaging:</p>
-                                                {this.props.messages.username.slice(0,1).toUpperCase() + this.props.messages.username.slice(1).toLowerCase()}
-                                            </div>
-                                            <div><img src={this.props.messages.image} alt=''/></div>    
-                                        </div>
-                                
+        console.log(this.props)
+        if (this.props.messages.username) {
+            return (
+                <div style={chatWrapper} >
+                    <div style={messageBanner}>
+
+                        <div style={headerDiv}>
+                            <div style={messagingWrapper}>
+                                <p style={messagingText}>Messaging:</p>
+                                {this.props.messages.username.slice(0, 1).toUpperCase() + this.props.messages.username.slice(1).toLowerCase()}
                             </div>
-
-                            <div style={messageWrapper} id="message">
-                                    <Message messages={this.props.currentMessages} switch={this.props.messages} />
-                            </div>
-
-
-                            <form style={chatBox} onSubmit={this.onSubmit}> 
-                                <div style={inputWrapper}>
-                                    <input
-                                        style={inputStyle}
-                                        type='text'
-                                        value={this.state.inputText}
-                                        onChange={(e) => {
-                                            this.setState({
-                                                ...this.state,
-                                                inputText: e.target.value
-                                            })
-                                        }} />
-                                    <button 
-                                        type="submit"
-                                        style={buttonStyle}
-                                    ><span className='glyphicon glyphicon-send'></span></button>
-                                </div>
-                            </form>
+                            <div><img src={this.props.messages.image} alt='' /></div>
                         </div>
-                    ) 
-                        } else {
-                    return (
-                        <></>
-                    )
-                    }
-                }
-    
+
+                    </div>
+
+                    <div style={messageWrapper} id="message">
+                        <Message messages={this.props.currentMessages} switch={this.props.messages} />
+                    </div>
+
+
+                    <form style={chatBox} onSubmit={this.onSubmit}>
+                        <div style={inputWrapper}>
+                            <input
+                                style={inputStyle}
+                                type='text'
+                                value={this.state.inputText}
+                                onChange={(e) => {
+                                    this.setState({
+                                        ...this.state,
+                                        inputText: e.target.value
+                                    })
+                                }} />
+                            <button
+                                type="submit"
+                                style={buttonStyle}
+                            ><span className='glyphicon glyphicon-send'></span></button>
+                        </div>
+                    </form>
+                </div>
+            )
+        } else {
+            return (
+                <></>
+            )
+        }
+    }
+
 }
 
 Chat.propTypes = {
@@ -150,7 +150,7 @@ Chat.propTypes = {
     getCurrentMessages: PropTypes.func.isRequired,
     currentMessages: PropTypes.array,
     friendListUpdater: PropTypes.func.isRequired,
-    setOnlineFriends: PropTypes.func.isRequired, 
+    setOnlineFriends: PropTypes.func.isRequired,
     newOnlineFriend: PropTypes.func.isRequired,
     newOfflineFriend: PropTypes.func.isRequired,
     friendsList: PropTypes.array
@@ -193,7 +193,7 @@ const buttonStyle = {
     borderBottom: '1px solid blue',
     backgroundColor: 'gainsboro',
     marginLeft: '10px',
-    color: 'blue', 
+    color: 'blue',
     letterSpacing: '1px'
 }
 
@@ -213,7 +213,7 @@ const chatBox = {
 
 const inputWrapper = {
     display: 'flex',
-    justifyContent: 'space-around', 
+    justifyContent: 'space-around',
     margin: 'auto',
 
 }
