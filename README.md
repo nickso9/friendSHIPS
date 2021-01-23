@@ -1,7 +1,7 @@
 # **FriendSHIPS**   ![Github All Releases](https://img.shields.io/github/contributors/nsando84/friendSHIPS)   
 
 #### Chat interface.
-![Screen Shot 2021-01-22 at 2 47 22 PM](https://user-images.githubusercontent.com/67135603/105557367-e62b3680-5cc0-11eb-8f7e-45bf4a842be0.png)
+![Screen Shot 2021-01-22 at 6 09 14 PM](https://user-images.githubusercontent.com/67135603/105565729-28627100-5cdd-11eb-9dd2-f4f46b521bb5.png)
 
 
   ## **Description**
@@ -62,10 +62,10 @@
 #### This application allows users to private message friends. 
 
 #### Friendlist minimized.
-![Screen Shot 2021-01-22 at 2 47 56 PM](https://user-images.githubusercontent.com/67135603/105557363-e4617300-5cc0-11eb-90b7-4dd1e0b25829.png)
+![Screen Shot 2021-01-22 at 6 09 38 PM](https://user-images.githubusercontent.com/67135603/105565730-2a2c3480-5cdd-11eb-9a01-9b1243c98735.png)
 
 #### Landing page.
-![Screen Shot 2021-01-22 at 2 48 08 PM](https://user-images.githubusercontent.com/67135603/105557361-e1668280-5cc0-11eb-864d-271ba33d34b4.png)
+![Screen Shot 2021-01-22 at 6 10 06 PM](https://user-images.githubusercontent.com/67135603/105565731-2b5d6180-5cdd-11eb-8962-0bc7b3606ff6.png)
 
 ---
 
