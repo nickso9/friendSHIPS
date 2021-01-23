@@ -21,7 +21,7 @@
   
   #### MERN - Socket.io, React (REDUX) , MongoDB (Mongoose), Express, & Node.js.
 
- #### [**FriendSHIPS**](https://ihostel.herokuapp.com/) <--- Demo the chat application here
+ #### [**FriendSHIPS**](https://friendshipsapp.herokuapp.com/) <--- Demo the chat application here
  
  ### Video demo - [Right Here](https://drive.google.com/file/d/1bo5XC-nXV4b6BsefW0DfaG1B6XMzKbpO/view)
  
