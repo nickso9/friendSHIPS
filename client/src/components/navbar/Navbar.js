@@ -92,7 +92,7 @@ class Navbar extends Component {
                             style={navbarBrand}>
                             <div style={brandWrapper}>
                             <span style={brandText}>
-                                {/* FriendSHIPS */}
+                                FriendSHIPS
                                 </span>
                             </div>
                         </div>  
