@@ -3,11 +3,6 @@
 #### Chat interface.
 ![Screen Shot 2021-01-22 at 2 47 22 PM](https://user-images.githubusercontent.com/67135603/105557367-e62b3680-5cc0-11eb-8f7e-45bf4a842be0.png)
 
-#### Landing page.
-![Screen Shot 2021-01-22 at 2 48 08 PM](https://user-images.githubusercontent.com/67135603/105557361-e1668280-5cc0-11eb-864d-271ba33d34b4.png)
- 
- 
-
 
   ## **Description**
 
@@ -69,7 +64,8 @@
 #### Friendlist minimized.
 ![Screen Shot 2021-01-22 at 2 47 56 PM](https://user-images.githubusercontent.com/67135603/105557363-e4617300-5cc0-11eb-90b7-4dd1e0b25829.png)
 
-
+#### Landing page.
+![Screen Shot 2021-01-22 at 2 48 08 PM](https://user-images.githubusercontent.com/67135603/105557361-e1668280-5cc0-11eb-864d-271ba33d34b4.png)
 
 ---
 
