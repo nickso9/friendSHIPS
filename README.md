@@ -45,7 +45,7 @@
     npx create-react-app
     npm axios
     npm react-redux
-    npm socket.io
+    npm socket.io-client
     npm moment
     
     npm express
