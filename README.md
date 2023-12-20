@@ -41,20 +41,9 @@
 ---
 
 ### **Installation**
- 
-    npx create-react-app
-    npm axios
-    npm react-redux
-    npm socket.io-client
-    npm moment
-    
-    npm express
-    npm mongodb mongoose
-    npm socket.io
-    npm jsonwebtoken
-    npm bcrypt
-    
-     
+```bash
+npm i
+```
 ---
 
 ### **Usage**
@@ -78,12 +67,6 @@
 ### **Tests**
 
 ### N/A
-
----
-
-### **Questions?**
-
-www.github.com/nsando84
 
 ---
 
